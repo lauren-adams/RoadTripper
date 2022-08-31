@@ -9,7 +9,7 @@ build-api:
 # road-trip-frontend folders and builds a docker image based on the
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
-    - cd docker/api
+    - cd road-trip-api
     - podman build -t road-trip-api .
 build-frontend:
   stage: build
@@ -18,7 +18,7 @@ build-frontend:
 # road-trip-frontend folders and builds a docker image based on the
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
-    - cd docker/frontend
+    - cd road-trip-frontend
     - podman build -t road-trip-frontend .
 deploy-prod:
   stage: deploy
