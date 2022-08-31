@@ -12,6 +12,7 @@ build-api:
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
     - cd road-trip-api
+    - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api kaase/road-trip-api:latest
     - podman push kaase/road-trip-api:latest
