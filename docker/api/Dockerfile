@@ -1,4 +1,4 @@
-FROM openjdk:14 AS build
+FROM docker.io/openjdk:14 AS build
 
 # Possible to execute the mave bom build here? Would need to dowload maven...
 

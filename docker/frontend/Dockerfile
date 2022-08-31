@@ -5,7 +5,7 @@ COPY . .
 RUN yarn install
 RUN yarn run build
 
-FROM node:12
+FROM docker.io/node:12
 WORKDIR /app
 COPY --from=build /build .
 
