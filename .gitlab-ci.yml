@@ -26,6 +26,7 @@ build-frontend:
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
     - cd road-trip-frontend
+    - podman build -t road-trip-frontend .
     - podman tag road-trip-frontend kaase/road-trip-frontend:latest
     - podman push kaase/road-trip-frontend:latest
 deploy-prod:
