@@ -2,8 +2,8 @@ image: docker:latest
 
 services:
   - docker:dind
-
-
+before_script:
+  - dockerd &
 
 
 build-api:
