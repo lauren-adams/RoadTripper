@@ -29,15 +29,34 @@ image: quay.io/podman/stable
     - podman tag road-trip-frontend docker.io/kaase/road-trip-frontend:latest
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-frontend:latest
-deploy:
+deploy-frontend:
   image:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   stage: deploy
   script:
-    - kubectl config get-contexts
-    - kubectl config use-context path/to/agent/repository:agent-name
-    - kubectl get pods
+    - cd kubernetes
+    - cd road-trip-api
+    - kubectl apply -f road-trip-api-deployment.yaml
+    - kubectl apply -f road-trip-api-service.yaml
+deploy-api:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  stage: deploy
+  script:
+    - cd kubernetes
+    - cd road-trip-frontend
+    - kubectl apply -f road-trip-frontend-deployment.yaml
+    - kubectl apply -f road-trip-frontend-service.yaml
+deploy-ingress:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  stage: deploy
+  script:
+    - cd kubernetes
+    - kubectl apply -f ingress-controller.yaml
 .deploy-prod:
   stage: deploy
   script:
