@@ -14,7 +14,7 @@ build-api:
     - podman build -t road-trip-api .
     - podman tag road-trip-api kaase/road-trip-api:latest
     - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
-    - podman push kaase/road-trip-api:latest
+    - podman push docker.io/kaase/road-trip-api:latest
 build-frontend:
   stage: build
   script:
@@ -26,7 +26,7 @@ build-frontend:
     - podman build -t road-trip-frontend .
     - podman tag road-trip-frontend kaase/road-trip-frontend:latest
     - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
-    - podman push kaase/road-trip-frontend:latest
+    - podman push docker.io/kaase/road-trip-frontend:latest
 deploy-prod:
   stage: deploy
   script:
