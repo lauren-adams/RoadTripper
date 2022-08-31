@@ -4,22 +4,28 @@ image: quay.io/podman/stable
 
 build-api:
   stage: build
+  before_script:
+    - podman login -u "$DOCKERUSER" - p "$DOCKERPASS"
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
     - cd road-trip-api
-    - podman build -t road-trip-api .
+    - podman build -t kaase/road-trip-api .
+    - podman push kaase/road-trip-api
 build-frontend:
   stage: build
+  before_script:
+    - podman login -u "$DOCKERUSER" - p "$DOCKERPASS"
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
     - cd road-trip-frontend
-    - podman build -t road-trip-frontend .
+    - podman build -t kaase/road-trip-frontend .
+    - podman push kaase/road-trip-frontend
 deploy-prod:
   stage: deploy
   script:
