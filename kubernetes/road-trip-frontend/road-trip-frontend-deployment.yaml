@@ -1,34 +1,25 @@
-kind: Deployment
 apiVersion: apps/v1
+kind: Deployment
 metadata:
-  name: road-trip-frontend-deployment
+  name: road-trip-frontend
+  labels:
+    app: frontend
 spec:
-  # A deployment's specification really only 
-  # has a few useful options
-  
-  # 1. How many copies of each pod do we want?
-  replicas: 1
-
-  # 2. How do want to update the pods?
-  strategy: Recreate
-
-  # 3. Which pods are managed by this deployment?
   selector:
-    # This must match the labels we set on the pod!
     matchLabels:
-      deploy: frontend
-  
-  # This template field is a regular pod configuration 
-  # nested inside the deployment spec
+      app: frontend
+      tier: web
   template:
     metadata:
-      # Set labels on the pod.
-      # This is used in the deployment selector.
       labels:
-        deploy: frontend
+        app: frontend
+        tier: web
     spec:
       containers:
-        - name: road-trip-frontend
-          image: kaase/road-trip-frontend:latest
-          ports:
-          - containerPort: 3000
+      - name: road-trip-frontend
+        image: docker.io/kaase/road-trip-frontend:latest
+        ports:
+        - containerPort: 3000
+        resources:
+          requests:
+            cpu: 900m
