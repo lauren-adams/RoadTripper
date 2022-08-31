@@ -30,3 +30,5 @@ spec:
       containers:
         - name: road-trip-frontend
           image: kaase/road-trip-frontend:latest
+          ports:
+          - containerPort: 3000
