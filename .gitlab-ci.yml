@@ -12,7 +12,7 @@ build-api:
     - cd road-trip-api
     - chmod +x gradlew
     - podman build -t road-trip-api .
-    - podman tag road-trip-api kaase/road-trip-api:latest
+    - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
     - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
     - podman push docker.io/kaase/road-trip-api:latest
 build-frontend:
@@ -24,7 +24,7 @@ build-frontend:
 # "Dockerfile" in each directory.
     - cd road-trip-frontend
     - podman build -t road-trip-frontend .
-    - podman tag road-trip-frontend kaase/road-trip-frontend:latest
+    - podman tag road-trip-frontend docker.io/kaase/road-trip-frontend:latest
     - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
     - podman push docker.io/kaase/road-trip-frontend:latest
 deploy-prod:
