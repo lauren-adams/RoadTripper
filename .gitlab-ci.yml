@@ -1,20 +1,9 @@
-image: docker:latest
+image: quay.io/podman/stable
 
 
 
 build-api:
   stage: build
-  services:
-   - name: docker:dind
-     alias: dockerdaemon
-
-  variables:
-    # Tell docker CLI how to talk to Docker daemon.
-    DOCKER_HOST: tcp://dockerdaemon:2375/
-    # Use the overlayfs driver for improved performance.
-    DOCKER_DRIVER: overlay2
-    # Disable TLS since we're running inside local network.
-    DOCKER_TLS_CERTDIR: ""
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
@@ -24,17 +13,6 @@ build-api:
     - docker build -t road-trip-api .
 build-frontend:
   stage: build
-  services:
-   - name: docker:dind
-     alias: dockerdaemon
-
-  variables:
-    # Tell docker CLI how to talk to Docker daemon.
-    DOCKER_HOST: tcp://dockerdaemon:2375/
-    # Use the overlayfs driver for improved performance.
-    DOCKER_DRIVER: overlay2
-    # Disable TLS since we're running inside local network.
-    DOCKER_TLS_CERTDIR: ""
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
