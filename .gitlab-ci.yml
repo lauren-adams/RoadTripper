@@ -13,8 +13,10 @@ build-api:
     - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
-    - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io/kaase/road-trip-api
-    - podman push docker.io/kaase/road-trip-api:latest
+    - echo $DOCKERUSER
+    - echo $DOCKERKEY
+    - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
+    - podman push kaase/road-trip-api:latest
 build-frontend:
   stage: build
   script:
@@ -25,8 +27,8 @@ build-frontend:
     - cd road-trip-frontend
     - podman build -t road-trip-frontend .
     - podman tag road-trip-frontend docker.io/kaase/road-trip-frontend:latest
-    - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io/kaase/road-trip-frontend
-    - podman push docker.io/kaase/road-trip-frontend:latest
+    - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
+    - podman push kaase/road-trip-frontend:latest
 deploy-prod:
   stage: deploy
   script:
