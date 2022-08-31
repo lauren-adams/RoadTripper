@@ -1,21 +1,24 @@
 default:
   image: docker:latest
 
-build-job:
+build-api:
   stage: build
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
 # docker files it finds there. This assumes there is a file named
 # "Dockerfile" in each directory.
-    - cd road-trip-api
+    - cd docker/api
     - docker build -t road-trip-api .
-    - cd ..
-    - cd road-trip-frontend
+build-frontend:
+  stage: build
+  script:
+# This set of instructions simply navigates to the road-trip-api and
+# road-trip-frontend folders and builds a docker image based on the
+# docker files it finds there. This assumes there is a file named
+# "Dockerfile" in each directory.
+    - cd docker/frontend
     - docker build -t road-trip-frontend .
-    - cd ..
-
-
 deploy-prod:
   stage: deploy
   script:
