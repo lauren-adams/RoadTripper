@@ -5,7 +5,7 @@ image: quay.io/podman/stable
 build-api:
   stage: build
   before_script:
-    - podman login -u "$DOCKERUSER" - p "$DOCKERPASS"
+    - podman login -u "$DOCKERUSER" -p "$DOCKERPASS"
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
@@ -17,7 +17,7 @@ build-api:
 build-frontend:
   stage: build
   before_script:
-    - podman login -u "$DOCKERUSER" - p "$DOCKERPASS"
+    - podman login -u "$DOCKERUSER" -p "$DOCKERPASS"
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
