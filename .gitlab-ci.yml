@@ -4,8 +4,6 @@ image: quay.io/podman/stable
 
 build-api:
   stage: build
-  before_script:
-    - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
@@ -15,11 +13,10 @@ build-api:
     - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api kaase/road-trip-api:latest
+    - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
     - podman push kaase/road-trip-api:latest
 build-frontend:
   stage: build
-  before_script:
-    - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
   script:
 # This set of instructions simply navigates to the road-trip-api and
 # road-trip-frontend folders and builds a docker image based on the
@@ -28,6 +25,7 @@ build-frontend:
     - cd road-trip-frontend
     - podman build -t road-trip-frontend .
     - podman tag road-trip-frontend kaase/road-trip-frontend:latest
+    - podman login -u $DOCKERUSER -p $DOCKERPASS docker.io
     - podman push kaase/road-trip-frontend:latest
 deploy-prod:
   stage: deploy
