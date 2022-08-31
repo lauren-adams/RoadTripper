@@ -2,7 +2,7 @@ image: quay.io/podman/stable
 
 
 
-build-api:
+.build-api:
   stage: build
   script:
 # This set of instructions simply navigates to the road-trip-api and
@@ -17,7 +17,7 @@ build-api:
     - echo $DOCKERKEY
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-api:latest
-build-frontend:
+.build-frontend:
   stage: build
   script:
 # This set of instructions simply navigates to the road-trip-api and
@@ -29,7 +29,16 @@ build-frontend:
     - podman tag road-trip-frontend docker.io/kaase/road-trip-frontend:latest
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-frontend:latest
-deploy-prod:
+deploy:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  stage: deploy
+  script:
+    - kubectl config get-contexts
+    - kubectl config use-context path/to/agent/repository:agent-name
+    - kubectl get pods
+.deploy-prod:
   stage: deploy
   script:
 # This script simply runs the images that were built in the previous step.
