@@ -1,4 +1,4 @@
-FROM node:12 AS build
+FROM docker.io/node:12 AS build
 WORKDIR /build
 COPY . .
 

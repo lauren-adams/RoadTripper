@@ -7,7 +7,7 @@ WORKDIR /build
 COPY . .
 RUN ./gradlew build --no-daemon -p .
 
-FROM openjdk:14
+FROM docker.io/openjdk:14
 WORKDIR /app
 COPY --from=build /build/build/libs/build-1.0-SNAPSHOT.jar app.jar
 
