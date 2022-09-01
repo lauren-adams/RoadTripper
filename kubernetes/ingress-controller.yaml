@@ -4,6 +4,8 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: ingress-road-trip
+  annotations:
+    kubernetes.io/ingress.class: addon-http-application-routing
 spec:
   rules:
   - host: "subjecttochange.dev"
