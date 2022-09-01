@@ -14,8 +14,9 @@ spec:
   - hosts:
     - subjecttochange.dev
       secretName: tls
+  - hosts:
     - api.subjecttochange.dev
-      secretName: tls
+      secretName: tls 
   rules:
   - host: "subjecttochange.dev"
     http:
