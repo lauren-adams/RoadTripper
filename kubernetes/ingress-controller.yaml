@@ -15,7 +15,6 @@ spec:
       - "*.subjecttochange.dev"
       - www.api.subjecttochange.dev
       - api.subjecttochange.dev
-      - www.*.subjecttochange.dev
       secretName: tls
 
   rules:
