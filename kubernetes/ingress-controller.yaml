@@ -3,7 +3,7 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: hello-world-ingress
+  name: ingress
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
@@ -22,8 +22,8 @@ spec:
         path: /
         backend:
           service:
-            name: frontend
-            port:
+            serviceName: frontend
+            servicePort:
               number: 3000
   - host: "api.subjecttochange.dev"
     http:
@@ -32,7 +32,7 @@ spec:
         path: /
         backend:
           service:
-            name: api
-            port:
+            serviceName: api
+            servicePort:
               number: 8080
 ---
