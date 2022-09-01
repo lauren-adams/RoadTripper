@@ -22,8 +22,8 @@ spec:
         path: /
         backend:
           service:
-            serviceName: frontend
-            servicePort:
+            name: frontend
+            port:
               number: 3000
   - host: "api.subjecttochange.dev"
     http:
@@ -32,7 +32,7 @@ spec:
         path: /
         backend:
           service:
-            serviceName: api
-            servicePort:
+            name: api
+            port:
               number: 8080
 ---
