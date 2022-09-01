@@ -353,7 +353,7 @@ spec:
     targetPort: http
   - appProtocol: https
     name: https
-    port: 443
+    port: 8080
     protocol: TCP
     targetPort: https
   selector:
@@ -455,8 +455,8 @@ spec:
         - containerPort: 80
           name: http
           protocol: TCP
-        - containerPort: 8080
-          name: api
+        - containerPort: 443
+          name: https
           protocol: TCP
         - containerPort: 8443
           name: webhook
