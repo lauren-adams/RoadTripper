@@ -13,10 +13,11 @@ spec:
   tls:
     - hosts:
       - "*.subjecttochange.dev"
-      secretName: tls
-    - hosts:
+      - www.api.subjecttochange.dev
       - api.subjecttochange.dev
+      - www.*.subjecttochange.dev
       secretName: tls
+
   rules:
   - host: "subjecttochange.dev"
     http:
