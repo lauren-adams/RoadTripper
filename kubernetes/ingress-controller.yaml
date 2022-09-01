@@ -12,7 +12,7 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - *.subjecttochange.dev
+      - "*.subjecttochange.dev"
       secretName: tls
     - hosts:
       - api.subjecttochange.dev
