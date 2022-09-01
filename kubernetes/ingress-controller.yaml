@@ -28,8 +28,8 @@ spec:
             name: frontend
             port:
               number: 3000
-  - host: "api.subjecttochange.dev"
-    http:
+  - host: "subjecttochange.dev"
+    api:
       paths:
       - pathType: Prefix
         path: /
