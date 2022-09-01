@@ -11,8 +11,11 @@ metadata:
 spec:
   ingressClassName: nginx
   tls:
-  - hosts:
-    - subjecttochange.dev
+    - hosts:
+      - subjecttochange.dev
+      secretName: tls
+    - hosts:
+      - api.subjecttochange.dev
       secretName: tls
   rules:
   - host: "subjecttochange.dev"
