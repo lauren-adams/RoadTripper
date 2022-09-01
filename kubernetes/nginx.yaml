@@ -343,7 +343,7 @@ metadata:
   name: ingress-nginx-controller
   namespace: ingress-nginx
 spec:
-  loadBalancerIP:: 20.188.90.110
+  loadBalancerIP: 20.188.90.110
   externalTrafficPolicy: Local
   ports:
   - appProtocol: http
