@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: road-trip-api
+  name: api
   labels:
     app: api
 spec:
@@ -16,7 +16,7 @@ spec:
         tier: web
     spec:
       containers:
-      - name: road-trip-api
+      - name: api
         image: docker.io/kaase/road-trip-api:latest
         ports:
         - containerPort: 8080
