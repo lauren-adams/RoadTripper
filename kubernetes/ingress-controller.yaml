@@ -3,22 +3,13 @@
 apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
-  name: ingress
+  name: hello-world-ingress
   annotations:
     nginx.ingress.kubernetes.io/ssl-redirect: "false"
     nginx.ingress.kubernetes.io/use-regex: "true"
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
----
-apiVersion: extensions/v1beta1
-kind: Ingress
-metadata:
-  name: ingress
-  namespace: gitlab-agent
-  annotations:
-    kubernetes.io/ingress.class: "nginx"
-spec:
   tls:
   - hosts:
     - subjecttochange.dev
@@ -44,3 +35,4 @@ spec:
             name: api
             port:
               number: 8080
+---
