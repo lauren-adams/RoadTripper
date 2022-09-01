@@ -49,6 +49,14 @@ deploy-api:
     - cd road-trip-frontend
     - kubectl apply -f road-trip-frontend-deployment.yaml
     - kubectl apply -f road-trip-frontend-service.yaml
+deploy-nginx:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  stage: deploy
+  script:
+    - cd kubernetes
+    - kubectl apply -f nginx.yaml
 deploy-ingress:
   image:
     name: bitnami/kubectl:latest
