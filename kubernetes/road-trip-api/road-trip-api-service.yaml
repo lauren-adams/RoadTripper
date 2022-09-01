@@ -9,4 +9,5 @@ spec:
     app: road-trip-api
   ports:
     - port: 8080
+      name: api
   type: ClusterIP

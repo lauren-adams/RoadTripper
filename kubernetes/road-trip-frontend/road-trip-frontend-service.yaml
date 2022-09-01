@@ -9,4 +9,5 @@ spec:
     app: road-trip-frontend
   ports:
     - port: 3000
+      name: api
   type: ClusterIP
