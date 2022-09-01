@@ -10,6 +10,10 @@ metadata:
     nginx.ingress.kubernetes.io/rewrite-target: /$2
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - subjecttochange.dev
+    secretName: tls
   rules:
   - host: "subjecttochange.dev"
     http:
