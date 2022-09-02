@@ -13,7 +13,7 @@ spec:
   tls:
     - hosts:
       - "api.subjecttochange.dev"
-      - "*.subjecttochange.dev"
+      - "subjecttochange.dev"
       - "www.api.subjecttochange.dev"
       secretName: tls
 
