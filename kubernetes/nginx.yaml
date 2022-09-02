@@ -353,7 +353,7 @@ spec:
     targetPort: http
   - appProtocol: https
     name: https
-    port: 8080
+    port: 443
     protocol: TCP
     targetPort: https
   selector:
