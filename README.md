@@ -1,15 +1,15 @@
  1. **Road-trip-api: Backend Setup**
 
 	- Install Java 16(OpenJDK)
-	- Install Docker:
+	- Install Docker:  
 		- Windows:
-			- Go this link: https://docs.docker.com/desktop/windows/install/
+			- Go this  link: https://docs.docker.com/desktop/windows/install/
 			- Choose **Hyper-V backend and Windows containers** to install docker
 			- For installation, you can follow this tutorial as well
 			  **(https://www.youtube.com/watch?v=_9AWYlt86B8&t=251s)**
 		- Mac:
 			- Go to this link: https://docs.docker.com/desktop/install/mac-install/
-			- Choose **Mac with Intel chip** or **Mac with Apple chip** depending on your specific machine
+			- Choose **Mac with Intel chip** or **Mac with Apple chip** depending on your specific machine 
 
 	- Setup Project in IntelliJ
 		- Import the project at the road-trip-planner parent dir (root of repository) into IntelliJ using existing sources
@@ -74,3 +74,4 @@
 		- whenever a commit is made, a pipeline should be created for your GitLab project. You can view this pipeline to see its status while it is executing in the "CI/CD -> Pipelines" tab on GitLab.
 
 This will get basic CI/CD functionality setup for your project. Feel free to customize this process to fit your needs as the project progresses.
+
