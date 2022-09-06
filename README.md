@@ -3,7 +3,7 @@
 	- Install Java 16(OpenJDK)
 	- Install Docker:
 		- Windows:
-			- Go this link: https://docs.docker.com/desktop/windows/install/
+			- Go this  link: https://docs.docker.com/desktop/windows/install/
 			- Choose **Hyper-V backend and Windows containers** to install docker
 			- For installation, you can follow this tutorial as well
 			  **(https://www.youtube.com/watch?v=_9AWYlt86B8&t=251s)**
