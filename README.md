@@ -1,7 +1,7 @@
 1. **Road-trip-api: Backend Setup**
 
 	- Install Java 16(OpenJDK)
-	- Install Docker:
+	- Install Docker:  
 		- Windows:
 			- Go this link: https://docs.docker.com/desktop/windows/install/
 			- Choose **Hyper-V backend and Windows containers** to install docker
@@ -74,3 +74,4 @@
 		- whenever a commit is made, a pipeline should be created for your GitLab project. You can view this pipeline to see its status while it is executing in the "CI/CD -> Pipelines" tab on GitLab.
 
 This will get basic CI/CD functionality setup for your project. Feel free to customize this process to fit your needs as the project progresses.
+
