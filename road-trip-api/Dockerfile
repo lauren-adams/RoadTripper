@@ -5,6 +5,7 @@ FROM docker.io/openjdk:14 AS build
 WORKDIR /build
 
 COPY . .
+RUN chmod +x ./gradlew
 RUN ./gradlew build --no-daemon -p .
 
 FROM docker.io/openjdk:14
