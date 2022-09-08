@@ -6,7 +6,7 @@ image: quay.io/podman/stable
 build-api:
   stage: build
   rules:
-    - if: $CI_COMMIT_MESSAGE == "BUILD-API"
+    - if: $CI_COMMIT_MESSAGE =~ "*[BUILD-API]*"
       when: always
   script:
   
@@ -27,7 +27,7 @@ build-api:
 build-frontend:
   stage: build
   rules:
-    - if: $CI_COMMIT_MESSAGE == "BUILD-FRONTEND"
+    - if: $CI_COMMIT_MESSAGE =~ "*[BUILD-FRONTEND]*"
       when: always
   script:
     # This set of instructions simply navigates to the road-trip-api and
