@@ -2,9 +2,9 @@ server:
   port : 8080
 spring:
   datasource:
-    url: jdbc:postgresql://db:5432/compose-postgres
-    username: compose-postgres
-    password: compose-postgres
+    url: jdbc:mysql://mysql.gitlab-runner.svc.cluster.local:3306/roadtrip
+    username: root
+    password: password
   jpa:
     hibernate:
       ddl-auto: update

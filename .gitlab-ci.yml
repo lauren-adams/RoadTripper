@@ -53,6 +53,19 @@ deploy-frontend:
     - kubectl apply -f road-trip-api-service.yaml
 
 # This deploys the built api image to the Kubernetes repository.
+deploy-db:
+  image:
+    name: bitnami/kubectl:latest
+    entrypoint: ['']
+  stage: deploy
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /\[DEPLOY-DB]/
+      when: always
+  script:
+    - cd kubernetes
+    - kubectl apply -f mysql.yaml
+
+# This deploys the built api image to the Kubernetes repository.
 deploy-api:
   image:
     name: bitnami/kubectl:latest
