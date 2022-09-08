@@ -54,6 +54,7 @@ deploy-frontend:
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
+    - when: always
   script:
     - cd kubernetes
     - cd road-trip-api
@@ -84,6 +85,7 @@ deploy-api:
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
+    - when: always
   script:
     - cd kubernetes
     - cd road-trip-frontend
@@ -97,6 +99,7 @@ deploy-nginx:
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
+    - when: always
   script:
     - cd kubernetes
     - kubectl apply -f nginx.yaml
@@ -110,6 +113,7 @@ deploy-ingress:
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
+    - when: always
   script:
     - cd kubernetes
     - kubectl apply -f ingress-controller.yaml
