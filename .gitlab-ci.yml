@@ -7,7 +7,9 @@ build-api:
   stage: build
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-API]/
-      when: always 
+      when: always
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
   script:
   
     # This set of instructions simply navigates to the road-trip-api and
@@ -27,8 +29,11 @@ build-api:
 build-frontend:
   stage: build
   rules:
-    - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-API]/
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
+    - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-FRONTEND]/
       when: always
+    
   script:
     # This set of instructions simply navigates to the road-trip-api and
     # road-trip-frontend folders and builds a docker image based on the
@@ -46,6 +51,9 @@ deploy-frontend:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
   script:
     - cd kubernetes
     - cd road-trip-api
@@ -61,6 +69,8 @@ deploy-db:
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[DEPLOY-DB]/
       when: always
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
   script:
     - cd kubernetes
     - kubectl apply -f mysql.yaml
@@ -71,6 +81,9 @@ deploy-api:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
   script:
     - cd kubernetes
     - cd road-trip-frontend
@@ -81,6 +94,9 @@ deploy-nginx:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
   script:
     - cd kubernetes
     - kubectl apply -f nginx.yaml
@@ -91,6 +107,9 @@ deploy-ingress:
     name: bitnami/kubectl:latest
     entrypoint: ['']
   stage: deploy
+  rules:
+    - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
+      when: never
   script:
     - cd kubernetes
     - kubectl apply -f ingress-controller.yaml
