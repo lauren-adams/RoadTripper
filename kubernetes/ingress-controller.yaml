@@ -20,7 +20,7 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: /frontend/(/|$)(.*)
+        path: /frontend(/|$)(.*)
         backend:
           service:
             name: frontend
