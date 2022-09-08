@@ -1,14 +1,19 @@
+# Set default image to podman, for docker builds. 
+# We have to use this because for some reason the official docker image does not work.
 image: quay.io/podman/stable
 
-
-
-.build-api:
+# This builds an image of the api, and pushes it to the docker repository.
+build-api:
   stage: build
+  rules:
+    - if: $CI_COMMIT_MESSAGE == "BUILD-API"
+      when: always
   script:
-# This set of instructions simply navigates to the road-trip-api and
-# road-trip-frontend folders and builds a docker image based on the
-# docker files it finds there. This assumes there is a file named
-# "Dockerfile" in each directory.
+  
+    # This set of instructions simply navigates to the road-trip-api and
+    # road-trip-frontend folders and builds a docker image based on the
+    # docker files it finds there. This assumes there is a file named
+    # "Dockerfile" in each directory.
     - cd road-trip-api
     - chmod +x gradlew
     - podman build -t road-trip-api .
@@ -17,18 +22,25 @@ image: quay.io/podman/stable
     - echo $DOCKERKEY
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-api:latest
-.build-frontend:
+
+# This builds an image of the frontend, and pushes it to the docker repository.
+build-frontend:
   stage: build
+  rules:
+    - if: $CI_COMMIT_MESSAGE == "BUILD-FRONTEND"
+      when: always
   script:
-# This set of instructions simply navigates to the road-trip-api and
-# road-trip-frontend folders and builds a docker image based on the
-# docker files it finds there. This assumes there is a file named
-# "Dockerfile" in each directory.
+    # This set of instructions simply navigates to the road-trip-api and
+    # road-trip-frontend folders and builds a docker image based on the
+    # docker files it finds there. This assumes there is a file named
+    # "Dockerfile" in each directory.
     - cd road-trip-frontend
     - podman build -t road-trip-frontend .
     - podman tag road-trip-frontend docker.io/kaase/road-trip-frontend:latest
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-frontend:latest
+
+# This deploys the built frontend image to the Kubernetes repository.
 deploy-frontend:
   image:
     name: bitnami/kubectl:latest
@@ -39,6 +51,8 @@ deploy-frontend:
     - cd road-trip-api
     - kubectl apply -f road-trip-api-deployment.yaml
     - kubectl apply -f road-trip-api-service.yaml
+
+# This deploys the built api image to the Kubernetes repository.
 deploy-api:
   image:
     name: bitnami/kubectl:latest
@@ -57,6 +71,8 @@ deploy-nginx:
   script:
     - cd kubernetes
     - kubectl apply -f nginx.yaml
+
+# This deploys the ingress controller, which regulates traffic to each service.
 deploy-ingress:
   image:
     name: bitnami/kubectl:latest
