@@ -6,7 +6,7 @@ image: quay.io/podman/stable
 build-api:
   stage: build
   rules:
-    - if: $CI_COMMIT_MESSAGE =~ '.*\[BUILD\-API\]'
+    - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-API]/
       when: always
   script:
   
