@@ -12,9 +12,7 @@ spec:
   ingressClassName: nginx
   tls:
     - hosts:
-      - "api.subjecttochange.dev"
       - "subjecttochange.dev"
-      - "www.api.subjecttochange.dev"
       secretName: tls
 
   rules:
@@ -22,13 +20,13 @@ spec:
     http:
       paths:
       - pathType: Prefix
-        path: /
+        path: /frontend
         backend:
           service:
             name: frontend
             port:
               number: 3000
-  - host: "api2.subjecttochange.dev"
+  - host: "subjecttochange.dev"
     http:
       paths:
       - pathType: Prefix
