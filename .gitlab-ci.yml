@@ -7,7 +7,7 @@ build-api:
   stage: build
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-API]/
-      when: always
+      when: always 
   script:
   
     # This set of instructions simply navigates to the road-trip-api and
