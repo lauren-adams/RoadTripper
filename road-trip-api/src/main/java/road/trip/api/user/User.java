@@ -10,8 +10,8 @@ import javax.persistence.Table;
 import lombok.Data;
 
 @Data
-@Entity
 @Table(name = User.TABLE_NAME)
+@Entity
 public class User {
     public static final String TABLE_NAME = "USER";
 

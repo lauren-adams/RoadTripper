@@ -35,6 +35,7 @@ repositories {
     mavenLocal()
     maven {
         url "http://maven.restlet.org"
+        allowInsecureProtocol = true
     }
 }
 
