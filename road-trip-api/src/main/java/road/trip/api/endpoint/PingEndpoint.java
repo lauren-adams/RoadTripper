@@ -7,9 +7,14 @@ import lombok.extern.log4j.Log4j2;
 
 @Log4j2
 @RestController
-public class TripPlannerEndpoint {
-    @GetMapping("/plan")
-    public String plan() {
-        return "this is the trip planning main page!";
+public class PingEndpoint {
+    @GetMapping("/ping")
+    public String ping() {
+        return "pong!";
+    }
+
+    @GetMapping("/memory-ping")
+    public String memoryPing() {
+        return String.format("Max available memory: %.3f MB", (Runtime.getRuntime().maxMemory() / (1024.0 * 1024.0)));
     }
 }
