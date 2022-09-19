@@ -8,9 +8,9 @@ import lombok.extern.log4j.Log4j2;
 @Log4j2
 @RestController
 public class PingEndpoint {
-    @GetMapping("/register")
+    @GetMapping("/ping")
     public String ping() {
-        return "This is the register page";
+        return "pong!";
     }
 
     @GetMapping("/memory-ping")
