@@ -23,9 +23,9 @@ spec:
         path: /frontend(/|$)(.*)
         backend:
           service:
-            name: frontend
+            name: api
             port:
-              number: 3000
+              number: 8080
   - host: "subjecttochange.dev"
     http:
       paths:
@@ -33,7 +33,7 @@ spec:
         path: /api(/|$)(.*)
         backend:
           service:
-            name: api
+            name: frontend
             port:
-              number: 8080
+              number: 3000
 ---
