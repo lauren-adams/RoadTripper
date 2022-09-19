@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class RegisterEndpoint {
     @GetMapping("/register")
-    public String ping() {
+    public String register() {
         return "register!";
     }
 
