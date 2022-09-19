@@ -1,11 +1,11 @@
-FROM docker.io/node:12 AS build
+FROM docker.io/node:14 AS build
 WORKDIR /build
 COPY . .
 
 RUN yarn install
 RUN yarn run build
 
-FROM docker.io/node:12
+FROM docker.io/node:14
 WORKDIR /app
 COPY --from=build /build .
 
