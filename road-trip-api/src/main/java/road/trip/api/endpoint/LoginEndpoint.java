@@ -12,10 +12,7 @@ public class LoginEndpoint {
         return "login!";
     }
 
-    @GetMapping("/memory-test")
-    public String memoryTest() {
-        return String.format("Max available memory: %.3f MB", (Runtime.getRuntime().maxMemory() / (1024.0 * 1024.0)));
-    }
+
     
 
 }
