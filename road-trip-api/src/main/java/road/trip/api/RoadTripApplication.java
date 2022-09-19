@@ -14,3 +14,4 @@ public class RoadTripApplication {
         SpringApplication.run(RoadTripApplication.class, args);
     }
 }
+ 
