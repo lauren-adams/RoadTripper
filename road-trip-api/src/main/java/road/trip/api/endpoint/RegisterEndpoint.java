@@ -11,4 +11,10 @@ public class RegisterEndpoint {
     public String ping() {
         return "register!";
     }
+
+    @GetMapping("/regtest)
+    public String regTest() {
+        return String.format("Max available memory: %.3f MB", (Runtime.getRuntime().maxMemory() / (1024.0 * 1024.0)));
+    }
+    
 }
