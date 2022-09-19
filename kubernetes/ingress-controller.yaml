@@ -16,6 +16,7 @@ spec:
       secretName: tls
 
   rules:
+    
   - host: "subjecttochange.dev"
     http:
       paths:
@@ -33,7 +34,7 @@ spec:
         path: /api(/|$)(.*)
         backend:
           service:
-            name: frontend
+            name: api
             port:
-              number: 3000
+              number: 8080
 ---
