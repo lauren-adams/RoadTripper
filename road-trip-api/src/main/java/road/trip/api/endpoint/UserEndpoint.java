@@ -109,6 +109,7 @@ public class UserEndpoint {
         }
     }
 
+
     /*
     example to find <something> depending on it meeting criteria
     @GetMapping("/tutorials/published")
