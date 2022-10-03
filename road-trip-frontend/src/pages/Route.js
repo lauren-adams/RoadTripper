@@ -1,16 +1,16 @@
-import React from 'react';
-import {BrowserRouter, Routes, Route} from 'react-router-dom';
+import React, {Component} from 'react';
+import {BrowserRouter, Routes, Route, Link} from 'react-router-dom';
 import Login from './login'
 import Home from './HomePage'
 
 
 
-export default function RouterConfig() {
+class RouterConfig extends Component {
 
     /*
     Here we define the route path and its corresponding components
     */
-
+render(){
     return (
         <BrowserRouter>
             <Routes>
@@ -21,3 +21,6 @@ export default function RouterConfig() {
         </BrowserRouter>
     );
 }
+
+}
+export default RouterConfig;
