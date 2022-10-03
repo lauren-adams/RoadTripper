@@ -4,6 +4,10 @@ import RouterConfig from "./Route";
 import { Link, Route, Router, Routes } from "react-router-dom"
 
 class HomePage extends React.Component {
+    //error coming in below, doesn't like link.
+    //Error says that i did not define pathname, meaning I didn't include "to", but I did
+    //And nothing online is giving any help over how to fix the issue.
+    //After getting that to work, we should have a much easier time developing the front end
 
     render(){
         return (
