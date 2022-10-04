@@ -7,3 +7,4 @@ gradlew
 gradlew.bat
 settings.gradle
 build.gradle
+road-trip-api/src/main/resources/application.properties
