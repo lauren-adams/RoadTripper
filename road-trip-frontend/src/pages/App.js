@@ -1,14 +1,19 @@
-import React, { Component } from 'react';
-import Router from './Route';
+import SignUp from "./SignUp";
+import Login from "./Login";
+import { Route, Switch, Redirect } from "react-router-dom";
 
-class App extends Component {
-    render() {
-        return (
-            <div>
-                <Router />
-            </div>
-        );
-    }
+function App() {
+    return (
+        <>
+            <Router>
+            <Switch>
+                <Route path="/login" component={Login} />
+                <Route path="/signup" component={SignUp} />
+                <Redirect from="/" to="/signup" />
+            </Switch>
+            </Router>
+        </>
+    );
 }
 
 export default App;

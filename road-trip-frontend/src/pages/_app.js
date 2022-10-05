@@ -1,3 +1,9 @@
+
+
+export default function MyApp({ Component, pageProps }) {
+    return <Component {...pageProps} />
+}
+/*
 import React from 'react';
 import { Provider } from 'react-redux';
 import { buildStore } from '../util/redux';
@@ -26,8 +32,8 @@ const RoadTripApp = ({ Component, pageProps }) => {
             </Head>
 
             <RoadTripThemeProvider>
-                {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
-                <CssBaseline />
+               */ {/* CssBaseline kickstart an elegant, consistent, and simple baseline to build upon. */}
+                /*<CssBaseline />
 
                 <Component {...pageProps} />
             </RoadTripThemeProvider>
@@ -37,4 +43,4 @@ const RoadTripApp = ({ Component, pageProps }) => {
 
 };
 
-export default RoadTripApp;
+export default RoadTripApp;*/

@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import Document, { Html, Head, Main, NextScript } from 'next/document';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import { theme } from '../util/theme';
@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
         return (
             <Html lang="en">
                 <Head>
-                    {/* PWA primary color */}
+                    {*//* PWA primary color *//*}
                     <meta name="theme-color" content={theme.palette.primary.main} />
                     <link
                         rel="stylesheet"
@@ -65,4 +65,5 @@ MyDocument.getInitialProps = async (ctx) => {
         // Styles fragment is rendered after the app and page rendering finish.
         styles: [...React.Children.toArray(initialProps.styles), sheets.getStyleElement()],
     };
-};
+
+};*/
