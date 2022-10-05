@@ -1,5 +1,6 @@
 package road.trip.api.user;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -15,7 +16,10 @@ public class UserService {
     public Optional<User> findUser(Long userId) {
         return userRepository.findById(userId);
     }
-    public List<User> findUserByEmail(String email){ return userRepository.findByEmailAddress(email); }
+    //public Optional<User> findByEmail(String email){ return userRepository.findByEmailAddress(email); }
+    public List<User> findUserByEmail(String email){
+        return userRepository.findByEmailAddress(email);
+    }
 
     public void deleteUser(Long id){ userRepository.deleteById(id); }
     public void deleteAllUsers() { userRepository.deleteAll(); }

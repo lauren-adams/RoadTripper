@@ -49,49 +49,14 @@ public class UserEndpoint {
     }
 
 
-
-
-    //Find all users based on id given(find all that contains given id) (or no id = all users)
-//    @GetMapping("/user")
-//    public ResponseEntity<List<User>> getAllUsers(@RequestParam(required = false) Long id){
-//        try {
-//            List<User> users = new ArrayList<User>();
-//            if (id == null) {
-//                userService.userRepository.findAll().forEach(users::add);
-//            } else {
-//                userService.userRepository.findByIdContaining(id).forEach(users::add);
-//            }
-//            if (users.isEmpty()) {
-//                return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-//            }
-//            return new ResponseEntity<>(HttpStatus.OK);
-//
-//        } catch (Exception e){
-//            return new ResponseEntity<>(null, HttpStatus.INTERNAL_SERVER_ERROR);
-//        }
-//    }
+    //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
+    //get all users with the supplied email address
     @GetMapping("/user")
-    public List<User> getUsersByEmail(@RequestParam(value="email", defaultValue = "") String email){
+    public List<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
         return userService.findUserByEmail(email);
     }
 
 
-    /*
-    example to find <something> depending on it meeting criteria
-    @GetMapping("/tutorials/published")
-  public ResponseEntity<List<Tutorial>> findByPublished() {
-    try {
-      List<Tutorial> tutorials = tutorialRepository.findByPublished(true);
-
-      if (tutorials.isEmpty()) {
-        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-      }
-      return new ResponseEntity<>(tutorials, HttpStatus.OK);
-    } catch (Exception e) {
-      return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-    }
-  }
-     */
 
 
 
