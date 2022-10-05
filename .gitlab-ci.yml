@@ -3,7 +3,7 @@
 image: quay.io/podman/stable 
 
 # This builds an image of the api, and pushes it to the docker repository.
-build-api:
+build-api: 
   stage: build
   rules:
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-API]/
