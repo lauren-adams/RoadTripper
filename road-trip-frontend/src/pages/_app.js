@@ -3,7 +3,7 @@ import { Provider } from 'react-redux';
 import { buildStore } from '../util/redux';
 
 import Head from 'next/head';
-import { CssBaseline } from '@material-ui/core';
+import { CssBaseline } from '@material-ui/core'; 
 import { RoadTripThemeProvider } from '../util/theme';
 
 let initialState = {};
