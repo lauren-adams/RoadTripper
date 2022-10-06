@@ -1,6 +1,11 @@
 FROM docker.io/node:16 AS build
-WORKDIR /build
-COPY . .
+ENV NODE_ENV=production
 
-RUN npm install
+WORKDIR /app
+
+COPY ["package.json", "package-lock.json*", "./"]
+
+RUN npm install --production
+
+COPY . .
 CMD ["npm", "start"]
