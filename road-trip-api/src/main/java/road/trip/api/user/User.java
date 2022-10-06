@@ -62,6 +62,12 @@ public class User {
     @Column(name = "PASSWORD")
     String password;
 
+    //Do NOT mess with this column!
+    @Column(name = "SALT")
+    String salt;
+
     @Column(name = "USER_TYPE")
     String userType;
+
+
 }

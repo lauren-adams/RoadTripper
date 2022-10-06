@@ -56,6 +56,17 @@ public class UserEndpoint {
         return userService.findUserByEmail(email);
     }
 
+    //Get the hashed password from storage, used to authenticate. It would be a good idea to limit access to this.
+    @GetMapping("/user/getPassword")
+    public String getPassword(@RequestParam(value="emailAddress", defaultValue = "") String email){
+        List<User> potentialUser = userService.findUserByEmail(email);
+        if (potentialUser.isEmpty()) {
+            return "None";
+        }
+        else {
+            return potentialUser.get(0).getPassword();
+        }
+    }
 
 
 
