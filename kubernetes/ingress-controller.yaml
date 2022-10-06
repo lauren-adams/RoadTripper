@@ -19,13 +19,6 @@ spec:
   - host: "subjecttochange.dev"
     http:
       paths:
-      - path: /
-        pathType: Exact
-        backend:
-          service:
-            name: frontend
-            port:
-              number: 3000
       - path: /api(/|$)(.*)
         pathType: Prefix
         backend:
