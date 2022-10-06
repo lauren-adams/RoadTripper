@@ -10,6 +10,9 @@ import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
 
+import bcrypt from 'bcryptjs';
+
+
 const Login = () => {
   const [data, setData] = useState({
     email: "",
@@ -23,18 +26,37 @@ const Login = () => {
     history.push('/maps');
   }
 
-  const chaeckData = (obj) => {
-    const { email, password } = obj;
-    const urlApi = `https://lightem.senatorhost.com/login-react/index.php?email=${email.toLowerCase()}&password=${password}`;
-    const api = axios
-      .get(urlApi)
-      .then((response) => response.data)
-      .then((data) => (data.ok ? logHandler() : notify("Your password or your email is wrong", "error")));
+  const checkProvidedInfo = (obj) => {
+    const email = data.email;
+    let passwordGiven = data.password;
+    console.log(email, passwordGiven);
+    let base = `https://subjecttochange.dev/api/`;
+    //let base = `http://localhost:8080/`;
+    let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
+    let passwordResult = "";
+    axios.get(urlApi).then(resp => {
+      passwordResult=resp.data;
+    });
+    //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
+    bcrypt.compare(passwordGiven, passwordResult, function(err, result) {
+      if (result) {
+        console.log("Success");
+      }
+      else {
+        console.log(":(");
+      }
+    });
+    /*
+    urlApi = base+`user/validatePassword?emailAddress=${email.toLowerCase()}&password=${passwordGivenSalted}`;
+
+    let api = axios.get(urlApi).then((response) => response.data)
+        .then((data) => (data.ok ? logHandler() : notify("Your password or your email is wrong", "error")));
     toast.promise(api, {
       pending: "Loading your data...",
       success: false,
       error: "Something went wrong!",
     });
+    */
   };
 
 
@@ -52,7 +74,7 @@ const Login = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    chaeckData(data);
+    checkProvidedInfo(data);
   };
 
   return (

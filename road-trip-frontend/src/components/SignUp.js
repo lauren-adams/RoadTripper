@@ -53,7 +53,9 @@ const SignUp = () => {
     event.preventDefault();
     if (!Object.keys(errors).length) {
       // Pushing data to database usuing PHP script
-      const urlApi = `https://subjecttochange.dev/api/user`;
+      const base = `https://subjecttochange.dev/api`
+      //const base = `http://localhost:8080`
+      const urlApi = base + `/user`;
       const pushData = async () => {
         //const responseA = axios.post(urlApi);
         const responseA = axios({
