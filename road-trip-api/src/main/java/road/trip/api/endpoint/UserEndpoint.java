@@ -15,7 +15,7 @@ import java.util.Optional;
 
 @Log4j2
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/")
 public class UserEndpoint {
     @Autowired
     private UserService userService;
