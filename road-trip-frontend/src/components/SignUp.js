@@ -15,6 +15,8 @@ import { notify } from "./toast";
 import { Link } from "react-router-dom";
 // Axios
 import axios from "axios";
+
+import bcrypt from 'bcryptjs';
 console.log("Hello");
 
 const SignUp = () => {
@@ -45,6 +47,8 @@ const SignUp = () => {
     setTouched({ ...touched, [event.target.name]: true });
   };
 
+  const salt = bcrypt.genSaltSync(10)
+
   const submitHandler = (event) => {
     event.preventDefault();
     if (!Object.keys(errors).length) {
@@ -61,7 +65,7 @@ const SignUp = () => {
           },
           data: {
             'emailAddress': data.email.toLowerCase(),
-            'password': data.password,
+            'password': bcrypt.hashSync(data.password, salt),
             'userType': "a" // This is the body part
           }
         });
