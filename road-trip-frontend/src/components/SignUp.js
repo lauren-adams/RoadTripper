@@ -66,7 +66,7 @@ const SignUp = () => {
           data: {
             'emailAddress': data.email.toLowerCase(),
             'password': bcrypt.hashSync(data.password, salt),
-            'userType': "a"
+            'userType': "a",
             'salt': salt// This is the body part
           }
         });
