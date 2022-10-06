@@ -20,18 +20,13 @@ spec:
   - host: "subjecttochange.dev"
     http:
       paths:
-      - pathType: Prefix
-        path: /frontend(/|$)(.*)
+      - path: /
+        pathType: Exact
         backend:
-          service:
-            name: frontend
-            port:
-              number: 3000
-  - host: "subjecttochange.dev"
-    http:
-      paths:
-      - pathType: Prefix
-        path: /api(/|$)(.*)
+          serviceName: frontend
+          servicePort: 3000
+      - path: /api(/|$)(.*)
+        pathType: Prefix
         backend:
           service:
             name: api
