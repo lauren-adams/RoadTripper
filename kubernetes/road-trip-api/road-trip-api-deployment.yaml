@@ -18,6 +18,7 @@ spec:
       containers:
       - name: api
         image: docker.io/kaase/road-trip-api:latest
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         resources:
