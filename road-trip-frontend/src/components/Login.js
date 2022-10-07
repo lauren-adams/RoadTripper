@@ -36,8 +36,9 @@ const Login = () => {
     let retrievedHash = "";
     console.log("First");
     axios.get(urlApi).then(function (response) {
-      console.log("Retrieved hash: ", response.toString());
       retrievedHash = response.data.password;
+      console.log("Retrieved hash: ", retrievedHash);
+
     });
     console.log("Second");
     console.log(retrievedHash.toString());
