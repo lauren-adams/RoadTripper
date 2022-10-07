@@ -58,6 +58,8 @@ deploy-frontend:
   script:
     - cd kubernetes
     - cd road-trip-api
+    - kubectl delete -f road-trip-api-deployment.yaml
+    - kubectl delete -f road-trip-api-service.yaml
     - kubectl apply -f road-trip-api-deployment.yaml
     - kubectl apply -f road-trip-api-service.yaml
 
@@ -89,6 +91,8 @@ deploy-api:
   script:
     - cd kubernetes
     - cd road-trip-frontend
+    - kubectl delete -f road-trip-frontend-deployment.yaml
+    - kubectl delete -f road-trip-frontend-service.yaml
     - kubectl apply -f road-trip-frontend-deployment.yaml
     - kubectl apply -f road-trip-frontend-service.yaml
 deploy-nginx:
