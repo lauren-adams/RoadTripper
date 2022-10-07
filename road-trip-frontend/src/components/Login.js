@@ -35,12 +35,9 @@ const Login = () => {
     let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
     let retrievedHash = "";
     console.log("First");
-    axios.get(urlApi, {
-      responseType: 'text',
-      transformResponse: [data => data],
-    }).then(function (response) {
+    axios.get(urlApi).then(function (response) {
       console.log("Retrieved hash: ", response.toString());
-      retrievedHash = response.data;
+      retrievedHash = response.data.password;
     });
     console.log("Second");
     console.log(retrievedHash.toString());
