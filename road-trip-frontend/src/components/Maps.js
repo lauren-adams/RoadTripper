@@ -15,6 +15,7 @@ import { notify } from "./toast";
 import { Link } from "react-router-dom";
 // Axios
 import axios from "axios";
+import { useHistory } from "react-router-dom";
 
 const Maps = () => {
     const [data, setData] = useState({
@@ -23,11 +24,13 @@ const Maps = () => {
         date: "",
     });
 
+    const history = useHistory();
+
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
     useEffect(() => {
-        setErrors(validate(data, "signUp"));
+        //setErrors(validate(data, "signUp"));
     }, [data, touched]);
 
     const changeHandler = (event) => {
@@ -44,7 +47,8 @@ const Maps = () => {
 
     const submitHandler = (event) => {
         event.preventDefault();
-        if (!Object.keys(errors).length) {
+        history.push("/home");
+        /*if (!Object.keys(errors).length) {
             // Pushing data to database usuing PHP script
             const urlApi = `https://lightem.senatorhost.com/login-react/index.php?email=${data.email.toLowerCase()}&password=${data.password}&register=true`;
             const pushData = async () => {
@@ -70,7 +74,7 @@ const Maps = () => {
                 confirmPassword: true,
                 IsAccepted: false,
             });
-        }
+        }*/
     };
 
     return (
@@ -80,21 +84,18 @@ const Maps = () => {
                 <div>
                     <div className={errors.name && touched.name ? styles.unCompleted : !errors.name && touched.name ? styles.completed : undefined}>
                         <input type="text" name="name" value={data.name} placeholder="Start Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
-                        <img src={userIcon} alt="" />
                     </div>
                     {errors.name && touched.name && <span className={styles.error}>{errors.name}</span>}
                 </div>
                 <div>
                     <div className={errors.email && touched.email ? styles.unCompleted : !errors.email && touched.email ? styles.completed : undefined}>
                         <input type="text" name="email" value={data.email} placeholder="End Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
-                        <img src={emailIcon} alt="" />
                     </div>
                     {errors.email && touched.email && <span className={styles.error}>{errors.email}</span>}
                 </div>
                 <div>
                     <div className={errors.date && touched.date ? styles.unCompleted : !errors.date && touched.date ? styles.completed : undefined}>
                         <input type="text" name="date" value={data.date} placeholder="Date" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
-                        <img src={emailIcon} alt="" />
                     </div>
                     {errors.date && touched.date && <span className={styles.error}>{errors.date}</span>}
                 </div>
