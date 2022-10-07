@@ -59,7 +59,7 @@ public class User {
     @Column(name = "EMAIL_ADDRESS")
     String emailAddress;
 
-    @Column(name = "PASSWORD", columnDefinition = "BINARY(61)")
+    @Column(name = "PASSWORD", columnDefinition = "VARCHAR(255)")
     String password;
 
     @Column(name = "USER_TYPE")
