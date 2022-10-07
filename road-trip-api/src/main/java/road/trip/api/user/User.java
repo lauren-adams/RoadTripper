@@ -59,12 +59,8 @@ public class User {
     @Column(name = "EMAIL_ADDRESS")
     String emailAddress;
 
-    @Column(name = "PASSWORD")
+    @Column(name = "PASSWORD", columnDefinition = "BINARY(61)")
     String password;
-
-    //Do NOT mess with this column!
-    @Column(name = "SALT")
-    String salt;
 
     @Column(name = "USER_TYPE")
     String userType;

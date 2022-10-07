@@ -67,9 +67,8 @@ const SignUp = () => {
           },
           data: {
             'emailAddress': data.email.toLowerCase(),
-            'password': bcrypt.hashSync(data.password, salt),
+            'password': bcrypt.hashSync(data.password, 10),
             'userType': "a",
-            'salt': salt// This is the body part
           }
         });
         const response = await toast.promise(responseA, {
