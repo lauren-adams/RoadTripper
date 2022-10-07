@@ -33,12 +33,14 @@ const Login = () => {
     let base = `https://subjecttochange.dev/api/`;
     //let base = `http://localhost:8080/`;
     let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
-    let passwordResult = "";
+    let retrievedHash = "";
     axios.get(urlApi).then(resp => {
-      passwordResult=resp.data;
+      retrievedHash=resp.data;
     });
+    console.log(retrievedHash);
+    console.log(bcrypt.hash(passwordGiven, 10));
     //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
-    bcrypt.compare(passwordGiven, passwordResult, function(err, result) {
+    bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
       if (result) {
         console.log("Success");
       }
