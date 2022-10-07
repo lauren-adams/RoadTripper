@@ -62,7 +62,7 @@ public class UserEndpoint {
     public String getPassword(@RequestParam(value="emailAddress") String email){
         List<User> potentialUser = userService.findUserByEmail(email);
         if (potentialUser.isEmpty()) {
-            return "None";
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
         }
         else {
             return potentialUser.get(0).getPassword();
