@@ -65,7 +65,7 @@ public class UserEndpoint {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
         }
         else {
-            return "{password: \""+potentialUser.get(0).getPassword()+"\"}";
+            return "{\"password\": \""+potentialUser.get(0).getPassword()+"\"}";
         }
     }
 
