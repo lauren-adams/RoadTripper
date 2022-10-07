@@ -34,11 +34,16 @@ const Login = () => {
     //let base = `http://localhost:8080/`;
     let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
     let retrievedHash = "";
-    axios.get(urlApi).then(resp => {
-      retrievedHash=resp.data;
+    console.log("First");
+    axios.get(urlApi, {
+      responseType: 'text',
+      transformResponse: [data => data],
+    }).then(function (response) {
+      console.log(response);
+      retrievedHash = response;
     });
+    console.log("Second");
     console.log(retrievedHash);
-    console.log(bcrypt.hash(passwordGiven, 10));
     //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
     bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
       if (result) {
