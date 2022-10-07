@@ -69,17 +69,6 @@ public class UserEndpoint {
         }
     }
 
-    //Get the salt for the password.
-    @GetMapping("/user/getSalt")
-    public String getSalt(@RequestParam(value="emailAddress") String email){
-        List<User> potentialUser = userService.findUserByEmail(email);
-        if (potentialUser.isEmpty()) {
-            return "None";
-        }
-        else {
-            return potentialUser.get(0).getSalt();
-        }
-    }
 
     //Get the salt for the password.
     @GetMapping("/user/validatePassword")
