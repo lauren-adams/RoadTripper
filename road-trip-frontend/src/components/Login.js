@@ -35,22 +35,31 @@ const Login = () => {
     let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
     let retrievedHash = "";
     console.log("First");
-    axios.get(urlApi).then(function (response) {
+    const pushData = async () => {
+      const responseA = axios.get(urlApi);
+      const response = await toast.promise(responseA, {
+        pending: "Check your data",
+        success: "Checked!",
+        error: "Something went wrong!",
+      });
       retrievedHash = response.data.password;
-      console.log("Retrieved hash: ", retrievedHash);
+      //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
+      bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
+        if (result) {
+          console.log("Success");
+          notify("Success, pimp. Redirecting you.")
+          window.sessionStorage.setItem("loginToken", passwordGiven);
 
-    });
-    console.log("Second");
-    console.log(retrievedHash.toString());
-    //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
-    bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
-      if (result) {
-        console.log("Success");
-      }
-      else {
-        console.log(":(");
-      }
-    });
+
+        }
+        else {
+          console.log(":(");
+          notify("Incorrect login")
+        }
+      });
+    };
+    pushData();
+
     /*
     urlApi = base+`user/validatePassword?emailAddress=${email.toLowerCase()}&password=${passwordGivenSalted}`;
 
