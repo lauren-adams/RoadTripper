@@ -9,6 +9,8 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
+import UserContext from "./UserContext";
+import { useContext } from 'react';
 
 import bcrypt from 'bcryptjs';
 
@@ -20,10 +22,11 @@ const Login = () => {
   });
   const history = useHistory()
   const [touched, setTouched] = useState({});
+  const userCtx = useContext(UserContext);
 
   const logHandler = () => {
     notify("You login to your account successfully", "success")
-    history.push('/maps');
+    history.push('/home');
   }
 
   const checkProvidedInfo = (obj) => {
@@ -49,6 +52,8 @@ const Login = () => {
           console.log("Success");
           notify("Success, pimp. Redirecting you.")
           window.sessionStorage.setItem("loginToken", passwordGiven);
+          logHandler();
+          userCtx.setMyUser( "user", email);
 
 
         }
