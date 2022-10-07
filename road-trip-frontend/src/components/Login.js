@@ -39,11 +39,11 @@ const Login = () => {
       responseType: 'text',
       transformResponse: [data => data],
     }).then(function (response) {
-      console.log(response);
-      retrievedHash = response;
+      console.log("Retrieved hash: ", response.toString());
+      retrievedHash = response.data;
     });
     console.log("Second");
-    console.log(retrievedHash);
+    console.log(retrievedHash.toString());
     //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
     bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
       if (result) {
