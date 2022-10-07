@@ -1,7 +1,7 @@
 package road.trip.api.trip;
 
 import lombok.Data;
-import road.trip.api.user.User;
+import road.trip.api.Stop;
 
 import javax.persistence.*;
 
@@ -10,21 +10,74 @@ import javax.persistence.*;
 @Entity
 public class Trip {
     public static final String TABLE_NAME = "TRIP";
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Long getUserID() {
+        return userID;
+    }
+
+    public void setUserID(Long userID) {
+        this.userID = userID;
+    }
+
+    public String getStartLoc() {
+        return startLoc;
+    }
+
+    public void setStartLoc(String startLoc) {
+        this.startLoc = startLoc;
+    }
+
+    public String getEndLoc() {
+        return endLoc;
+    }
+
+    public void setEndLoc(String endLoc) {
+        this.endLoc = endLoc;
+    }
+
+    public List<Stops> getStopList() {
+        return stopList;
+    }
+
+    public void setStopList(List<Stops> stopList) {
+        this.stopList = stopList;
+    }
+
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
     @SequenceGenerator(
             name = TABLE_NAME + "_GENERATOR",
             sequenceName = TABLE_NAME + "_SEQUENCE"
     )
-    @Column(name = "USER_ID")
+    @Column(name = "TRIP_ID")
     Long id;
 
+    @Column(name = "USER_ID")
+    Long userID;
+
+
     @Column(name = "START_LOCATION")
-    String emailAddress;
+    String startLoc;
 
-    @Column(name = "PASSWORD", columnDefinition = "VARCHAR(255)")
-    String password;
+    @Column(name = "END_LOCATION")
+    String endLoc;
 
-    @Column(name = "STOP_LOCATION")
-    String userType;
+    @ManyToMany(fetch = FetchType.EAGER,
+            cascade = {
+                    CascadeType.PERSIST,
+                    CascadeType.MERGE
+            })
+    @JoinTable(name = "Stop")
+    List<Stops> stopList;
+
+
+
 }
