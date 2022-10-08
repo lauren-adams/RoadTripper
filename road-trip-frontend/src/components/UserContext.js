@@ -28,10 +28,10 @@ export function UserContextProvider(props) {
         });
     }
 
-    function setUser(username, email){
+    function setUser(username, email, log){
             setUserName(username);
             setUserEmail(email);
-            setLoggedIn(true);
+            setLoggedIn(log);
             return 0;
     }
 

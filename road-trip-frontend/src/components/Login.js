@@ -24,8 +24,11 @@ const Login = () => {
   const [touched, setTouched] = useState({});
   const userCtx = useContext(UserContext);
 
-  const logHandler = () => {
+  const logHandler = async () => {
     notify("You login to your account successfully", "success")
+    //    //https://subjecttochange.dev/api/user?emailAddress=g@g.com
+    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email);
+    console.log(response.data);
     history.push('/home');
   }
 
@@ -53,7 +56,7 @@ const Login = () => {
           notify("Success, pimp. Redirecting you.")
           window.sessionStorage.setItem("loginToken", passwordGiven);
           logHandler();
-          userCtx.setMyUser( "user", email);
+          userCtx.setMyUser( "user", email, true);
 
 
         }
