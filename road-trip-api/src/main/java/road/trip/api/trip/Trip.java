@@ -1,9 +1,10 @@
 package road.trip.api.trip;
 
 import lombok.Data;
-import road.trip.api.Stop;
+import road.trip.api.stop.Stop;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Data
 @Table(name = Trip.TABLE_NAME)
@@ -43,11 +44,11 @@ public class Trip {
         this.endLoc = endLoc;
     }
 
-    public List<Stops> getStopList() {
+    public List<Stop> getStopList() {
         return stopList;
     }
 
-    public void setStopList(List<Stops> stopList) {
+    public void setStopList(List<Stop> stopList) {
         this.stopList = stopList;
     }
 
@@ -76,5 +77,5 @@ public class Trip {
                     CascadeType.MERGE
             })
     @JoinTable(name = "Stop")
-    List<Stops> stopList;
+    List<Stop> stopList;
 }

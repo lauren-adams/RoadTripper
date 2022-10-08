@@ -58,6 +58,7 @@ const Home = () => {
 
             </nav>
             <p>welcome {userCtx.username} at {userCtx.email}</p>
+
         </div>
 
     );

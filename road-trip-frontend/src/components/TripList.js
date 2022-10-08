@@ -1,10 +1,11 @@
 import React from "react";
 import TripItem from './TripItem';
 
-const tripArr = ['trip1', 'trip2', 'trip3'];  // for test use
+const tripArr = [{tripName: 'test21',
+                    starting: 'asdsa'}, 'trip2', 'trip3'];  // for test use
 
 // the temp function for print the trip name
-const TripList = tripArr => {
+const TripList = () => {
     return(
         <>
             <h3>

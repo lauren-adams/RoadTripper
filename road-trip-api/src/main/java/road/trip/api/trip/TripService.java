@@ -18,8 +18,8 @@ public class TripService{
 
     public void deleteAllTrip() { tripRepository.deleteAll(); }
 
-    public Optional<Trip> findTripByID(){return tripRepository.findByID(Long id);}
+    public Optional<Trip> findTripByID(Long id){return tripRepository.findById(id);}
 
-    public Optional<Trip> findTripByUserID(){return tripRepository.findByUserID(Long userID)}
+    public List<Trip> findTripByUserID(Long userId){return tripRepository.findByUserId(userId); }
 
 }

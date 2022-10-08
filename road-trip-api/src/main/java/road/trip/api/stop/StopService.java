@@ -16,7 +16,7 @@ public class StopService{
 
     public void deleteStop(Long id){ stopRepository.deleteById(id);}
 
-    public void deleteAllStop() { tripRepository.deleteAll(); }
+    public void deleteAllStop() { stopRepository.deleteAll(); }
 
-    public Optional<Stop> findStopByID(){return stopRepository.findByID(Long id);}
+    public Optional<Stop> findStopByID(Long id){return stopRepository.findById(id);}
 }
