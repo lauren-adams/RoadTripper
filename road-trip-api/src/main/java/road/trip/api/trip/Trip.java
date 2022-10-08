@@ -77,7 +77,4 @@ public class Trip {
             })
     @JoinTable(name = "Stop")
     List<Stops> stopList;
-
-
-
 }
