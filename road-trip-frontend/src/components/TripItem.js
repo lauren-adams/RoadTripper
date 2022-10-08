@@ -30,22 +30,6 @@ const TripItem = props => {
         viewMode.display = "none"
     }
 
-    // TODO: the temp function for print the trip name
-    function printList(passInValue) {
-        return(
-            <>
-                <ul>
-                    {passInValue.map((tripp) => (tripName(tripp)))}
-                </ul>
-            </>
-        )
-    }
-
-    // TODO: call this function to print name
-    function tripName(props) {
-        return(<li>{props.name}</li>)
-    }
-
     return (
         <div>hello</div>
     );

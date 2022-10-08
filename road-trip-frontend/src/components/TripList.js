@@ -1,17 +1,43 @@
+import React from "react";
 import TripItem from './TripItem';
 
-const TripList = props => {
+const tripArr = ['trip1', 'trip2', 'trip3'];  // for test use
 
+// the temp function for print the trip name
+const TripList = tripArr => {
+    return(
+        <>
+            <h3>
+                Trips
+            </h3>
+            <ul>
+                {tripArr.map((tripp) => (tripName(tripp)))}
+            </ul>
+        </>
+    )
+}
 
-    return (
-        <ul>
-            {props.trips.map(trip => (
-                <TripItem key={trip.id} trip={trip} handleChangeProps={props.handleChangeProps}
-                deleteTripProps={props.deleteTripProps} setUpdate={props.setUpdate} />
-            ))}
-        </ul>
-    );
-    //Should call <TripItem /> object many times in list
-};
+// call this function to print name
+function tripName(props) {
+    return(
+        <li>{props}</li>
+    )
+}
+
+// Commented to test if I can print trips
+
+// const TripList = props => {
+//
+//
+//     return (
+//         <ul>
+//             {props.trips.map(trip => (
+//                 <TripItem key={trip.id} trip={trip} handleChangeProps={props.handleChangeProps}
+//                 deleteTripProps={props.deleteTripProps} setUpdate={props.setUpdate} />
+//             ))}
+//         </ul>
+//     );
+//     //Should call <TripItem /> object many times in list
+// };
 
 export default TripList;
