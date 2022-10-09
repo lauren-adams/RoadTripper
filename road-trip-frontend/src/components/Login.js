@@ -27,8 +27,9 @@ const Login = () => {
   const logHandler = async () => {
     notify("You login to your account successfully", "success")
     //    //https://subjecttochange.dev/api/user?emailAddress=g@g.com
-    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email);
-    console.log(response.data);
+    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email);console.log(response.data[0].id);
+    userCtx.setMyUser(response.data[0].username, data.email, true);
+    userCtx.setId(response.data[0].id);
 
     history.push('/home');
   }

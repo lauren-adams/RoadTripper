@@ -37,7 +37,7 @@ const Home = () => {
                     <div className="navbar-nav ml-auto">
                         <li className="nav-item">
                             <Link to={"/profile"} className="nav-link">
-                                {userCtx.email}
+                                {userCtx.username}
                             </Link>
                         </li>
                         <li className="nav-item">
@@ -57,7 +57,7 @@ const Home = () => {
                 )}
 
             </nav>
-            <p>welcome {userCtx.username} at {userCtx.email}</p>
+            <p>welcome {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
 
         </div>
 

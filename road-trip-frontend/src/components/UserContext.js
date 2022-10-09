@@ -6,9 +6,11 @@ const UserContext = createContext({
     addTrip: (favoriteMeetup) => {},
     removeFavorite: (meetupId) => {},
     setMyUser: (username,email) => {},
+    setId: (id) => {},
     username: "",
     email: "",
     isLoggedIn: false,
+    id: ""
 
 });
 
@@ -16,6 +18,7 @@ export function UserContextProvider(props) {
     const [userTrips, setUserTrips] = useState([]);
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [idd, setIdd] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
 
     function addTripHandler(favoriteMeetup) {
@@ -34,6 +37,10 @@ export function UserContextProvider(props) {
             setLoggedIn(log);
             return 0;
     }
+    function setId(id){
+        setIdd(id);
+        return 0;
+    }
 
     function isLoggedIn() {
         return loggedIn;
@@ -46,8 +53,10 @@ export function UserContextProvider(props) {
         addTrip: addTripHandler,
         removeTrip: removeTripHandler,
         setMyUser: setUser,
+        setId: setId,
         username: userName,
         email: userEmail,
+        id: idd,
         isLoggedIn: loggedIn
     };
 
