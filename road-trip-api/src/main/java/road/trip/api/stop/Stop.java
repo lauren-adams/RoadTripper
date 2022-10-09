@@ -19,6 +19,9 @@ public class Stop {
     @Column(name = "STOP_ID")
     Long id;
 
+    @Column(name = "T_ID")
+    String tripId;
+
     @Column(name = "LOCATION")
     String stopLoc;
 
