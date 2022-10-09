@@ -7,6 +7,8 @@ import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class StopService{
     @Autowired
@@ -21,4 +23,6 @@ public class StopService{
     public Optional<Stop> findStopByID(Long id){return stopRepository.findById(id);}
 
     public List<Stop> findStopsByTripId(String tripId){ return stopRepository.findByTripId(tripId); }
+
+    public void deleteByTripId(String id){ stopRepository.deleteByTripId(id); }
 }
