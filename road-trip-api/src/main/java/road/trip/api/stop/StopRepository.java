@@ -16,4 +16,9 @@ public interface StopRepository extends JpaRepository<Stop, Long>, JpaSpecificat
 
     List<Stop> findByTripId(String tripId);
 
+    //List<Stop> findByTripId(Long id);
+    void deleteByTripId(String id);
+
+
+
 }

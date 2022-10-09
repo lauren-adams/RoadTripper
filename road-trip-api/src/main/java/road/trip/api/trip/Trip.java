@@ -45,14 +45,6 @@ public class Trip {
         this.endLoc = endLoc;
     }
 
-    public List<Stop> getStopList() {
-        return stopList;
-    }
-
-    public void setStopList(List<Stop> stopList) {
-        this.stopList = stopList;
-    }
-
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
     @SequenceGenerator(
@@ -81,13 +73,6 @@ public class Trip {
     @Column(name = "RATING")
     Integer rating;
 
-    @ManyToMany(fetch = FetchType.EAGER,
-            cascade = {
-                    CascadeType.PERSIST,
-                    CascadeType.MERGE
-            })
-    @JoinTable(name = "Stop")
-    List<Stop> stopList;
 
 
 }
