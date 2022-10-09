@@ -16,11 +16,12 @@ import { Link } from "react-router-dom";
 // Axios
 import axios from "axios";
 import { useHistory } from "react-router-dom";
+import bcrypt from "bcryptjs";
 
 const Maps = () => {
     const [data, setData] = useState({
-        name: "",
-        email: "",
+        start: "",
+        end: "",
         date: "",
     });
 
@@ -48,6 +49,27 @@ const Maps = () => {
     const submitHandler = (event) => {
         event.preventDefault();
         history.push("/home");
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/user`;
+        console.log(data.start + data.end + data.date);
+        const pushData = async () => {
+            //const responseA = axios.post(urlApi);
+            const responseA = axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                data: {
+                    'start': data.email.toLowerCase(),
+                    'end': bcrypt.hashSync(data.password, 10),
+                    'date': "a",
+                }
+            });
+            pushData();
+        }
+
         /*if (!Object.keys(errors).length) {
             // Pushing data to database usuing PHP script
             const urlApi = `https://lightem.senatorhost.com/login-react/index.php?email=${data.email.toLowerCase()}&password=${data.password}&register=true`;
@@ -82,16 +104,16 @@ const Maps = () => {
             <form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
                 <h2>Plan Trip</h2>
                 <div>
-                    <div className={errors.name && touched.name ? styles.unCompleted : !errors.name && touched.name ? styles.completed : undefined}>
-                        <input type="text" name="name" value={data.name} placeholder="Start Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                    <div className={errors.start && touched.start ? styles.unCompleted : !errors.start && touched.start ? styles.completed : undefined}>
+                        <input type="text" name="start" value={data.start} placeholder="Start Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
                     </div>
-                    {errors.name && touched.name && <span className={styles.error}>{errors.name}</span>}
+                    {errors.start && touched.start && <span className={styles.error}>{errors.start}</span>}
                 </div>
                 <div>
-                    <div className={errors.email && touched.email ? styles.unCompleted : !errors.email && touched.email ? styles.completed : undefined}>
-                        <input type="text" name="email" value={data.email} placeholder="End Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                    <div className={errors.end && touched.end ? styles.unCompleted : !errors.end && touched.end ? styles.completed : undefined}>
+                        <input type="text" name="end" value={data.end} placeholder="End Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
                     </div>
-                    {errors.email && touched.email && <span className={styles.error}>{errors.email}</span>}
+                    {errors.end && touched.end && <span className={styles.error}>{errors.end}</span>}
                 </div>
                 <div>
                     <div className={errors.date && touched.date ? styles.unCompleted : !errors.date && touched.date ? styles.completed : undefined}>

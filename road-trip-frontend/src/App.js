@@ -1,7 +1,7 @@
 import SignUp from "./components/SignUp";
 import Login from "./components/Login";
 import Maps from "./components/Maps";
-import Trip from "./components/Trip";
+import Trp from "./components/Trp";
 import Home from "./components/Home";
 import Profile from "./components/Profile";
 import { Route, Switch, Redirect, NavLink } from "react-router-dom";
@@ -14,7 +14,7 @@ function App() {
         <Route path="/login" component={Login} />
         <Route path="/signup" component={SignUp} />
           <Route path="/maps" component={Maps} />
-          <Route path="/view-trips" component={Trip} />
+          <Route path="/view-trips" component={Trp} />
           <Route path="/home" component={Home} />
         <Route path="/profile" component={Profile} />
         <Redirect from="/" to="/home" />
