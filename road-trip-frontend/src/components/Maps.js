@@ -71,7 +71,7 @@ const Maps = () => {
                 data: {
                     'startLoc': data.start,
                     'endLoc': data.end,
-                    'date': data.date,
+                    'startDate': data.date,
                     'userID': userCtx.id,
                     'rating': data.rating
                 }

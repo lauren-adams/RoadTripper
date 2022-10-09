@@ -10,10 +10,10 @@ function TrpList(props) {
                 <TrpItem
                     key={meetup.id}
                     id={meetup.id}
-                    image={meetup.image}
-                    title={meetup.title}
-                    address={meetup.address}
-                    description={meetup.description}
+                    startLoc={meetup.startLoc}
+                    endLoc={meetup.endLoc}
+                    date={meetup.startDate}
+                    rating={meetup.rating}
                 />
             ))}
         </ul>
