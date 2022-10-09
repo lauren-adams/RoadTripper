@@ -12,6 +12,6 @@ public interface TripRepository extends JpaRepository<Trip, Long>, JpaSpecificat
     Optional<Trip> findById(Long id);
     List<Trip> findByUserID(Long userID);
 
-    void deleteById(Long id);
+    void deleteById(Long id); 
 
 }
