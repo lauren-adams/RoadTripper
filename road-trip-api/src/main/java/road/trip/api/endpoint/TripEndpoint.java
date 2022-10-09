@@ -15,6 +15,8 @@ public class TripEndpoint {
 
     @Autowired
     private TripService tripService;
+    @PostMapping("/trip")
+    public Trip saveTrip(@RequestBody Trip trip){ return tripService.saveTrip(trip); }
 
     //get a trip by id
     @GetMapping("/trip/{id}")
@@ -23,7 +25,11 @@ public class TripEndpoint {
         return trip.orElse(null);
     }
 
-    @DeleteMapping("/user/{id}")
+    @DeleteMapping("/trip/{id}")
     public void deleteTrip(@PathVariable("id") Long id){ tripService.deleteTrip(id); }
-    
+
+    @DeleteMapping("/trip")
+    public void deleteAllTrips(){ tripService.deleteAllTrip(); }
+
+    //@GetMapping()
 }

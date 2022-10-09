@@ -75,6 +75,9 @@ public class Trip {
     @Column(name = "DATE")
     Date date;
 
+    @Column(name = "RATING")
+    Integer rating;
+
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
                     CascadeType.PERSIST,
@@ -82,4 +85,6 @@ public class Trip {
             })
     @JoinTable(name = "Stop")
     List<Stop> stopList;
+
+
 }

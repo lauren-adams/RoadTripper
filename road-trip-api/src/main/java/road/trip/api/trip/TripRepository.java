@@ -10,7 +10,7 @@ import java.util.Optional;
 @Repository
 public interface TripRepository extends JpaRepository<Trip, Long>, JpaSpecificationExecutor{
     Optional<Trip> findById(Long id);
-    List<Trip> findByUserId(Long userID);
+    List<Trip> findByUserID(Long userID);
 
     void deleteById(Long id);
 
