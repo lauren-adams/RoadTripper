@@ -17,7 +17,7 @@ function Trp() {
     useEffect(() => {
         setIsLoading(true);
         fetch(
-            'https://react-getting-started-48dec-default-rtdb.firebaseio.com/meetups.json'
+            'https://subjecttochange.dev/api/trip?userId=' + userCtx.id
         )
             .then((response) => {
                 return response.json();

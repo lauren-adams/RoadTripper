@@ -74,7 +74,7 @@ const Profile = () => {
                         'emailAddress': data.email.toLowerCase(),
                         'password': bcrypt.hashSync(data.password, 10),
                         'userType': "a",
-                        'username': data.username
+                        'username': data.name
                     }
                 });
                 const response = await toast.promise(responseA, {
@@ -109,7 +109,7 @@ const Profile = () => {
                 <h2>Profile</h2>
                 <div>
                     <div className={errors.name && touched.name ? styles.unCompleted : !errors.name && touched.name ? styles.completed : undefined}>
-                        <input type="text" name="name" value={userCtx.name} placeholder="Name" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                        <input type="text" name="name" value={userCtx.username} placeholder="Name" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
                         <img src={userIcon} alt="" />
                     </div>
                     {errors.name && touched.name && <span className={styles.error}>{errors.name}</span>}

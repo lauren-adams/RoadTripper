@@ -17,18 +17,25 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useHistory } from "react-router-dom";
 import bcrypt from "bcryptjs";
+import { useContext } from 'react';
+import UserContext from "./UserContext";
+
+
+
 
 const Maps = () => {
     const [data, setData] = useState({
         start: "",
         end: "",
         date: "",
+        rating: 0
     });
 
     const history = useHistory();
 
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
+    const userCtx = useContext(UserContext);
 
     useEffect(() => {
         //setErrors(validate(data, "signUp"));
@@ -50,7 +57,7 @@ const Maps = () => {
         event.preventDefault();
         history.push("/home");
         const base = `https://subjecttochange.dev/api`
-        const urlApi = base + `/user`;
+        const urlApi = base + `/trip`;
         console.log(data.start + data.end + data.date);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
@@ -62,9 +69,11 @@ const Maps = () => {
                     'Access-Control-Allow-Origin': '*'
                 },
                 data: {
-                    'start': data.email.toLowerCase(),
-                    'end': bcrypt.hashSync(data.password, 10),
-                    'date': "a",
+                    'startLoc': data.start,
+                    'endLoc': data.end,
+                    'date': data.date,
+                    'userID': userCtx.id,
+                    'rating': data.rating
                 }
             });
             pushData();
@@ -120,6 +129,12 @@ const Maps = () => {
                         <input type="text" name="date" value={data.date} placeholder="Date" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
                     </div>
                     {errors.date && touched.date && <span className={styles.error}>{errors.date}</span>}
+                </div>
+                <div>
+                    <div className={errors.rating && touched.rating ? styles.unCompleted : !errors.rating && touched.rating ? styles.completed : undefined}>
+                        <input type="text" name="rating" value={data.rating} placeholder="Rating" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                    </div>
+                    {errors.rating && touched.rating && <span className={styles.error}>{errors.rating}</span>}
                 </div>
 
                 <div>
