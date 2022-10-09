@@ -25,4 +25,5 @@ public class TripEndpoint {
 
     @DeleteMapping("/user/{id}")
     public void deleteTrip(@PathVariable("id") Long id){ tripService.deleteTrip(id); }
+    
 }
