@@ -15,6 +15,7 @@ function getTrips(){
     return []
     //return trips for user or empty i hope
 }
+
 const Trip = () => {
     const [trips, setTrips] = useState(getTrips())
 
