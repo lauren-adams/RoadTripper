@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.*;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
 
+import java.util.List;
+
 
 @Log4j2
 @RestController
@@ -31,5 +33,8 @@ public class TripEndpoint {
     @DeleteMapping("/trip")
     public void deleteAllTrips(){ tripService.deleteAllTrip(); }
 
-    //@GetMapping()
+    @GetMapping("/trip")
+    public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId){
+        return tripService.findTripByUserID(userId);
+    }
 }

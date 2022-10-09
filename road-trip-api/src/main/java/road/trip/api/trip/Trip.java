@@ -1,17 +1,17 @@
 package road.trip.api.trip;
 
 import lombok.Data;
+import org.springframework.context.annotation.Primary;
 import road.trip.api.stop.Stop;
 
 import javax.persistence.*;
-import java.util.Date;
 import java.util.List;
 
 @Data
 @Table(name = Trip.TABLE_NAME)
 @Entity
 public class Trip {
-    public static final String TABLE_NAME = "TRIP";
+    public static final String TABLE_NAME = "TRIPS";
 
     public Long getId() {
         return id;
@@ -21,11 +21,11 @@ public class Trip {
         this.id = id;
     }
 
-    public Long getUserID() {
+    public String getUserID() {
         return userID;
     }
 
-    public void setUserID(Long userID) {
+    public void setUserID(String userID) {
         this.userID = userID;
     }
 
@@ -62,8 +62,11 @@ public class Trip {
     @Column(name = "TRIP_ID")
     Long id;
 
-    @Column(name = "USER_ID")
-    Long userID;
+
+
+    @Column(name="U_ID")
+    String userID;
+
 
 
     @Column(name = "START_LOCATION")
@@ -72,8 +75,8 @@ public class Trip {
     @Column(name = "END_LOCATION")
     String endLoc;
 
-    @Column(name = "DATE")
-    Date date;
+    @Column(name = "START_DATE")
+    String startDate;
 
     @Column(name = "RATING")
     Integer rating;

@@ -20,6 +20,6 @@ public class TripService{
 
     public Optional<Trip> findTripByID(Long id){return tripRepository.findById(id);}
 
-    public List<Trip> findTripByUserID(Long userId){return tripRepository.findByUserID(userId); }
+    public List<Trip> findTripByUserID(String userId){ return tripRepository.findByUserID(userId); }
 
 }
