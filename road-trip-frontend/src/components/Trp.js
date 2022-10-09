@@ -49,15 +49,27 @@ function Trp() {
             </section>
         );
     }
+    if (userCtx.isLoggedIn) {
 
     return (
         <div>
-        <section>
-            <h1>Saved Trips</h1>
-            <TrpList trips={loadedTrips} />
-        </section>
-    <Link to="/home">Home</Link></div>
+            <section>
+                <h1>Saved Trips</h1>
+                <TrpList trips={loadedTrips}/>
+            </section>
+            <Link to="/home">Home</Link></div>
     );
+} else {
+        return (
+            <div>
+                <section>
+                    <h1>Saved Trips</h1>
+                    <p> log in to be able to save trips</p>
+                </section>
+                <Link to="/home">Home</Link></div>
+        );
+    }
+
 }
 
 export default Trp;

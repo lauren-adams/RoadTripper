@@ -8,6 +8,7 @@ import { Route, Switch, Redirect, NavLink } from "react-router-dom";
 import TripList from "./components/TripList";
 import TripItem from "./components/TripItem";
 import Trp from "./components/Trp";
+import EditTrip from "./components/EditTrip";
 
 function App() {
 
@@ -22,6 +23,7 @@ function App() {
         <Route path="/test" component={TripItem} />
         <Route path="/profile" component={Profile} />
         <Route path="/trp" component={Trp} />
+        <Route path="/edit-trip" component={EditTrip} />
         <Redirect from="/" to="/home" />
       </Switch>
     </>

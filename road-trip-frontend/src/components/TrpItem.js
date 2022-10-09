@@ -3,15 +3,34 @@ import { useContext } from 'react';
 
 import classes from './TripItem.module.css';
 import UserContext from "./UserContext";
+import { useHistory } from "react-router-dom";
 
 function TrpItem(props) {
     const userCtx = useContext(UserContext);
     console.log(props);
+    const history = useHistory();
 
     //const itemIsFavorite = favoritesCtx.itemIsFavorite(props.id);
 
     function toggleFavoriteStatusHandler() {
         console.log("DELETE SOON");
+    }
+
+    function editHandler() {
+        console.log("Edit");
+        console.log(props.startLoc, props.endLoc, props.date, props.rating, props.id)
+        userCtx.setCurTrip(props.startLoc, props.endLoc, props.date, props.rating, props.id);
+        console.log(userCtx.start + userCtx.tid + userCtx.end + userCtx.rating + userCtx.date);
+        history.push("/edit-trip");
+    }
+
+    function addStopHandler() {
+        console.log("add stop");
+    }
+
+
+    function viewStopHandler() {
+        console.log("view stop");
     }
     //[{"id":1,"userID":"1","startLoc":"your","endLoc":"NO","startDate":"today","rating":5,"stopList":[]},
     return (
@@ -28,6 +47,15 @@ function TrpItem(props) {
                 <div className={classes.actions}>
                     <button onClick={toggleFavoriteStatusHandler}>
                         {'Delete'}
+                    </button>
+                    <button onClick={editHandler}>
+                        {'Edit'}
+                    </button>
+                    <button onClick={toggleFavoriteStatusHandler}>
+                        {'Add Stop'}
+                    </button>
+                    <button onClick={toggleFavoriteStatusHandler}>
+                        {'View Stops'}
                     </button>
                 </div>
             </div>
