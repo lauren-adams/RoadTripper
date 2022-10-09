@@ -16,6 +16,7 @@ function Trp() {
     const [loadedTrips, setLoadedTrips] = useState([]);
 
     useEffect(() => {
+        console.log(userCtx.username + userCtx.email + userCtx.id);
         setIsLoading(true);
         fetch(
             'https://subjecttochange.dev/api/trip?userID=' + userCtx.id

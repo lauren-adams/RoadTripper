@@ -24,6 +24,9 @@ import UserContext from "./UserContext";
 
 
 const Maps = () => {
+
+    const userCtx = useContext(UserContext);
+    console.log(userCtx.username + userCtx.email + userCtx.id);
     const [data, setData] = useState({
         start: "",
         end: "",
@@ -35,7 +38,7 @@ const Maps = () => {
 
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
-    const userCtx = useContext(UserContext);
+
 
     useEffect(() => {
         //setErrors(validate(data, "signUp"));
@@ -58,9 +61,11 @@ const Maps = () => {
         history.push("/home");
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip`;
-        console.log(data.start + data.end + data.date);
+        console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
+        console.log("ID: " + userCtx.id);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
+
             const responseA = axios({
                 method: 'post',
                 url: urlApi,
@@ -72,12 +77,17 @@ const Maps = () => {
                     'startLoc': data.start,
                     'endLoc': data.end,
                     'startDate': data.date,
-                    'userID': userCtx.id,
+                    'userID': userCtx.id.toString(),
                     'rating': data.rating
                 }
+
             });
-            pushData();
+            console.log(urlApi);
+            console.log(data.start + data.end + data.date +  userCtx.id + data.rating);
+            console.log(responseA);
+
         }
+        pushData();
 
         /*if (!Object.keys(errors).length) {
             // Pushing data to database usuing PHP script
@@ -140,6 +150,7 @@ const Maps = () => {
                 <div>
                     <button type="submit">Submit</button>
                     <span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
+                        <Link to="/home">Home</Link>
 
           </span>
                 </div>
