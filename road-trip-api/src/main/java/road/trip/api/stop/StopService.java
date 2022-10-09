@@ -19,4 +19,6 @@ public class StopService{
     public void deleteAllStop() { stopRepository.deleteAll(); }
 
     public Optional<Stop> findStopByID(Long id){return stopRepository.findById(id);}
+
+    public List<Stop> findStopsByTripId(String tripId){ return stopRepository.findByTripId(tripId); }
 }

@@ -4,6 +4,8 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.params.converter.JavaTimeConversionPattern;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import road.trip.api.stop.Stop;
+import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
 
@@ -14,6 +16,8 @@ import java.util.List;
 @RestController
 @RequestMapping("/")
 public class TripEndpoint {
+    @Autowired
+    private StopService stopService;
 
     @Autowired
     private TripService tripService;
@@ -37,4 +41,28 @@ public class TripEndpoint {
     public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId){
         return tripService.findTripByUserID(userId);
     }
+
+
+
+
+
+    @GetMapping("/stop/{id}")
+    public Stop getStopById(@PathVariable Long id){
+        var stop = stopService.findStopByID(id);
+        return stop.orElse(null);
+    }
+    @PostMapping("/stop")
+    public Stop saveStop(@RequestBody Stop stop){ return stopService.saveStop(stop); }
+
+    @DeleteMapping("/stop/{id}")
+    public void deleteStopById(@PathVariable Long id){ stopService.deleteStop(id);}
+
+    @DeleteMapping("/stop")
+    public void deleteAllStops(){ stopService.deleteAllStop(); }
+
+    @GetMapping("/stop")
+    public List<Stop> getStopsByTripId(@RequestParam(value="tripId") String tripId){
+        return stopService.findStopsByTripId(tripId);
+    }
+
 }

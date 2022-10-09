@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.stereotype.Repository;
 import road.trip.api.trip.Trip;
 
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -12,5 +13,7 @@ public interface StopRepository extends JpaRepository<Stop, Long>, JpaSpecificat
     //Optional<Trip> findByStopId(Long id);
     Optional<Stop> findById(Long id);
     void deleteById(Long id);
+
+    List<Stop> findByTripId(String tripId);
 
 }
