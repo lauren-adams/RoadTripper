@@ -29,6 +29,7 @@ const Login = () => {
     //    //https://subjecttochange.dev/api/user?emailAddress=g@g.com
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email);
     console.log(response.data);
+
     history.push('/home');
   }
 

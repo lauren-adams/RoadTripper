@@ -4,6 +4,7 @@ import lombok.Data;
 import road.trip.api.stop.Stop;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Data
@@ -70,6 +71,9 @@ public class Trip {
 
     @Column(name = "END_LOCATION")
     String endLoc;
+
+    @Column(name = "DATE")
+    Date date;
 
     @ManyToMany(fetch = FetchType.EAGER,
             cascade = {
