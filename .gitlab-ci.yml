@@ -2,6 +2,10 @@
 # We have to use this because for some reason the official docker image does not work.
 image: quay.io/podman/stable 
 
+stages:
+  - "build"
+  - "deploy"
+  - "test"
 # This builds an image of the api, and pushes it to the docker repository.
 build-api: 
   stage: build
@@ -126,9 +130,9 @@ deploy-ingress:
 test-api:
   stage: test
   script:
-    - curl https://subjecttochange.dev/api/ping
+    - curl -k https://subjecttochange.dev/api/ping
 
 test-frontend:
   stage: test
   script:
-    - curl https://subjecttochange.dev/home
+    - curl -k https://subjecttochange.dev/home
