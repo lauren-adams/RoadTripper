@@ -25,6 +25,7 @@ function App() {
         <Route path="/edit-trip" component={EditTrip} />
         <Route path="/add-stop" component={addStop} />
         <Route path="/view-stops" component={ViewStops} />
+
         <Redirect from="/" to="/home" />
       </Switch>
     </>
