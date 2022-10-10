@@ -59,7 +59,7 @@ const Home = () => {
                 )}
 
             </nav>
-            <p>welcome {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
+            <p>proof {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
             <RenderMap />
 
         </div>
