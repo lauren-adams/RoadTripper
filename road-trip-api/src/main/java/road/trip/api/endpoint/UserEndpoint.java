@@ -46,7 +46,9 @@ public class UserEndpoint {
     //create a user, also updates a user if matching id
     @PostMapping("/user")
     public User saveUser(@RequestBody User user) {
-        return userService.saveUser(user);
+        if (getUsersByEmail(user.getEmailAddress()).isEmpty()) {
+            return userService.saveUser(user);
+        }
     }
 
 
