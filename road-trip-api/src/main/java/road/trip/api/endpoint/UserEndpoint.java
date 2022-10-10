@@ -49,6 +49,7 @@ public class UserEndpoint {
         if (getUsersByEmail(user.getEmailAddress()).isEmpty()) {
             return userService.saveUser(user);
         }
+        throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists\n");
     }
 
 
