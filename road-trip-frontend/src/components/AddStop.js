@@ -60,7 +60,7 @@ const AddStop = () => {
         event.preventDefault();
         history.push("/view-trips");
         const base = `https://subjecttochange.dev/api`
-        const urlApi = base + `/stop`;
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
         console.log("ID: " + userCtx.id);
         const pushData = async () => {
@@ -74,8 +74,8 @@ const AddStop = () => {
                     'Access-Control-Allow-Origin': '*'
                 },
                 data: {
-                    'stop': data.start,
-                    'tripId': data.end
+                    'stopLoc': data.start,
+                    'tripId': userCtx.tid
                 }
 
             });
@@ -102,7 +102,7 @@ const AddStop = () => {
                 <div>
                     <button type="submit">Submit</button>
                     <span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
-                        <Link to="/home">Home</Link>
+                        <Link to="/view-trips">Back</Link>
 
           </span>
                 </div>

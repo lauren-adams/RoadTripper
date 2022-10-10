@@ -86,7 +86,7 @@ const EditTrip = () => {
                     'Access-Control-Allow-Origin': '*'
                 },
                 data: {
-                    'id': userCtx.id,
+                    'id': userCtx.tid,
                     'startLoc': data.start,
                     'endLoc': data.end,
                     'startDate': data.date,
