@@ -43,24 +43,24 @@ function TripIntegrated() {
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
 
-    /** @type React.MutableRefObject<HTMLInputElement> */
     const originRef = useRef()
-    /** @type React.MutableRefObject<HTMLInputElement> */
-    const destiantionRef = useRef()
+    const destinationRef = useRef()
+    const dateRef = useRef()
+    const ratingRef = useRef()
 
     if (!isLoaded) {
         return <SkeletonText/>;
     }
 
     async function calculateRoute() {
-        if (originRef.current.value === '' || destiantionRef.current.value === '') {
+        if (originRef.current.value === '' || destinationRef.current.value === '') {
             return
         }
         // eslint-disable-next-line no-undef
         const directionsService = new google.maps.DirectionsService()
         const results = await directionsService.route({
             origin: originRef.current.value,
-            destination: destiantionRef.current.value,
+            destination: destinationRef.current.value,
             // eslint-disable-next-line no-undef
             travelMode: google.maps.TravelMode.DRIVING,
         })
@@ -75,7 +75,7 @@ function TripIntegrated() {
         const urlApi = base + `/trip`;
         console.log("Savetrip function")
         //console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
-        console.log("ID: " + userCtx.id + originRef.current.value + destiantionRef.current.value);
+        console.log("ID: " + userCtx.id + originRef.current.value + destinationRef.current.value);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
 
@@ -88,10 +88,10 @@ function TripIntegrated() {
                 },
                 data: {
                     'startLoc': originRef.current.value,
-                    'endLoc': destiantionRef.current.value,
-                    'startDate': "10/10/22",
+                    'endLoc': destinationRef.current.value,
+                    'startDate': dateRef.current.value,
                     'userID': userCtx.id,
-                    'rating': 5
+                    'rating': ratingRef.current.value
                 }
 
             });
@@ -106,7 +106,9 @@ function TripIntegrated() {
         setDistance('')
         setDuration('')
         originRef.current.value = ''
-        destiantionRef.current.value = ''
+        destinationRef.current.value = ''
+        originRef.current.value = ''
+        dateRef.current.value = ''
     }
 
     return (
@@ -154,12 +156,22 @@ function TripIntegrated() {
                     </Box>
                     <Box flexGrow={1}>
                         <Autocomplete>
+                            <Input type='text' placeholder='Destination' ref={destinationRef} />
+                        </Autocomplete>
+                    </Box>
+                    <Box flexGrow={1}>
                             <Input
                                 type='text'
-                                placeholder='Destination'
-                                ref={destiantionRef}
+                                placeholder='Date'
+                                ref={dateRef}
                             />
-                        </Autocomplete>
+                    </Box>
+                    <Box flexGrow={1}>
+                            <Input
+                                type='text'
+                                placeholder='Rating {1..5}'
+                                ref={ratingRef}
+                            />
                     </Box>
 
                     <ButtonGroup>
