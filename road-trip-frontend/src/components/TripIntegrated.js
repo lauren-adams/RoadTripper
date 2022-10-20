@@ -69,7 +69,8 @@ function TripIntegrated() {
         setDuration(results.routes[0].legs[0].duration.text)
     }
 
-    async function saveTrip() {
+    const saveTrip = (event) => {
+        event.preventDefault();
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip`;
         console.log("Savetrip function")
@@ -94,9 +95,11 @@ function TripIntegrated() {
                 }
 
             });
-            console.log(responseA);
+            console.log("responseA" + responseA);
         }
-    }
+
+        pushData();
+    };
 
     function clearRoute() {
         setDirectionsResponse(null)
