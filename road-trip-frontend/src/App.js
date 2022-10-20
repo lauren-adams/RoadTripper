@@ -9,6 +9,7 @@ import Trp from "./components/Trp";
 import EditTrip from "./components/EditTrip";
 import addStop from "./components/AddStop";
 import ViewStops from "./components/ViewStops"
+import TripIntegrated from "./components/TripIntegrated";
 
 function App() {
 
@@ -25,6 +26,7 @@ function App() {
         <Route path="/edit-trip" component={EditTrip} />
         <Route path="/add-stop" component={addStop} />
         <Route path="/view-stops" component={ViewStops} />
+        <Route path="/test" component={TripIntegrated} />
 
         <Redirect from="/" to="/home" />
       </Switch>

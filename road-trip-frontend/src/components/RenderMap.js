@@ -6,6 +6,7 @@ class App extends Component {
             width: "1000px",
             height: "800px"
         }
+
         return (
             <div className="App">
                 <Map
