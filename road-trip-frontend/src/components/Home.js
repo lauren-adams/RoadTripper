@@ -2,6 +2,8 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import UserContext from "./UserContext";
 import { useContext } from 'react';
+import RenderMap from "./RenderMap";
+
 
 
 const Home = () => {
@@ -57,9 +59,12 @@ const Home = () => {
                 )}
 
             </nav>
-            <p>welcome {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
+            <p>proof {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
+            <RenderMap />
 
         </div>
+
+
 
     );
 };
