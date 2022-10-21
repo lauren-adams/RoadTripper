@@ -94,13 +94,13 @@ public class UserEndpoint {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
         }
         else if (sad && calm) {
-            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4MYukieWIJWuLM3buEFk0B?utm_source=generator\"";
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4MYukieWIJWuLM3buEFk0B?utm_source=generator\"}";
         }
         else if (happy && energetic) {
-            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?utm_source=generator\"";
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?utm_source=generator\"}";
         }
         else if (happy && calm) {
-            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/57UzxeOSaSbw4UyySlTWHp?utm_source=generator\"";
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/57UzxeOSaSbw4UyySlTWHp?utm_source=generator\"}";
         }
         return "Bad";
     }
