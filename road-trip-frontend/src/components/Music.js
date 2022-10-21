@@ -24,7 +24,7 @@ const Button = styled.button`
 `;
 
 let playlistReturned = false;
-let playlistURL = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
+let playlistURL = "https://open.spotify.com/embed/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
 
 function Music()  {
     const userCtx = useContext(UserContext);
