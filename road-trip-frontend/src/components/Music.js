@@ -2,7 +2,7 @@ import * as React from 'react';
 import { useContext } from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
-import { notify } from "toast";
+import { ToastContainer, toast } from "react-toastify";
 import styled from 'styled-components';
 import axios from "axios";
 
