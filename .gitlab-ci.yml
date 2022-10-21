@@ -1,6 +1,6 @@
 # Set default image to podman, for docker builds.  
 # We have to use this because for some reason the official docker image does not work.
-image: quay.io/podman/stable
+image: quay.io/podman/stable 
 
 stages:
   - "build"
