@@ -8,7 +8,9 @@ import { Route, Switch, Redirect, NavLink } from "react-router-dom";
 import Trp from "./components/Trp";
 import EditTrip from "./components/EditTrip";
 import addStop from "./components/AddStop";
-import ViewStops from "./components/ViewStops"
+import ViewStops from "./components/ViewStops";
+import Music from "./components/Music"
+
 
 function App() {
 
@@ -25,7 +27,7 @@ function App() {
         <Route path="/edit-trip" component={EditTrip} />
         <Route path="/add-stop" component={addStop} />
         <Route path="/view-stops" component={ViewStops} />
-        <Route path="/music" component={ViewStops} />
+        <Route path="/music" component={Music} />
         <Redirect from="/" to="/home" />
       </Switch>
     </>

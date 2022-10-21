@@ -1,4 +1,3 @@
-@@ -0,0 +1,84 @@
 import React, { useState, useEffect } from 'react';
 
 import TrpList from './TrpList';
@@ -16,10 +15,10 @@ import classes from "./TripItem.module.css";
 //total combinations, shown below as unique Spotify
 //playlists.
 
-HappyCalm = "https://open.spotify.com/playlist/57UzxeOSaSbw4UyySlTWHp?si=0c9df277baba4bf8";
-HappyEnergetic = "https://open.spotify.com/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?si=dbde3180caad4474";
-SadCalm = "https://open.spotify.com/playlist/4MYukieWIJWuLM3buEFk0B?si=a0950e54fa44475d";
-SadEnergetic = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
+const HappyCalm = "https://open.spotify.com/playlist/57UzxeOSaSbw4UyySlTWHp?si=0c9df277baba4bf8";
+const HappyEnergetic = "https://open.spotify.com/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?si=dbde3180caad4474";
+const SadCalm = "https://open.spotify.com/playlist/4MYukieWIJWuLM3buEFk0B?si=a0950e54fa44475d";
+const SadEnergetic = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
 
 function Music() {
     const userCtx = useContext(UserContext);
@@ -64,7 +63,7 @@ function Music() {
     return (
         <div>
             <section>
-                <h1>Stops</h1>
+                <h1>Music</h1>
                 <div>
                     <ul className={classes.list}>
                         {loadedTrips.map(item => {
