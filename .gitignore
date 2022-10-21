@@ -8,3 +8,4 @@ gradlew.bat
 settings.gradle
 build.gradle
 road-trip-api/src/main/resources/application.properties
+road-trip-frontend/package-lock.json
