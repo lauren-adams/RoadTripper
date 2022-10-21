@@ -88,6 +88,23 @@ public class UserEndpoint {
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
     }
 
+    @GetMapping("/user/getPlaylist")
+    public String getPlaylist(@RequestParam(value="sad") boolean sad, @RequestParam(value="happy") boolean happy, @RequestParam(value="energetic") boolean energetic, @RequestParam(value="calm") boolean calm){
+        if (sad && energetic) {
+            return "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
+        }
+        else if (sad && calm) {
+            return "https://open.spotify.com/playlist/4MYukieWIJWuLM3buEFk0B?si=a0950e54fa44475d";
+        }
+        else if (happy && energetic) {
+            return "https://open.spotify.com/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?si=dbde3180caad4474";
+        }
+        else if (happy && calm) {
+            return "https://open.spotify.com/playlist/57UzxeOSaSbw4UyySlTWHp?si=0c9df277baba4bf8";
+        }
+        return "Bad";
+    }
+
 
 
 

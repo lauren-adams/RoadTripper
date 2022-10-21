@@ -51,7 +51,7 @@ function Music()  {
             notify("You must select one from both categories!");
         }
         else {
-            let urlApi =  `https://subjecttochange.dev/api/user/getPassword?sad=${isSad}&happy=${isHappy}&calm=${isCalm}&isEnergetic=${isEnergetic}`;
+            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
             axios.get()
         }
     }
