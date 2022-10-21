@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import UserContext from "./UserContext";
 import { useContext } from 'react';
 import RenderMap from "./RenderMap";
+import TripIntegrated from "./TripIntegrated";
 
 
 
@@ -67,7 +68,7 @@ const Home = () => {
 
             </nav>
             <p>proof {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
-            <RenderMap />
+            <TripIntegrated />
 
         </div>
 

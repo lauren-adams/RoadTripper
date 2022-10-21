@@ -9,8 +9,7 @@ import Trp from "./components/Trp";
 import EditTrip from "./components/EditTrip";
 import addStop from "./components/AddStop";
 import ViewStops from "./components/ViewStops";
-import Music from "./components/Music"
-
+import Music from "./components/Music";
 
 function App() {
 
