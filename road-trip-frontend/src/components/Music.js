@@ -6,6 +6,7 @@ import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
 import TrpItem from "./TrpItem";
 import classes from "./TripItem.module.css";
+import { notify } from "./toast";
 
 
 
@@ -22,42 +23,35 @@ const SadEnergetic = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?s
 
 function Music() {
     const userCtx = useContext(UserContext);
-    const [isLoading, setIsLoading] = useState(true);
     const [loadedTrips, setLoadedTrips] = useState([]);
+    let isSad = 0;
+    let isHappy = 0;
+    let isCalm = 0;
+    let isEnergetic = 0;
 
-    useEffect(() => {
-        console.log(userCtx.username + userCtx.email + userCtx.id);
-        setIsLoading(true);
-        fetch(
-            'https://subjecttochange.dev/api/trip/' + userCtx.tid + '/stop'
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                console.log(data);
-                const trips = [];
+    function setSad() {
+        isHappy = false;
+        isSad = true;
+    }
+    function setHappy() {
+        isHappy = true;
+        isSad = false;
+    }
+    function setCalm() {
+        isCalm = true;
+        isEnergetic = false;
+    }
+    function setEnergetic() {
+        isCalm = false;
+        isEnergetic = true;
+    }
+    function submit() {
+        if ((!isSad && !isHappy) || (!isCalm && !isEnergetic)) {
+            notify("You must select one from both categories!");
+        }
+        else {
 
-                for (const key in data) {
-                    const trip = {
-                        id: key,
-                        ...data[key]
-                    };
-
-                    trips.push(trip);
-                }
-                console.log("trips" + trips);
-                setIsLoading(false);
-                setLoadedTrips(trips);
-            });
-    }, []);
-
-    if (isLoading) {
-        return (
-            <section>
-                <p>Loading...</p>
-            </section>
-        );
+        }
     }
 
     return (
@@ -65,16 +59,23 @@ function Music() {
             <section>
                 <h1>Music</h1>
                 <div>
-                    <ul className={classes.list}>
-                        {loadedTrips.map(item => {
-                            return <li className={classes.item}><div className={classes.card} >
+                    <h2>What kind of music do you want?</h2>
+                    <h3>Are you sad or happy?</h3>
+                    <div>
+                        <button moodSad={setSad()}>I'm Sad :(</button>
+                        <button moodHappy={setHappy()}>I'm Happy :)</button>
+                    </div>
+                    <h3>Are you energetic or calm?</h3>
+                    <div>
+                        <button moodEnergetic={setEnergetic()}>ENERGY</button>
+                        <button moodCalm={setCalm()}>zzz    </button>
+                    </div>
+                    <div>
 
-                                <div className={classes.content}>{item.stopLoc}</div></div></li>;
-                        })}
-                    </ul>
+                    </div>
                 </div>
             </section>
-            <Link to="/view-trips">Back</Link></div>
+            <Link to="/home">Back</Link></div>
     );
 
 
