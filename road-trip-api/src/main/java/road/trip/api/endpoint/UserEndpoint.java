@@ -91,16 +91,16 @@ public class UserEndpoint {
     @GetMapping("/user/getPlaylist")
     public String getPlaylist(@RequestParam(value="sad") boolean sad, @RequestParam(value="happy") boolean happy, @RequestParam(value="energetic") boolean energetic, @RequestParam(value="calm") boolean calm){
         if (sad && energetic) {
-            return "{\"playlist\": \"https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0\"}";
+            return "{\"playlist\": \"https://open.spotify.com/embed/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0\"}";
         }
         else if (sad && calm) {
-            return "{\"playlist\": \"https://open.spotify.com/playlist/4MYukieWIJWuLM3buEFk0B?si=a0950e54fa44475d\"";
+            return "{\"playlist\": \"https://open.spotify.com/embed/4MYukieWIJWuLM3buEFk0B?si=a0950e54fa44475d\"";
         }
         else if (happy && energetic) {
-            return "{\"playlist\": \"https://open.spotify.com/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?si=dbde3180caad4474\"";
+            return "{\"playlist\": \"https://open.spotify.com/embed/3ZK3Xs4ZFPCeekT6dXsDmm?si=dbde3180caad4474\"";
         }
         else if (happy && calm) {
-            return "{\"playlist\": \"https://open.spotify.com/playlist/57UzxeOSaSbw4UyySlTWHp?si=0c9df277baba4bf8\"";
+            return "{\"playlist\": \"https://open.spotify.com/embed/57UzxeOSaSbw4UyySlTWHp?si=0c9df277baba4bf8\"";
         }
         return "Bad";
     }
