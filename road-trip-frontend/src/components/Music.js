@@ -1,12 +1,10 @@
-import React, { useState, useEffect } from 'react';
-
-import TrpList from './TrpList';
+import * as React from 'react';
 import { useContext } from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
-import TrpItem from "./TrpItem";
-import classes from "./TripItem.module.css";
 import { notify } from "./toast";
+import styled from 'styled-components';
+import axios from "axios";
 
 
 
@@ -21,36 +19,40 @@ const HappyEnergetic = "https://open.spotify.com/playlist/3ZK3Xs4ZFPCeekT6dXsDmm
 const SadCalm = "https://open.spotify.com/playlist/4MYukieWIJWuLM3buEFk0B?si=a0950e54fa44475d";
 const SadEnergetic = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
 
-function Music() {
-    const userCtx = useContext(UserContext);
-    const [loadedTrips, setLoadedTrips] = useState([]);
-    let isSad = 0;
-    let isHappy = 0;
-    let isCalm = 0;
-    let isEnergetic = 0;
+const Button = styled.button`
+  /* Same as above */
+`;
 
-    function setSad() {
+function Music()  {
+    const userCtx = useContext(UserContext);
+    let isSad = false;
+    let isHappy = false;
+    let isCalm = false;
+    let isEnergetic = false;
+
+    const setSad = () => {
         isHappy = false;
         isSad = true;
     }
-    function setHappy() {
+    const setHappy = () => {
         isHappy = true;
         isSad = false;
     }
-    function setCalm() {
+    const setCalm = () => {
         isCalm = true;
         isEnergetic = false;
     }
-    function setEnergetic() {
+    const setEnergetic = () => {
         isCalm = false;
         isEnergetic = true;
     }
-    function submit() {
+    const submit = () => {
         if ((!isSad && !isHappy) || (!isCalm && !isEnergetic)) {
             notify("You must select one from both categories!");
         }
         else {
-
+            let urlApi =  `https://subjecttochange.dev/api/user/getPassword?sad=${isSad}&happy=${isHappy}&calm=${isCalm}&isEnergetic=${isEnergetic}`;
+            axios.get()
         }
     }
 
@@ -62,16 +64,16 @@ function Music() {
                     <h2>What kind of music do you want?</h2>
                     <h3>Are you sad or happy?</h3>
                     <div>
-                        <button moodSad={setSad()}>I'm Sad :(</button>
-                        <button moodHappy={setHappy()}>I'm Happy :)</button>
+                        <button type="button" onClick={setSad}>I'm Sad :(</button>
+                        <button type="button" onClick={setHappy}>I'm Happy :)</button>
                     </div>
                     <h3>Are you energetic or calm?</h3>
                     <div>
-                        <button moodEnergetic={setEnergetic()}>ENERGY</button>
-                        <button moodCalm={setCalm()}>zzz    </button>
+                        <button type="button" onClick={setEnergetic}>ENERGY</button>
+                        <button type="button" onClick={setCalm}>zzz    </button>
                     </div>
                     <div>
-
+                        <button type="button" onClick={submit}>Submit</button>
                     </div>
                 </div>
             </section>
