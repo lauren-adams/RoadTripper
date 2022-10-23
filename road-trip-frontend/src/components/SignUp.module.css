@@ -169,6 +169,34 @@
   justify-content: center;
   margin: 19px 0;
 }
+.buttonPressed {
+  display: inline-block;
+  border-radius: 4px;
+  color: #488011;
+  border: 1px solid #488011;
+}
+.button {
+  display: inline-block;
+  border-radius: 4px;
+  color: #77002e;
+  border: 1px solid #77002e;
+}
+.button:hover,
+.button:active {
+  background-color: #ffe2ed;
+}
+.buttonPressed:hover,
+.buttonPressed:active {
+  background-color: #d3f1b2;
+}
+.buttonContainer button{
+  text-align: center;
+  border-radius: 4px;
+  padding: 0.5rem 1.5rem;
+  background-color: transparent;
+  font:inherit;
+  cursor: pointer;
+}
 
 @media (max-width: 568px) {
   .formLogin {

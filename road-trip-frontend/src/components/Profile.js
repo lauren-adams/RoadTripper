@@ -21,10 +21,36 @@ import { useContext } from 'react';
 import UserContext from "./UserContext";
 
 
+const preferenceValues = [
+    {id: 0, title: 'Restaurants'},
+    {id: 1, title: "Parks"},
+    {id: 2, title: "Gas Stations"},
+    {id: 3, title: "Museums"}
+]
 
 
 const Profile = () => {
-    const [data, setData] = useState({
+    const userCtx = useContext(UserContext);
+    const getPreferences = () => {
+        let base = 'http://localhost:8080'
+        //let base = 'https://subjecttochange.dev/api'
+        let url = base + "/user/" + userCtx.id + "/preferences"
+
+        axios.get(url).then(res => {
+            const data = res.data;
+            data.forEach(d => {
+                console.log(d)
+                preferences.values.push(d.type)
+
+            })
+            console.log(preferences.values)
+
+        })
+
+
+
+    }
+    let [data, setData] = useState({
         start: "",
         end: "",
         date: "",
@@ -35,11 +61,20 @@ const Profile = () => {
 
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
-    const userCtx = useContext(UserContext);
+    const [preferences, setPreferences] = useState({
+        values: []
+    } )
+
+
+    useEffect( () => {
+        getPreferences();
+    }, [])
 
     useEffect(() => {
         //setErrors(validate(data, "signUp"));
     }, [data, touched]);
+
+    //getPreferences()
 
     const changeHandler = (event) => {
         if (event.target.name === "IsAccepted") {
@@ -64,7 +99,9 @@ const Profile = () => {
         event.preventDefault();
         history.push("/home");
         const base = `https://subjecttochange.dev/api`
+        const base2 = 'http://localhost:8080'
         const urlApi = base + `/user`;
+        const prefApi = base2 + '/user/' + userCtx.id + '/preferences'
         console.log(data.start + data.end);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
@@ -81,9 +118,68 @@ const Profile = () => {
                     'username': data.start
                 }
             });
-            pushData();
+
+
+
+        }
+        pushData();
+        const delData = async () => {
+            //const responseA = axios.post(urlApi);
+            const responseA = axios({
+                method: 'delete',
+                url: prefApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+
+
+
         }
 
+        const pushPref = async () => {
+            // const responseC = axios({
+            //     method: 'delete',
+            //     url: prefApi,
+            //     headers: {
+            //         'Content-Type': 'application/json',
+            //         'Access-Control-Allow-Origin': '*'
+            //     }
+            // })
+            console.log(preferences.values)
+            preferences.values.map(preference => {
+                const responseB = axios({
+                    method: 'post',
+                    url: prefApi,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Access-Control-Allow-Origin': '*'
+                    },
+                    data: {
+                        'type': preference,
+                        'userId': userCtx.id
+                    }
+                })
+            })
+
+        }
+        delData().then(r => {
+            pushPref()
+        });
+
+
+    };
+    const preferenceHandler = (button) => {
+        let tmp = preferences.values;
+        if(preferences.values.includes(button)){
+            setPreferences({values: preferences.values.filter(el => el !== button)})
+        }
+        else{
+            tmp.push(button);
+            setPreferences({values: tmp})
+        }
+        console.log(preferences.values)
     };
 
     return (
@@ -102,12 +198,27 @@ const Profile = () => {
                     </div>
                     {errors.end && touched.end && <span className={styles.error}>{errors.end}</span>}
                 </div>
+                <div>
+                    <div className={styles.buttonContainer}>
+                        {preferenceValues.map(bt => (
+                            <button
+                                key={bt.title}
+                                type="button"
+                                onClick={() => preferenceHandler(bt.title)}
+                                className={preferences.values.includes(bt.title) ? styles.buttonPressed: styles.button}>
+                                {bt.title}
+                            </button>
+                        ))}
+                    </div>
+
+
+                </div>
 
                 <div>
                     <button type="submit">Save Edits</button>
                     <span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
-             <Link to="/home">Home</Link>
-          </span>
+                    <Link to="/home">Home</Link>
+                    </span>
                 </div>
             </form>
             <ToastContainer />
