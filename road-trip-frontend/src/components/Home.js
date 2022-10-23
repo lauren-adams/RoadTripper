@@ -34,6 +34,13 @@ const Home = () => {
                         </Link>
                     </li>
                 </div>
+                <div className="navbar-nav mr-auto">
+                    <li className="nav-item">
+                        <Link to={"/music"} className="nav-link">
+                            Music
+                        </Link>
+                    </li>
+                </div>
 
 
                 {userCtx.isLoggedIn ? (
