@@ -101,7 +101,7 @@ const Profile = () => {
         const base = `https://subjecttochange.dev/api`
         const base2 = 'http://localhost:8080'
         const urlApi = base + `/user`;
-        const prefApi = base2 + '/user/' + userCtx.id + '/preferences'
+        const prefApi = base + '/user/' + userCtx.id + '/preferences'
         console.log(data.start + data.end);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
