@@ -32,8 +32,8 @@ const preferenceValues = [
 const Profile = () => {
     const userCtx = useContext(UserContext);
     const getPreferences = () => {
-        let base = 'http://localhost:8080'
-        //let base = 'https://subjecttochange.dev/api'
+        //let base = 'http://localhost:8080'
+        let base = 'https://subjecttochange.dev/api'
         let url = base + "/user/" + userCtx.id + "/preferences"
 
         axios.get(url).then(res => {
