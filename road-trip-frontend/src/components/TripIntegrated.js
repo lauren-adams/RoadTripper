@@ -47,6 +47,10 @@ function TripIntegrated() {
     const destinationRef = useRef()
     const dateRef = useRef()
     const ratingRef = useRef()
+    const polyline = require("google-polyline");
+
+    let waypoints = [];
+    const google = window.google;
 
     if (!isLoaded) {
         return <SkeletonText/>;
@@ -59,16 +63,53 @@ function TripIntegrated() {
         // eslint-disable-next-line no-undef
         const directionsService = new google.maps.DirectionsService()
         const results = await directionsService.route({
+            
             origin: originRef.current.value,
             destination: destinationRef.current.value,
             // eslint-disable-next-line no-undef
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(results)
+        waypoints = polyline.decode(results.routes[0].overview_polyline);
+        console.log(waypoints[0])
+        // service = new google.maps.places.PlacesService(map);
+        const PolygonCoords = PolygonPoints();
+    const PolygonBound = new google.maps.Polygon({
+        paths: PolygonCoords,
+        strokeColor: "#FF0000",
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: "#FF0000",
+        fillOpacity: 0.35,
+        });
+
+    PolygonBound.setMap(map);
+        const service = new google.maps.places.PlacesService(map);
+        for(let j = 0;j< waypoints.length;j+=40){
+            service.nearbySearch({
+              location: { lat:waypoints[j][0], lng:waypoints[j][1] },
+              radius: '20000',
+              type: ['restaurant']
+            }, callback);
+            function callback(results, status) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                  for (var i = 0; i < results.length; i++) {
+                    if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
+                        new google.maps.Marker({
+                        position: results[i].geometry.location,
+                        map,
+                        title: "Hello World!"
+                      });
+                     }
+                  }
+                }
+              }
+        }
+        console.log(waypoints[0]);
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
     }
-
+      
     const saveTrip = (event) => {
         event.preventDefault();
         const base = `https://subjecttochange.dev/api`
@@ -100,6 +141,43 @@ function TripIntegrated() {
 
         pushData();
     };
+    function PolygonPoints() {
+
+        let polypoints = waypoints
+        let PolyLength = polypoints.length;
+       
+      
+        let UpperBound = [];
+        let LowerBound = [];
+      
+        for (let j = 0; j <= PolyLength - 1; j++) {
+          let NewPoints = PolygonArray(polypoints[j][0]);
+          UpperBound.push({ lat: NewPoints[0], lng: polypoints[j][1] });
+          LowerBound.push({ lat: NewPoints[1], lng: polypoints[j][1] });
+        }
+         let reversebound = LowerBound.reverse();
+       
+        let FullPoly = UpperBound.concat(reversebound);
+       
+        return FullPoly;
+    }
+
+    function PolygonArray(latitude) {
+        const R = 6378137;
+        const pi = 3.14;
+        //distance in meters
+        const upper_offset = 300;
+        const lower_offset = -300;
+       
+        const Lat_up = upper_offset / R;
+        const Lat_down = lower_offset / R;
+        //OffsetPosition, decimal degrees
+        const lat_upper = latitude + (Lat_up * 180) / pi;
+        const lat_lower = latitude + (Lat_down * 180) / pi;
+      
+         return [lat_upper, lat_lower];
+      }
+
 
     function clearRoute() {
         setDirectionsResponse(null)
