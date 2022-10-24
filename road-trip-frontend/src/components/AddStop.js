@@ -1,26 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 //Icon
 import userIcon from "../img/user.svg";
 import emailIcon from "../img/email.svg";
 import passwordIcon from "../img/password.svg";
 // Validate
-import { validate } from "./validate";
+import {validate} from "./validate";
 // Styles
 import styles from "./SignUp.module.css";
 import "react-toastify/dist/ReactToastify.css";
 // Toast
-import { ToastContainer, toast } from "react-toastify";
-import { notify } from "./toast";
+import {ToastContainer, toast} from "react-toastify";
+import {notify} from "./toast";
 //
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 // Axios
 import axios from "axios";
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import bcrypt from "bcryptjs";
-import { useContext } from 'react';
+import {useContext} from 'react';
 import UserContext from "./UserContext";
-
-
+import Filter from "./StopFilter";
 
 
 const AddStop = () => {
@@ -46,14 +45,14 @@ const AddStop = () => {
 
     const changeHandler = (event) => {
         if (event.target.name === "IsAccepted") {
-            setData({ ...data, [event.target.name]: event.target.checked });
+            setData({...data, [event.target.name]: event.target.checked});
         } else {
-            setData({ ...data, [event.target.name]: event.target.value });
+            setData({...data, [event.target.name]: event.target.value});
         }
     };
 
     const focusHandler = (event) => {
-        setTouched({ ...touched, [event.target.name]: true });
+        setTouched({...touched, [event.target.name]: true});
     };
 
     const submitHandler = (event) => {
@@ -93,21 +92,27 @@ const AddStop = () => {
             <form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
                 <h2>Add Stop</h2>
                 <div>
-                    <div className={errors.start && touched.start ? styles.unCompleted : !errors.start && touched.start ? styles.completed : undefined}>
-                        <input type="text" name="start" value={data.start} placeholder="Start Location" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                    <div
+                        className={errors.start && touched.start ? styles.unCompleted : !errors.start && touched.start ? styles.completed : undefined}>
+                        <input type="text" name="start" value={data.start} placeholder="Start Location"
+                               onChange={changeHandler} onFocus={focusHandler} autoComplete="off"/>
                     </div>
                     {errors.start && touched.start && <span className={styles.error}>{errors.start}</span>}
                 </div>
 
                 <div>
                     <button type="submit">Submit</button>
-                    <span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
+                    <span style={{color: "#a29494", textAlign: "center", display: "inline-block", width: "100%"}}>
                         <Link to="/view-trips">Back</Link>
-
-          </span>
+                    </span>
                 </div>
             </form>
-            <ToastContainer />
+
+            <ToastContainer/>
+
+            <Filter>
+            </Filter>
+
         </div>
     );
 };
