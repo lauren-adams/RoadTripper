@@ -20,7 +20,13 @@ const SadCalm = "https://open.spotify.com/playlist/4MYukieWIJWuLM3buEFk0B?si=a09
 const SadEnergetic = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?si=bd7ea5131c7f47d0";
 
 const Button = styled.button`
-  /* Same as above */
+  background-color: black;
+  color: white;
+  font-size: 20px;
+  padding: 10px 60px;
+  border-radius: 5px;
+  margin: 10px 0px;
+  cursor: pointer;
 `;
 
 let playlistReturned = false;
@@ -63,6 +69,7 @@ function Music()  {
             pushData();
             //window.location.reload();
             document.querySelector('#spotifyembed').src = playlistURL;
+            document.querySelector('#spotifyembed').height = 380;
         }
     }
     if (!playlistReturned) {
@@ -88,7 +95,7 @@ function Music()  {
                         <div>
                             <iframe
                                 src="" id="spotifyembed"
-                                    width="100%" height="380" frameBorder="0" allowFullScreen=""
+                                    width="100%" height="0" frameBorder="0" allowFullScreen=""
                                     allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
                                     loading="lazy">
                             </iframe>
