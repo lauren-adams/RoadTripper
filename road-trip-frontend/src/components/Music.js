@@ -65,11 +65,12 @@ function Music()  {
             const pushData = async () => {
                 const responseA = await axios.get(urlApi);
                 playlistURL = responseA.data.playlist;
+                document.querySelector('#spotifyembed').src = playlistURL;
+                document.querySelector('#spotifyembed').height = 380;
             };
             pushData();
             //window.location.reload();
-            document.querySelector('#spotifyembed').src = playlistURL;
-            document.querySelector('#spotifyembed').height = 380;
+
         }
     }
     if (!playlistReturned) {
