@@ -22,12 +22,13 @@ const SadEnergetic = "https://open.spotify.com/playlist/09MB9D7A0DX20Rp3zX1mq9?s
 const Button = styled.button`
   background-color: black;
   color: white;
-  font-size: 20px;
-  padding: 10px 60px;
+  font-size: 14px;
+  padding: 10px 30px;
   border-radius: 5px;
-  margin: 10px 0px;
+  margin: 10px 10px;
   cursor: pointer;
 `;
+
 
 let playlistReturned = false;
 let playlistURL;
@@ -66,7 +67,7 @@ function Music()  {
                 const responseA = await axios.get(urlApi);
                 playlistURL = responseA.data.playlist;
                 document.querySelector('#spotifyembed').src = playlistURL;
-                document.querySelector('#spotifyembed').height = 380;
+                document.querySelector('#spotifyembed').height = "800";
             };
             pushData();
             //window.location.reload();
@@ -77,21 +78,23 @@ function Music()  {
         return (
             <div>
                 <section>
-                    <h1>Music</h1>
                     <div>
-                        <h2>What kind of music do you want?</h2>
-                        <h3>Are you sad or happy?</h3>
+                        <center>
+                        <h2><b>What kind of music do you want?</b></h2>
+                            <br/><br/>
+                        <h3>Are you <i>sad</i> or <i>happy</i>?</h3>
                         <div>
-                            <button type="button" onClick={setSad}>I'm Sad :(</button>
-                            <button type="button" onClick={setHappy}>I'm Happy :)</button>
+                            <Button type="button" onClick={setSad}>I'm Sad</Button>
+                            <Button type="button" onClick={setHappy}>I'm Happy</Button>
                         </div>
-                        <h3>Are you energetic or calm?</h3>
+                            <br/><br/>
+                        <h3>Are you <i>energetic</i> or <i>calm?</i></h3>
                         <div>
-                            <button type="button" onClick={setEnergetic}>ENERGY</button>
-                            <button type="button" onClick={setCalm}>zzz    </button>
+                            <Button type="button" onClick={setEnergetic}>ENERGY</Button>
+                            <Button type="button" onClick={setCalm}>zzz</Button>
                         </div>
                         <div>
-                            <button type="button" onClick={submit}>Submit</button>
+                            <Button type="button" onClick={submit}>Submit</Button>
                         </div>
                         <div>
                             <iframe
@@ -101,6 +104,7 @@ function Music()  {
                                     loading="lazy">
                             </iframe>
                         </div>
+                            </center>
                     </div>
                 </section>
                 <Link to="/home">Back</Link></div>
