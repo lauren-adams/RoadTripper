@@ -1,6 +1,7 @@
 package road.trip.api.user;
 
 import javax.mail.Message;
+import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
@@ -53,20 +54,26 @@ public class User {
     }
 
     public void sendWelcomeMessage() throws Exception {
+
+
         Email emailObj = new Email();
+        String msg = "Welcome to the trip planner!";
+        /*
+        Session mailSession = emailObj.generateSession();
 
-        emailObj.generateSession();
-
-        MimeMessage message = new MimeMessage(emailObj.generateSession());
+        MimeMessage message = new MimeMessage(mailSession);
         message.setContent("Welcome to the trip planner!", "text/plain");
         message.setFrom(new InternetAddress("admin@subjecttochange.dev"));
         message.addRecipient(Message.RecipientType.TO,
                 new InternetAddress(this.emailAddress));
 
-        emailObj.generateSession().getTransport().connect();
-        emailObj.generateSession().getTransport().sendMessage(message,
+        mailSession.getTransport().connect();
+        mailSession.getTransport().sendMessage(message,
                 message.getRecipients(Message.RecipientType.TO));
-        emailObj.generateSession().getTransport().close();
+        mailSession.getTransport().close();
+        */
+        emailObj.sendMessage(msg, this.emailAddress);
+
     }
 
     @Id

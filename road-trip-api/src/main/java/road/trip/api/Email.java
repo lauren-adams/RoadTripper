@@ -39,20 +39,20 @@ public class Email {
 
 
         // uncomment for debugging infos to stdout
-        // mailSession.setDebug(true);
+        mailSession.setDebug(true);
         return mailSession;
     }
 
-    public void sendMessage(MimeMessage message) throws Exception {
+    public void sendMessage(String messageToSend, String addrToSendTo) throws Exception {
 
         Session mailSession = generateSession();
         Transport transport = mailSession.getTransport();
 
-        //MimeMessage message = new MimeMessage(mailSession);
-        message.setContent("This is a test", "text/plain");
+        MimeMessage message = new MimeMessage(mailSession);
+        message.setContent(messageToSend, "text/plain");
         message.setFrom(new InternetAddress("admin@subjecttochange.dev"));
         message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress("lauren_adams3@baylor.edu"));
+                new InternetAddress(addrToSendTo));
 
         transport.connect();
         transport.sendMessage(message,
