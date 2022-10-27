@@ -37,7 +37,6 @@ build-frontend:
       when: never
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-FRONTEND]/
       when: always
-    - when: always
     
   script:
     # This set of instructions simply navigates to the road-trip-api and
