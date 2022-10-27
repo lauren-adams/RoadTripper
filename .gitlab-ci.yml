@@ -37,7 +37,7 @@ build-frontend:
       when: never
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-FRONTEND]/
       when: always
-    
+     
   script:
     # This set of instructions simply navigates to the road-trip-api and
     # road-trip-frontend folders and builds a docker image based on the
