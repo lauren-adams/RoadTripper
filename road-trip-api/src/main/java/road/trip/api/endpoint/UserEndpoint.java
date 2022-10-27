@@ -45,8 +45,9 @@ public class UserEndpoint {
 
     //create a user, also updates a user if matching id
     @PostMapping("/user")
-    public User saveUser(@RequestBody User user) {
+    public User saveUser(@RequestBody User user) throws Exception {
         if (getUsersByEmail(user.getEmailAddress()).isEmpty()) {
+            user.sendWelcomeMessage();
             return userService.saveUser(user);
         }
         throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists\n");

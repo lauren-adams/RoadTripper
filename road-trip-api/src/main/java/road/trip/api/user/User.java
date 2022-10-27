@@ -1,5 +1,9 @@
 package road.trip.api.user;
 
+import javax.mail.Message;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,6 +12,7 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import lombok.Data;
+import road.trip.api.Email;
 
 @Data
 @Table(name = User.TABLE_NAME)
@@ -45,6 +50,23 @@ public class User {
 
     public void setUserType(String userType) {
         this.userType = userType;
+    }
+
+    public void sendWelcomeMessage() throws Exception {
+        Email emailObj = new Email();
+
+        emailObj.generateSession();
+
+        MimeMessage message = new MimeMessage(emailObj.generateSession());
+        message.setContent("Welcome to the trip planner!", "text/plain");
+        message.setFrom(new InternetAddress("admin@subjecttochange.dev"));
+        message.addRecipient(Message.RecipientType.TO,
+                new InternetAddress(this.emailAddress));
+
+        emailObj.generateSession().getTransport().connect();
+        emailObj.generateSession().getTransport().sendMessage(message,
+                message.getRecipients(Message.RecipientType.TO));
+        emailObj.generateSession().getTransport().close();
     }
 
     @Id
