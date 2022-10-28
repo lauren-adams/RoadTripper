@@ -58,20 +58,6 @@ public class User {
 
         Email emailObj = new Email();
         String msg = "Welcome to the trip planner!";
-        /*
-        Session mailSession = emailObj.generateSession();
-
-        MimeMessage message = new MimeMessage(mailSession);
-        message.setContent("Welcome to the trip planner!", "text/plain");
-        message.setFrom(new InternetAddress("admin@subjecttochange.dev"));
-        message.addRecipient(Message.RecipientType.TO,
-                new InternetAddress(this.emailAddress));
-
-        mailSession.getTransport().connect();
-        mailSession.getTransport().sendMessage(message,
-                message.getRecipients(Message.RecipientType.TO));
-        mailSession.getTransport().close();
-        */
         emailObj.sendMessage(msg, this.emailAddress);
 
     }
