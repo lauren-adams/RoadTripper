@@ -50,7 +50,9 @@ public class UserEndpoint {
             user.sendWelcomeMessage();
             return userService.saveUser(user);
         }
-        throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists\n");
+        else {
+            throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists\n");
+        }
     }
 
 
