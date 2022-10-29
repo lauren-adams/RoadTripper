@@ -106,12 +106,15 @@ const AddStop = () => {
                         <Link to="/view-trips">Back</Link>
                     </span>
                 </div>
+
+                <Filter>
+                </Filter>
+
             </form>
 
             <ToastContainer/>
 
-            <Filter>
-            </Filter>
+
 
         </div>
     );

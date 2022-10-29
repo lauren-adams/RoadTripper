@@ -1,5 +1,4 @@
-
-import { FaLocationArrow, FaTimes } from 'react-icons/fa'
+import {FaLocationArrow, FaTimes} from 'react-icons/fa'
 
 import {
     useJsApiLoader,
@@ -23,18 +22,16 @@ import {
     Text,
 } from '@chakra-ui/react'
 
-import { useRef, useState } from 'react'
+import {useRef, useState} from 'react'
 import axios from "axios";
-import { useContext } from 'react';
+import {useContext} from 'react';
 import UserContext from "./UserContext";
 
 
-
-
-const center = { lat: 48.8584, lng: 2.2945 }
+const center = {lat: 48.8584, lng: 2.2945}
 
 function TripIntegrated() {
-    const { isLoaded } = useJsApiLoader({
+    const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyDm3fa141BAW4SlncLns36sYTTk4gx2BOw',
         libraries: ['places'],
     })
@@ -67,7 +64,7 @@ function TripIntegrated() {
         // eslint-disable-next-line no-undef
         const directionsService = new google.maps.DirectionsService()
         const results = await directionsService.route({
-            
+
             origin: originRef.current.value,
             destination: destinationRef.current.value,
             // eslint-disable-next-line no-undef
@@ -78,51 +75,52 @@ function TripIntegrated() {
         console.log(waypoints[0])
         // service = new google.maps.places.PlacesService(map);
         const PolygonCoords = PolygonPoints();
-    const PolygonBound = new google.maps.Polygon({
-        paths: PolygonCoords,
-        strokeColor: "#FF0000",
-        strokeOpacity: 0.8,
-        strokeWeight: 2,
-        fillColor: "#FF0000",
-        fillOpacity: 0.35,
+        const PolygonBound = new google.maps.Polygon({
+            paths: PolygonCoords,
+            strokeColor: "#FF0000",
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            fillColor: "#FF0000",
+            fillOpacity: 0.35,
         });
 
-    PolygonBound.setMap(map);
+        PolygonBound.setMap(map);
         const service = new google.maps.places.PlacesService(map);
-        for(let j = 0;j< waypoints.length;j+=40){
+        for (let j = 0; j < waypoints.length; j += 40) {
             service.nearbySearch({
-              location: { lat:waypoints[j][0], lng:waypoints[j][1] },
-              radius: radiusRef.current.value,
-              type: preferenceRef.current.value.split(",")
+                location: {lat: waypoints[j][0], lng: waypoints[j][1]},
+                radius: radiusRef.current.value,
+                type: preferenceRef.current.value.split(",")
             }, callback);
+
             function callback(results, status) {
                 console.log(results)
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
-                  for (var i = 0; i < results.length; i++) {
-                    const infoWindow = new google.maps.InfoWindow();
+                    for (var i = 0; i < results.length; i++) {
+                        const infoWindow = new google.maps.InfoWindow();
 
-                    //if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
+                        //if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
                         const marker = new google.maps.Marker({
-                        position: results[i].geometry.location,
-                        map,
-                        title: results[i].name,
-                        pixelOffset: new google.maps.Size(100,140)
+                            position: results[i].geometry.location,
+                            map,
+                            title: results[i].name,
+                            pixelOffset: new google.maps.Size(100, 140)
                         });
                         marker.addListener("click", () => {
-                        infoWindow.close();
-                        infoWindow.setContent(marker.getTitle());
-                        infoWindow.open(marker.getMap(), marker);
-                      });
-                     //}
-                  }
+                            infoWindow.close();
+                            infoWindow.setContent(marker.getTitle());
+                            infoWindow.open(marker.getMap(), marker);
+                        });
+                        //}
+                    }
                 }
-              }
+            }
         }
         console.log(waypoints[0]);
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
     }
-      
+
     const saveTrip = (event) => {
         event.preventDefault();
         const base = `https://subjecttochange.dev/api`
@@ -155,24 +153,24 @@ function TripIntegrated() {
 
         pushData();
     };
+
     function PolygonPoints() {
 
         let polypoints = waypoints
         let PolyLength = polypoints.length;
-       
-      
+
         let UpperBound = [];
         let LowerBound = [];
-      
+
         for (let j = 0; j <= PolyLength - 1; j++) {
-          let NewPoints = PolygonArray(polypoints[j][0]);
-          UpperBound.push({ lat: NewPoints[0], lng: polypoints[j][1] });
-          LowerBound.push({ lat: NewPoints[1], lng: polypoints[j][1] });
+            let NewPoints = PolygonArray(polypoints[j][0]);
+            UpperBound.push({lat: NewPoints[0], lng: polypoints[j][1]});
+            LowerBound.push({lat: NewPoints[1], lng: polypoints[j][1]});
         }
-         let reversebound = LowerBound.reverse();
-       
+        let reversebound = LowerBound.reverse();
+
         let FullPoly = UpperBound.concat(reversebound);
-       
+
         return FullPoly;
     }
 
@@ -182,15 +180,15 @@ function TripIntegrated() {
         //distance in meters
         const upper_offset = 300;
         const lower_offset = -300;
-       
+
         const Lat_up = upper_offset / R;
         const Lat_down = lower_offset / R;
         //OffsetPosition, decimal degrees
         const lat_upper = latitude + (Lat_up * 180) / pi;
         const lat_lower = latitude + (Lat_down * 180) / pi;
-      
-         return [lat_upper, lat_lower];
-      }
+
+        return [lat_upper, lat_lower];
+    }
 
 
     function clearRoute() {
@@ -216,7 +214,7 @@ function TripIntegrated() {
                 <GoogleMap
                     center={center}
                     zoom={15}
-                    mapContainerStyle={{ width: '100%', height: '100%' }}
+                    mapContainerStyle={{width: '100%', height: '100%'}}
                     options={{
                         zoomControl: false,
                         streetViewControl: false,
@@ -225,9 +223,9 @@ function TripIntegrated() {
                     }}
                     onLoad={map => setMap(map)}
                 >
-                    <Marker position={center} />
+                    <Marker position={center}/>
                     {directionsResponse && (
-                        <DirectionsRenderer directions={directionsResponse} />
+                        <DirectionsRenderer directions={directionsResponse}/>
                     )}
                 </GoogleMap>
             </Box>
@@ -243,35 +241,35 @@ function TripIntegrated() {
                 <HStack spacing={2} justifyContent='space-between'>
                     <Box flexGrow={1}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Origin' ref={originRef} />
+                            <Input type='text' placeholder='Origin' ref={originRef}/>
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Destination' ref={destinationRef} />
+                            <Input type='text' placeholder='Destination' ref={destinationRef}/>
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1}>
-                            <Input
-                                type='text'
-                                placeholder='Date'
-                                ref={dateRef}
-                            />
+                        <Input
+                            type='text'
+                            placeholder='Date'
+                            ref={dateRef}
+                        />
                     </Box>
                     <Box flexGrow={1}>
-                            <Input
-                                type='text'
-                                placeholder='Rating {1..5}'
-                                ref={ratingRef}
-                            />
+                        <Input
+                            type='text'
+                            placeholder='Rating {1..5}'
+                            ref={ratingRef}
+                        />
                     </Box>
                     <Box flexGrow={1}>
-                            <Input
-                                type='text'
-                                placeholder='Radius {in meters}'
-                                ref={radiusRef}
-                            />
-                    </Box>   
+                        <Input
+                            type='text'
+                            placeholder='Radius {in meters}'
+                            ref={radiusRef}
+                        />
+                    </Box>
 
                     <ButtonGroup>
                         <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
@@ -282,27 +280,27 @@ function TripIntegrated() {
                         </Button>
                         <IconButton
                             aria-label='center back'
-                            icon={<FaTimes />}
+                            icon={<FaTimes/>}
                             onClick={clearRoute}
                         />
                     </ButtonGroup>
                 </HStack>
                 <HStack spacing={2} justifyContent='space-between'>
-                 
-                <Box flexGrow={1}>
-                            <Input
-                                type='text'
-                                placeholder='Preference separated by comma'
-                                ref={preferenceRef}
-                            />
-                    </Box> 
+
+                    <Box flexGrow={1}>
+                        <Input
+                            type='text'
+                            placeholder='Preference separated by comma'
+                            ref={preferenceRef}
+                        />
+                    </Box>
                 </HStack>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
                     <IconButton
                         aria-label='center back'
-                        icon={<FaLocationArrow />}
+                        icon={<FaLocationArrow/>}
                         isRound
                         onClick={() => {
                             map.panTo(center)
