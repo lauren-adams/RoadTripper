@@ -183,7 +183,7 @@ function ViewStops() {
                     <Box flexGrow={1}>
                         <Text>
                             {/*TODO: The value need to be added*/}
-                            Trip: TripName Start: Waco, TX Destination: Toronto, ON Distance: {}
+                            Trip: TripName Start: Waco, TX Destination: Toronto, ON
                         </Text>
                         <Text>Distance: {distance} </Text>
                         <Text>Duration: {duration} </Text>
