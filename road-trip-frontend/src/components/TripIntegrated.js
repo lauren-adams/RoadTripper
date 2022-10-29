@@ -13,6 +13,7 @@ import {
     Box,
     Button,
     ButtonGroup,
+    color,
     Flex,
     HStack,
     IconButton,
@@ -48,6 +49,8 @@ function TripIntegrated() {
     const destinationRef = useRef()
     const dateRef = useRef()
     const ratingRef = useRef()
+    const radiusRef = useRef()
+    const preferenceRef = useRef()
     const polyline = require("google-polyline");
 
     let waypoints = [];
@@ -89,19 +92,28 @@ function TripIntegrated() {
         for(let j = 0;j< waypoints.length;j+=40){
             service.nearbySearch({
               location: { lat:waypoints[j][0], lng:waypoints[j][1] },
-              radius: '20000',
-              type: ['restaurant']
+              radius: radiusRef.current.value,
+              type: preferenceRef.current.value.split(",")
             }, callback);
             function callback(results, status) {
+                console.log(results)
                 if (status == google.maps.places.PlacesServiceStatus.OK) {
                   for (var i = 0; i < results.length; i++) {
-                    if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
-                        new google.maps.Marker({
+                    const infoWindow = new google.maps.InfoWindow();
+
+                    //if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
+                        const marker = new google.maps.Marker({
                         position: results[i].geometry.location,
                         map,
-                        title: "Hello World!"
+                        title: results[i].name,
+                        pixelOffset: new google.maps.Size(100,140)
+                        });
+                        marker.addListener("click", () => {
+                        infoWindow.close();
+                        infoWindow.setContent(marker.getTitle());
+                        infoWindow.open(marker.getMap(), marker);
                       });
-                     }
+                     //}
                   }
                 }
               }
@@ -134,6 +146,7 @@ function TripIntegrated() {
                     'startDate': dateRef.current.value,
                     'userID': userCtx.id,
                     'rating': ratingRef.current.value
+                    //todo : add the radius functionality
                 }
 
             });
@@ -252,6 +265,13 @@ function TripIntegrated() {
                                 ref={ratingRef}
                             />
                     </Box>
+                    <Box flexGrow={1}>
+                            <Input
+                                type='text'
+                                placeholder='Radius {in meters}'
+                                ref={radiusRef}
+                            />
+                    </Box>   
 
                     <ButtonGroup>
                         <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
@@ -266,6 +286,16 @@ function TripIntegrated() {
                             onClick={clearRoute}
                         />
                     </ButtonGroup>
+                </HStack>
+                <HStack spacing={2} justifyContent='space-between'>
+                 
+                <Box flexGrow={1}>
+                            <Input
+                                type='text'
+                                placeholder='Preference separated by comma'
+                                ref={preferenceRef}
+                            />
+                    </Box> 
                 </HStack>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
