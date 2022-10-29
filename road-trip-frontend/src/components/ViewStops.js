@@ -72,7 +72,6 @@ function ViewStops() {
         }
     }
 
-
     const google = window.google;
 
     async function getRoute() {
