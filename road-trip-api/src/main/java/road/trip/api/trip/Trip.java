@@ -70,9 +70,28 @@ public class Trip {
     @Column(name = "START_DATE")
     String startDate;
 
+    public Integer getRadius() {
+        return radius;
+    }
+
+    public void setRadius(Integer radius) {
+        this.radius = radius;
+    }
+
+    public String getPreference() {
+        return preference;
+    }
+
+    public void setPreference(String preference) {
+        this.preference = preference;
+    }
+
     @Column(name = "RATING")
     Integer rating;
 
+    @Column(name = "RADIUS")
+    Integer radius;
 
-
+    @Column(name = "PREFERENCE")
+    String preference;
 }

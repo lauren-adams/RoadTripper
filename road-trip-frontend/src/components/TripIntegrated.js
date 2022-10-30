@@ -1,4 +1,4 @@
-import {FaLocationArrow, FaTimes} from 'react-icons/fa'
+import { FaLocationArrow, FaTimes } from 'react-icons/fa'
 
 import {
     useJsApiLoader,
@@ -6,6 +6,7 @@ import {
     Marker,
     Autocomplete,
     DirectionsRenderer,
+    MARKER_LAYER,
 } from '@react-google-maps/api'
 
 import {
@@ -20,24 +21,25 @@ import {
     position,
     SkeletonText,
     Text,
+    Select,
 } from '@chakra-ui/react'
 
-import {useRef, useState} from 'react'
+import { useRef, useState } from 'react'
 import axios from "axios";
-import {useContext} from 'react';
+import { useContext } from 'react';
 import UserContext from "./UserContext";
 
 
-const center = {lat: 48.8584, lng: 2.2945}
+const center = { lat: 48.8584, lng: 2.2945 }
 
 function TripIntegrated() {
-    const {isLoaded} = useJsApiLoader({
+    const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyDm3fa141BAW4SlncLns36sYTTk4gx2BOw',
         libraries: ['places'],
     })
 
     const userCtx = useContext(UserContext);
-    const [map, setMap] = useState(/** @type google.maps.Map */ (null))
+    const [map, setMap] = useState(/** @type google.maps.Map */(null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
@@ -49,12 +51,13 @@ function TripIntegrated() {
     const radiusRef = useRef()
     const preferenceRef = useRef()
     const polyline = require("google-polyline");
+    let markers = [];
 
     let waypoints = [];
     const google = window.google;
 
     if (!isLoaded) {
-        return <SkeletonText/>;
+        return <SkeletonText />;
     }
 
     async function calculateRoute() {
@@ -88,7 +91,7 @@ function TripIntegrated() {
         const service = new google.maps.places.PlacesService(map);
         for (let j = 0; j < waypoints.length; j += 40) {
             service.nearbySearch({
-                location: {lat: waypoints[j][0], lng: waypoints[j][1]},
+                location: { lat: waypoints[j][0], lng: waypoints[j][1] },
                 radius: radiusRef.current.value,
                 type: preferenceRef.current.value.split(",")
             }, callback);
@@ -104,18 +107,39 @@ function TripIntegrated() {
                             position: results[i].geometry.location,
                             map,
                             title: results[i].name,
-                            pixelOffset: new google.maps.Size(100, 140)
+                            label: {
+                                text: getLabelByType(results[i].types), 
+                                fontFamily: "Material Icons",
+                                color: "#ffffff",
+                                fontSize: "18px",
+                            },
                         });
+                        markers.push({m:marker})
+                        console.log(markers)
                         marker.addListener("click", () => {
                             infoWindow.close();
                             infoWindow.setContent(marker.getTitle());
                             infoWindow.open(marker.getMap(), marker);
                         });
+
+                      
                         //}
                     }
+
                 }
             }
+
+
         }
+
+        let getLabelByType=(types)=>{
+            if(types.includes("church")) return "\ueaae"
+            if(types.includes("restaurant")) return "\ue56c"
+            if(types.includes("gas_station")) return "\ue546"
+            if(types.includes("doctor")) return "\uf033"
+            if(types.includes("car_wash")) return "\ue542"
+        }
+
         console.log(waypoints[0]);
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
@@ -143,8 +167,9 @@ function TripIntegrated() {
                     'endLoc': destinationRef.current.value,
                     'startDate': dateRef.current.value,
                     'userID': userCtx.id,
-                    'rating': ratingRef.current.value
-                    //todo : add the radius functionality
+                    'rating': ratingRef.current.value,
+                    'radius':radiusRef.current.value,
+                    'preference': preferenceRef.current.value
                 }
 
             });
@@ -164,8 +189,8 @@ function TripIntegrated() {
 
         for (let j = 0; j <= PolyLength - 1; j++) {
             let NewPoints = PolygonArray(polypoints[j][0]);
-            UpperBound.push({lat: NewPoints[0], lng: polypoints[j][1]});
-            LowerBound.push({lat: NewPoints[1], lng: polypoints[j][1]});
+            UpperBound.push({ lat: NewPoints[0], lng: polypoints[j][1] });
+            LowerBound.push({ lat: NewPoints[1], lng: polypoints[j][1] });
         }
         let reversebound = LowerBound.reverse();
 
@@ -192,14 +217,23 @@ function TripIntegrated() {
 
 
     function clearRoute() {
-        setDirectionsResponse(null)
-        setDistance('')
-        setDuration('')
+        
         originRef.current.value = ''
         destinationRef.current.value = ''
         originRef.current.value = ''
         dateRef.current.value = ''
+        preferenceRef.current.value = ''
+        radiusRef.current.value = ''
+        console.log(markers)
+        // markers.forEach(x=>{
+        //     x.setMap(null)
+        // })
+        // markers = [];
+        // setDirectionsResponse(null)
+        // setDistance('')
+        // setDuration('')
     }
+
 
     return (
         <Flex
@@ -214,7 +248,7 @@ function TripIntegrated() {
                 <GoogleMap
                     center={center}
                     zoom={15}
-                    mapContainerStyle={{width: '100%', height: '100%'}}
+                    mapContainerStyle={{ width: '100%', height: '100%' }}
                     options={{
                         zoomControl: false,
                         streetViewControl: false,
@@ -223,9 +257,9 @@ function TripIntegrated() {
                     }}
                     onLoad={map => setMap(map)}
                 >
-                    <Marker position={center}/>
+                    <Marker position={center} />
                     {directionsResponse && (
-                        <DirectionsRenderer directions={directionsResponse}/>
+                        <DirectionsRenderer directions={directionsResponse} />
                     )}
                 </GoogleMap>
             </Box>
@@ -241,12 +275,12 @@ function TripIntegrated() {
                 <HStack spacing={2} justifyContent='space-between'>
                     <Box flexGrow={1}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Origin' ref={originRef}/>
+                            <Input type='text' placeholder='Origin' ref={originRef} />
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1}>
                         <Autocomplete>
-                            <Input type='text' placeholder='Destination' ref={destinationRef}/>
+                            <Input type='text' placeholder='Destination' ref={destinationRef} />
                         </Autocomplete>
                     </Box>
                     <Box flexGrow={1}>
@@ -280,27 +314,35 @@ function TripIntegrated() {
                         </Button>
                         <IconButton
                             aria-label='center back'
-                            icon={<FaTimes/>}
+                            icon={<FaTimes />}
                             onClick={clearRoute}
                         />
                     </ButtonGroup>
                 </HStack>
                 <HStack spacing={2} justifyContent='space-between'>
 
-                    <Box flexGrow={1}>
+                    {/* <Box flexGrow={1}>
                         <Input
                             type='text'
                             placeholder='Preference separated by comma'
                             ref={preferenceRef}
                         />
-                    </Box>
+                    </Box> */}
+                    <Select placeholder='Select Preferences' ref={preferenceRef}>
+                        <option value='church'>Places of worship</option>
+                        <option value='restaurant'>Restaurants</option>
+                        <option value='gas_station'>Gas Station</option>
+                        <option value='doctor'>Doctor</option>
+                        <option value='car_wash'>Car Wash</option>
+                    </Select>
+
                 </HStack>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
                     <Text>Distance: {distance} </Text>
                     <Text>Duration: {duration} </Text>
                     <IconButton
                         aria-label='center back'
-                        icon={<FaLocationArrow/>}
+                        icon={<FaLocationArrow />}
                         isRound
                         onClick={() => {
                             map.panTo(center)

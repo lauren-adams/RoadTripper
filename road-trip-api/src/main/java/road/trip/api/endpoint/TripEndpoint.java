@@ -10,6 +10,7 @@ import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -53,7 +54,7 @@ public class TripEndpoint {
         return stop.orElse(null);
     }
     @PostMapping("/trip/{tripId}/stop")
-    public Stop saveStop(@PathVariable Long tripId, @RequestBody Stop stop){
+    public List<Stop> saveStop(@PathVariable Long tripId, @RequestBody List<Stop> stops){
 //        Trip trip = findTripById(tripId);
 //        stop.setTrip(trip);
 //        System.out.println("just trying to print here");
@@ -64,7 +65,8 @@ public class TripEndpoint {
 //            return stopService.saveStop(stop);
 //        }).orElse(null);
 //        return stop1;
-        return stopService.saveStop(stop);
+
+        return stopService.saveAllStop(stops);
     }
 
     @DeleteMapping("/stop/{id}")

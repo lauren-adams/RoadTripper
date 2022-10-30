@@ -1,13 +1,10 @@
 package road.trip.api.stop;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
-import javax.transaction.Transactional;
 
 @Service
 public class StopService{
@@ -15,7 +12,7 @@ public class StopService{
     public StopRepository stopRepository;
 
     public Stop saveStop(Stop stop){ return stopRepository.save(stop); }
-
+    public List<Stop> saveAllStop(List<Stop> stops){ return stopRepository.saveAll(stops); }
     public void deleteStop(Long id){ stopRepository.deleteById(id);}
 
     public void deleteAllStop() { stopRepository.deleteAll(); }
