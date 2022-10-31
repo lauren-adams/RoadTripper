@@ -44,6 +44,7 @@ const Profile = () => {
 
             })
             console.log(preferences.values)
+            setLoading(false);
 
         })
 
@@ -64,6 +65,7 @@ const Profile = () => {
     const [preferences, setPreferences] = useState({
         values: []
     } )
+    const [loading, setLoading] = useState(true)
 
 
     useEffect( () => {
@@ -100,8 +102,9 @@ const Profile = () => {
         history.push("/home");
         const base = `https://subjecttochange.dev/api`
         const base2 = 'http://localhost:8080'
+
         const urlApi = base + `/user`;
-        const prefApi = base2 + '/user/' + userCtx.id + '/preferences'
+        const prefApi = base + '/user/' + userCtx.id + '/preferences'
         console.log(data.start + data.end);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
@@ -183,46 +186,62 @@ const Profile = () => {
     };
 
     return (
-        <div className={styles.container}>
-            <form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
-                <h2>Profile</h2>
-                <div>
-                    <div className={errors.start && touched.start ? styles.unCompleted : !errors.start && touched.start ? styles.completed : undefined}>
-                        <input type="text" name="start" value={data.start} placeholder={userCtx.username} onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
-                    </div>
-                    {errors.start && touched.start && <span className={styles.error}>{errors.start}</span>}
-                </div>
-                <div>
-                    <div className={errors.end && touched.end ? styles.unCompleted : !errors.end && touched.end ? styles.completed : undefined}>
-                        <input type="text" name="end" value={data.end} placeholder={userCtx.email} onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
-                    </div>
-                    {errors.end && touched.end && <span className={styles.error}>{errors.end}</span>}
-                </div>
-                <div>
-                    <div className={styles.buttonContainer}>
-                        {preferenceValues.map(bt => (
-                            <button
-                                key={bt.title}
-                                type="button"
-                                onClick={() => preferenceHandler(bt.title)}
-                                className={preferences.values.includes(bt.title) ? styles.buttonPressed: styles.button}>
-                                {bt.title}
-                            </button>
-                        ))}
-                    </div>
+        <div>
+            {loading ? (
+                <label>loading</label>
+            ) : (
+                <div className={styles.container}>
+                    <form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
+                        <h2>Profile</h2>
+                        <div>
+                            <label>Username: </label>
+                        </div>
+                        <div>
+                            <div className={errors.start && touched.start ? styles.unCompleted : !errors.start && touched.start ? styles.completed : undefined}>
+                                <input type="text" name="start" value={data.start} placeholder={userCtx.username} onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                            </div>
+                            {errors.start && touched.start && <span className={styles.error}>{errors.start}</span>}
+                        </div>
+                        <div>
+                            <label>Email: </label>
+                        </div>
+                        <div>
+                            <div className={errors.end && touched.end ? styles.unCompleted : !errors.end && touched.end ? styles.completed : undefined}>
+                                <input type="text" name="end" value={data.end} placeholder={userCtx.email} onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
+                            </div>
+                            {errors.end && touched.end && <span className={styles.error}>{errors.end}</span>}
+                        </div>
+                        <div>
+                            <label>Stop Preferences: </label>
+                        </div>
+                        <div>
+                            <div className={styles.buttonContainer}>
+                                {preferenceValues.map(bt => (
+                                    <button
+                                        key={bt.title}
+                                        type="button"
+                                        onClick={() => preferenceHandler(bt.title)}
+                                        className={preferences.values.includes(bt.title) ? styles.buttonPressed: styles.button}>
+                                        {bt.title}
+                                    </button>
+                                ))}
+                            </div>
 
 
-                </div>
+                        </div>
 
-                <div>
-                    <button type="submit">Save Edits</button>
-                    <span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
+                        <div>
+                            <button type="submit">Save Edits</button>
+                            <span style={{ color: "#a29494", textAlign: "center", display: "inline-block", width: "100%" }}>
                     <Link to="/home">Home</Link>
                     </span>
+                        </div>
+                    </form>
+                    <ToastContainer />
                 </div>
-            </form>
-            <ToastContainer />
+            )}
         </div>
+
     );
 };
 
