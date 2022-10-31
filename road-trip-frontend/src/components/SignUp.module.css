@@ -172,14 +172,14 @@
 .buttonPressed {
   display: inline-block;
   border-radius: 4px;
-  color: #488011;
-  border: 1px solid #488011;
+  color: #72c41d;
+  border: 1px solid #72c41d;
 }
 .button {
   display: inline-block;
   border-radius: 4px;
-  color: #77002e;
-  border: 1px solid #77002e;
+  color: #b60c0c;
+  border: 1px solid #b60c0c;
 }
 .button:hover,
 .button:active {
