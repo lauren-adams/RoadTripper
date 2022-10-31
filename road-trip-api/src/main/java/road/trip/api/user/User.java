@@ -62,6 +62,13 @@ public class User {
 
     }
 
+    public void sendTripMessage(String trip) throws Exception {
+        Email emailObj = new Email();
+        //String msg = "Welcome to the trip planner!";
+        emailObj.sendMessage(trip, this.emailAddress);
+
+    }
+
     @Id
     @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
     @SequenceGenerator(
