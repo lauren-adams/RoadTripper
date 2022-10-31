@@ -152,7 +152,7 @@ function TripIntegrated() {
         setDuration(results.routes[0].legs[0].duration.text)
     }
     const saveStops = (trip) => {
-        const base = `http://localhost:8080`
+        const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/${trip.id}/stop`;
         arrayStops.map(x=>x.tripId = trip.id)
         console.log("Data" , arrayStops)
@@ -176,7 +176,7 @@ function TripIntegrated() {
     };
     const saveTrip = (event) => {
         event.preventDefault();
-        const base = `http://localhost:8080`
+        const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip`;
         console.log("Savetrip function")
         console.log("Waypoints", waypoints)
