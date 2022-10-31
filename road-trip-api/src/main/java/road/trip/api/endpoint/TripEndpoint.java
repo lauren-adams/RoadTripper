@@ -25,6 +25,7 @@ public class TripEndpoint {
 
     @Autowired
     private TripService tripService;
+    @Autowired
     private UserService userService;
     @PostMapping("/trip")
     public Trip saveTrip(@RequestBody Trip trip) throws Exception {
@@ -43,6 +44,7 @@ public class TripEndpoint {
         }*/
         var user = userService.findUser(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
+            //System.out.print("In user" + user.toString());
             user.get().sendTripMessage(trip.toString());
         }
 
@@ -62,7 +64,16 @@ public class TripEndpoint {
     public void deleteAllTrips(){ tripService.deleteAllTrip(); }
 
     @GetMapping("/trip")
-    public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId){
+    public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {
+       /* List<Trip>  t = tripService.findTripByUserID(userId);
+        var user = userService.findUser(Long.valueOf(t.get(0).getUserID()));
+        System.out.println(user.toString());
+        if (user.isPresent()) {
+            System.out.print("In user" + user.toString());
+            user.get().sendTripMessage(t.get(0).toString());
+        } else {
+            System.out.println("fail to get user");
+        }*/
         return tripService.findTripByUserID(userId);
     }
 
