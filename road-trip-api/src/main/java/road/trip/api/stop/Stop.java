@@ -32,7 +32,7 @@ public class Stop {
         @Column(name = "LATTITUDE")
         Float lattitude;
 
-        @Column(name = "IMAGE")
+        @Column(name = "IMAGE", columnDefinition = "TEXT")
         String image;
 
     public String getType() {
@@ -75,7 +75,7 @@ public class Stop {
     //    }
 
         @Column(name = "T_ID")
-        String tripId;
+        Long tripId;
 
         public Boolean getFlagStop() {
             return flagStop;
@@ -99,11 +99,11 @@ public class Stop {
             this.id = id;
         }
 
-        public String getTripId() {
+        public Long getTripId() {
             return tripId;
         }
 
-        public void setTripId(String tripId) {
+        public void setTripId(Long tripId) {
             this.tripId = tripId;
         }
 

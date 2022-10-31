@@ -31,7 +31,10 @@ import UserContext from "./UserContext";
 
 
 const center = { lat: 48.8584, lng: 2.2945 }
-
+let markers = [];
+let PolygonBound;
+let waypoints = [];
+let arrayStops = [];
 function TripIntegrated() {
     const { isLoaded } = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyDm3fa141BAW4SlncLns36sYTTk4gx2BOw',
@@ -51,9 +54,7 @@ function TripIntegrated() {
     const radiusRef = useRef()
     const preferenceRef = useRef()
     const polyline = require("google-polyline");
-    let markers = [];
-
-    let waypoints = [];
+    
     const google = window.google;
 
     if (!isLoaded) {
@@ -78,7 +79,7 @@ function TripIntegrated() {
         console.log(waypoints[0])
         // service = new google.maps.places.PlacesService(map);
         const PolygonCoords = PolygonPoints();
-        const PolygonBound = new google.maps.Polygon({
+        PolygonBound = new google.maps.Polygon({
             paths: PolygonCoords,
             strokeColor: "#FF0000",
             strokeOpacity: 0.8,
@@ -88,7 +89,47 @@ function TripIntegrated() {
         });
 
         PolygonBound.setMap(map);
+
         const service = new google.maps.places.PlacesService(map);
+        let callback =(results, status) =>{
+            console.log(results)
+            if (status == google.maps.places.PlacesServiceStatus.OK) {
+                for (var i = 0; i < results.length; i++) {
+                    const infoWindow = new google.maps.InfoWindow();
+
+                    //if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
+                    const marker = new google.maps.Marker({
+                        position: results[i].geometry.location,
+                        map,
+                        title: results[i].name,
+                        label: {
+                            text: getLabelByType(results[i].types), 
+                            fontFamily: "Material Icons",
+                            color: "#ffffff",
+                            fontSize: "18px",
+                        },
+                    });
+                    arrayStops.push({
+                        "stopLoc": results[i].name,
+                        //"image": (results[i].photos && results[i].photos.length > 0) ? results[i].photos[0].getUrl() : "",
+                        "lattitude": results[i].geometry.location.lat(),
+                        "longitude": results[i].geometry.location.lng(),
+                        "type": results[i].types.join()
+                    })
+                    markers.push(marker)
+                    marker.addListener("click", () => {
+                        infoWindow.close();
+                        infoWindow.setContent(marker.getTitle());
+                        infoWindow.open(marker.getMap(), marker);
+                    });
+
+                  
+                    //}
+                }
+
+            }
+        }
+
         for (let j = 0; j < waypoints.length; j += 40) {
             service.nearbySearch({
                 location: { lat: waypoints[j][0], lng: waypoints[j][1] },
@@ -96,41 +137,7 @@ function TripIntegrated() {
                 type: preferenceRef.current.value.split(",")
             }, callback);
 
-            function callback(results, status) {
-                console.log(results)
-                if (status == google.maps.places.PlacesServiceStatus.OK) {
-                    for (var i = 0; i < results.length; i++) {
-                        const infoWindow = new google.maps.InfoWindow();
-
-                        //if(google.maps.geometry.poly.containsLocation(results[i].geometry.location,PolygonBound) == true) {
-                        const marker = new google.maps.Marker({
-                            position: results[i].geometry.location,
-                            map,
-                            title: results[i].name,
-                            label: {
-                                text: getLabelByType(results[i].types), 
-                                fontFamily: "Material Icons",
-                                color: "#ffffff",
-                                fontSize: "18px",
-                            },
-                        });
-                        markers.push({m:marker})
-                        console.log(markers)
-                        marker.addListener("click", () => {
-                            infoWindow.close();
-                            infoWindow.setContent(marker.getTitle());
-                            infoWindow.open(marker.getMap(), marker);
-                        });
-
-                      
-                        //}
-                    }
-
-                }
-            }
-
-
-        }
+     }
 
         let getLabelByType=(types)=>{
             if(types.includes("church")) return "\ueaae"
@@ -144,18 +151,42 @@ function TripIntegrated() {
         setDistance(results.routes[0].legs[0].distance.text)
         setDuration(results.routes[0].legs[0].duration.text)
     }
+    const saveStops = (trip) => {
+        const base = `http://localhost:8080`
+        const urlApi = base + `/trip/${trip.id}/stop`;
+        arrayStops.map(x=>x.tripId = trip.id)
+        console.log("Data" , arrayStops)
+        const pushData = async () => {
+            //const responseA = axios.post(urlApi);
 
+            const stopA = await axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                data: arrayStops
+
+            });
+            console.log("Stops" + stopA);
+        }
+
+        pushData();
+    };
     const saveTrip = (event) => {
         event.preventDefault();
-        const base = `https://subjecttochange.dev/api`
+        const base = `http://localhost:8080`
         const urlApi = base + `/trip`;
         console.log("Savetrip function")
+        console.log("Waypoints", waypoints)
+        console.log("Array Stops" , arrayStops)
         //console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
         console.log("ID: " + userCtx.id + originRef.current.value + destinationRef.current.value);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
 
-            const responseA = axios({
+            const responseA = await axios({
                 method: 'post',
                 url: urlApi,
                 headers: {
@@ -173,12 +204,15 @@ function TripIntegrated() {
                 }
 
             });
-            console.log("responseA" + responseA);
+            console.log("responseA" , responseA);
+            saveStops(responseA.data)
         }
 
         pushData();
+
     };
 
+    
     function PolygonPoints() {
 
         let polypoints = waypoints
@@ -225,13 +259,18 @@ function TripIntegrated() {
         preferenceRef.current.value = ''
         radiusRef.current.value = ''
         console.log(markers)
-        // markers.forEach(x=>{
-        //     x.setMap(null)
-        // })
-        // markers = [];
-        // setDirectionsResponse(null)
-        // setDistance('')
-        // setDuration('')
+        setDirectionsResponse(null)
+        setDistance('')
+        setDuration('')
+        markers.forEach(x=>{
+            if(x)
+            x.setMap(null)
+        })
+        markers = [];
+        PolygonBound.setPath([])
+        console.log(PolygonBound)
+        //PolygonBound.remove()
+        
     }
 
 

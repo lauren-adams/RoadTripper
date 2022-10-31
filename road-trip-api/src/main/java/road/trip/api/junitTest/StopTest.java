@@ -22,7 +22,7 @@ class StopTest {
     @DisplayName("test set/get trip id of stop")
     @ParameterizedTest(name = "trip id = {0}")
     @ValueSource(strings = {"1", "2", "999"})
-    public void testTripId(String id) {
+    public void testTripId(Long id) {
         Stop stop = new Stop();
         stop.setTripId(id);
         assertEquals(id, stop.getTripId());
