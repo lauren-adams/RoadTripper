@@ -47,7 +47,6 @@ public class TripEndpoint {
             //System.out.print("In user" + user.toString());
             user.get().sendTripMessage(trip.toString());
         }
-
         return tripService.saveTrip(trip); }
 
     //get a trip by id
@@ -65,7 +64,8 @@ public class TripEndpoint {
 
     @GetMapping("/trip")
     public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {
-       /* List<Trip>  t = tripService.findTripByUserID(userId);
+        /* email testing can be deleted
+        List<Trip>  t = tripService.findTripByUserID(userId);
         var user = userService.findUser(Long.valueOf(t.get(0).getUserID()));
         System.out.println(user.toString());
         if (user.isPresent()) {

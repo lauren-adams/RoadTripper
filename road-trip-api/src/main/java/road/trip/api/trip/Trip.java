@@ -86,6 +86,15 @@ public class Trip {
         this.preference = preference;
     }
 
+    @Override
+    public String toString() {
+        return "Trip " + id +
+                "\nFrom: " + startLoc +
+                "\nTo: " + endLoc +
+                "\n Date: " + startDate +
+                "\n rating: " + rating;
+    }
+
     @Column(name = "RATING")
     Integer rating;
 
