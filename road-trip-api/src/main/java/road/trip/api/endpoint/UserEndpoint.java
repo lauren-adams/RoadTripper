@@ -40,20 +40,25 @@ public class UserEndpoint {
     public void deleteAllUsers(){
         userService.deleteAllUsers();
     }
+//    @PostMapping("/user/{id}")
+//    public User saveUserFix(@RequestBody User user){
+//
+//    }
 
 
 
     //create a user, also updates a user if matching id
     @PostMapping("/user")
+
     public User saveUser(@RequestBody User user) throws Exception {
         if (getUsersByEmail(user.getEmailAddress()).isEmpty()) {
             user.sendWelcomeMessage();
             return userService.saveUser(user);
-        }
-        else {
+        } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists\n");
         }
     }
+
 
 
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
