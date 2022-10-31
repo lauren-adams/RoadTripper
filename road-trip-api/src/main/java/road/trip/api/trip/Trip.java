@@ -37,6 +37,14 @@ public class Trip {
         this.startLoc = startLoc;
     }
 
+    public String getStartDate() {
+        return startDate;
+    }
+
+    public void setStartDate(String startDate) {
+        this.startDate = startDate;
+    }
+
     public String getEndLoc() {
         return endLoc;
     }

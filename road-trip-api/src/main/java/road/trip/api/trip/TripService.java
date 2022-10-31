@@ -21,5 +21,8 @@ public class TripService{
     public Optional<Trip> findTripByID(Long id){return tripRepository.findById(id);}
 
     public List<Trip> findTripByUserID(String userId){ return tripRepository.findByUserID(userId); }
+    public List<Trip> findTripByDate(String date){ return tripRepository.findByStartDate(date); }
+
+
 
 }

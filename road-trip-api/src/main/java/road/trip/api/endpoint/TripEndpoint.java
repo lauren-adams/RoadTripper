@@ -113,4 +113,5 @@ public class TripEndpoint {
         return stopService.findStopsByTripId(tripId);
     }
 
+
 }
