@@ -28,7 +28,7 @@ public class TripEndpoint {
     private UserService userService;
     @PostMapping("/trip")
     public Trip saveTrip(@RequestBody Trip trip){
-        Email emailObj = new Email();
+        /*Email emailObj = new Email();
         String addy = "";
         var user = userService.findUser(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
@@ -40,7 +40,7 @@ public class TripEndpoint {
             emailObj.sendMessage(msg, addy);
         } catch (Exception e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
         return tripService.saveTrip(trip); }
 
