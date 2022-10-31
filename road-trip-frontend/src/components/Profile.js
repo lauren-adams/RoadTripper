@@ -100,7 +100,7 @@ const Profile = () => {
         userCtx.setMyUser(data.start, data.end, true);
         event.preventDefault();
         history.push("/home");
-        const base = `https://subjecttochange.dev/api`
+        const base = `https://subjecttochange.dev/api` 
         const base2 = 'http://localhost:8080'
         const urlApi = base + `/user`;
         const prefApi = base + '/user/' + userCtx.id + '/preferences'
