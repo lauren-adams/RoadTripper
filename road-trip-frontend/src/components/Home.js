@@ -68,6 +68,7 @@ const Home = () => {
 
             </nav>
             <p>proof {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
+            <p>test</p>
             <TripIntegrated />
 
         </div>
