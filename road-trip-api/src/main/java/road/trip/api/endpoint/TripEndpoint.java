@@ -34,6 +34,7 @@ public class TripEndpoint {
         if (user.isPresent()) {
             addy = user.get().getEmailAddress();
         }
+
         String msg = trip.toString();
         try {
             emailObj.sendMessage(msg, addy);
