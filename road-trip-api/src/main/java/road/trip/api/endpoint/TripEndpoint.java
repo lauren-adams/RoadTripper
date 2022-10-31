@@ -9,6 +9,8 @@ import road.trip.api.stop.Stop;
 import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
+import road.trip.api.Email;
+import road.trip.api.user.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -23,8 +25,23 @@ public class TripEndpoint {
 
     @Autowired
     private TripService tripService;
+    private UserService userService;
     @PostMapping("/trip")
-    public Trip saveTrip(@RequestBody Trip trip){ return tripService.saveTrip(trip); }
+    public Trip saveTrip(@RequestBody Trip trip){
+        Email emailObj = new Email();
+        String addy = "";
+        var user = userService.findUser(Long.valueOf(trip.getUserID()));
+        if (user.isPresent()) {
+            addy = user.get().getEmailAddress();
+        }
+        String msg = trip.toString();
+        try {
+            emailObj.sendMessage(msg, addy);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+
+        return tripService.saveTrip(trip); }
 
     //get a trip by id
     @GetMapping("/trip/{id}")
