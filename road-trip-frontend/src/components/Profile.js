@@ -48,8 +48,6 @@ const Profile = () => {
 
         })
 
-
-
     }
     let [data, setData] = useState({
         start: "",
