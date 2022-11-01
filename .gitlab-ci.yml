@@ -75,12 +75,12 @@ deploy-db:
     entrypoint: ['']
   stage: deploy
   rules:
-    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - if: $CI_COMMIT_MESSAGE =~ /\[DEPLOY-DB]/
       when: always
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
   script:
+    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - cd kubernetes
     - kubectl apply -f mysql.yaml
 
