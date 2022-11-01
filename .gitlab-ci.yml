@@ -60,6 +60,7 @@ deploy-frontend:
       when: never
     - when: always
   script:
+    - echo $KUBECONFIG
     - cd kubernetes
     - cd road-trip-api
     - kubectl delete -f road-trip-api-deployment.yaml
