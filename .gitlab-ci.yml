@@ -60,7 +60,7 @@ deploy-frontend:
       when: never
     - when: always
   script:
-    - echo $KUBECONFIG
+    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - cd kubernetes
     - cd road-trip-api
     - kubectl delete -f road-trip-api-deployment.yaml
@@ -75,6 +75,7 @@ deploy-db:
     entrypoint: ['']
   stage: deploy
   rules:
+    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - if: $CI_COMMIT_MESSAGE =~ /\[DEPLOY-DB]/
       when: always
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
@@ -94,6 +95,7 @@ deploy-api:
       when: never
     - when: always
   script:
+    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - cd kubernetes
     - cd road-trip-frontend
     - kubectl delete -f road-trip-frontend-deployment.yaml
@@ -110,6 +112,7 @@ deploy-nginx:
       when: never
     - when: always
   script:
+    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - cd kubernetes
     - kubectl apply -f nginx.yaml
 
@@ -124,6 +127,7 @@ deploy-ingress:
       when: never
     - when: always
   script:
+    - kubectl --kubeconfig <(echo $KUBECONFIG64 | base64 --decode) ...
     - cd kubernetes
     - kubectl apply -f ingress-controller.yaml
 
