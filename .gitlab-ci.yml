@@ -60,7 +60,7 @@ deploy-frontend:
       when: never
     - when: always
   script:
-    - export KUBECONFIG = $(echo $KUBECONFIG64 | base64 --decode)
+    - export KUBECONFIG = echo $KUBECONFIG64 | base64 --decode
     - kubectl --kubeconfig < echo $KUBECONFIG
     - cd kubernetes
     - cd road-trip-api
