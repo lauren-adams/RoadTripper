@@ -61,7 +61,6 @@ deploy-frontend:
     - when: always
   script:
     - export KUBECONFIG=echo $KUBECONFIG64 | base64 --decode
-    - kubectl --kubeconfig < echo $KUBECONFIG
     - cd kubernetes
     - cd road-trip-api
     - kubectl delete -f road-trip-api-deployment.yaml
