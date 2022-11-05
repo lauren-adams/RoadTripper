@@ -16,6 +16,7 @@ function ViewStops() {
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
     const [loadedTrips, setLoadedTrips] = useState([]);
+    const [loadedWaypoints, setLoadedWaypoints] = useState([]);
     const [map, setMap] = useState(/** @type google.maps.Map */ (null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
@@ -33,18 +34,32 @@ function ViewStops() {
             .then((data) => {
                 console.log(data);
                 const trips = [];
+                const waypoints = [];
 
                 for (const key in data) {
                     const trip = {
                         id: key,
                         ...data[key]
                     };
+                    const loc = {
+                        lat: trip.lattitude,
+                        lng: trip.longitude
+                    }
+
+                    const waypoint = {
+                        location: loc,
+                        stopover: true
+                    }
+                    console.log(trip);
+                    console.log(waypoint);
                 /* TODO only push to list when flagged */
                     trips.push(trip);
+                    waypoints.push(waypoint);
                 }
                 console.log("trips" + trips);
                 setIsLoading(false);
                 setLoadedTrips(trips);
+                setLoadedWaypoints(waypoints);
             });
     }, []);
 
@@ -80,9 +95,9 @@ function ViewStops() {
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
-            waypoints:
-                [{location: 'Chicago, IL', stopover: true},
-                    {location: 'Indianapolis, IN', stopover: true}],
+            waypoints: loadedWaypoints
+                /*[{location: 'Chicago, IL', stopover: true},
+                    {location: 'Indianapolis, IN', stopover: true}]*/,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
