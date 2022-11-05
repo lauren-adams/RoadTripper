@@ -32,6 +32,17 @@ public class Stop {
         @Column(name = "LATTITUDE")
         Float lattitude;
 
+    public Float getRating() {
+        return rating;
+    }
+
+    public void setRating(Float rating) {
+        this.rating = rating;
+    }
+
+    @Column(name = "RATING")
+        Float rating;
+
         @Column(name = "IMAGE", columnDefinition = "TEXT")
         String image;
 
@@ -76,6 +87,17 @@ public class Stop {
 
         @Column(name = "T_ID")
         Long tripId;
+
+    public Long getWaypointNumber() {
+        return waypointNumber;
+    }
+
+    public void setWaypointNumber(Long waypointNumber) {
+        this.waypointNumber = waypointNumber;
+    }
+
+    @Column(name = "WAYPOINT")
+        Long waypointNumber;
 
         public Boolean getFlagStop() {
             return flagStop;

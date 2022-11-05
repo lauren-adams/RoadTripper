@@ -106,10 +106,10 @@ public class TripEndpoint {
     public void deleteStopById(@PathVariable Long id){ stopService.deleteStop(id);}
 
     @DeleteMapping("/trip/{tripId}/stop")
-    public void deleteAllStopsForTrip(@PathVariable String tripId){ stopService.deleteByTripId(tripId); }
+    public void deleteAllStopsForTrip(@PathVariable Long tripId){ stopService.deleteByTripId(tripId); }
 
     @GetMapping("/trip/{tripId}/stop")
-    public List<Stop> getStopsByTripId(@PathVariable String tripId){
+    public List<Stop> getStopsByTripId(@PathVariable Long tripId){
         return stopService.findStopsByTripId(tripId);
     }
 

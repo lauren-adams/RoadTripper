@@ -53,6 +53,7 @@ function TripIntegrated() {
     const ratingRef = useRef()
     const radiusRef = useRef()
     const preferenceRef = useRef()
+
     const polyline = require("google-polyline");
     
     const google = window.google;
@@ -76,7 +77,7 @@ function TripIntegrated() {
         })
         setDirectionsResponse(results)
         waypoints = polyline.decode(results.routes[0].overview_polyline);
-        console.log(waypoints[0])
+        console.log(waypoints)
         // service = new google.maps.places.PlacesService(map);
         const PolygonCoords = PolygonPoints();
         PolygonBound = new google.maps.Polygon({
@@ -91,7 +92,9 @@ function TripIntegrated() {
         PolygonBound.setMap(map);
 
         const service = new google.maps.places.PlacesService(map);
+        let currentWaypoint = 0;
         let callback =(results, status) =>{
+            currentWaypoint++;
             console.log(results)
             if (status == google.maps.places.PlacesServiceStatus.OK) {
                 for (var i = 0; i < results.length; i++) {
@@ -114,7 +117,9 @@ function TripIntegrated() {
                         //"image": (results[i].photos && results[i].photos.length > 0) ? results[i].photos[0].getUrl() : "",
                         "lattitude": results[i].geometry.location.lat(),
                         "longitude": results[i].geometry.location.lng(),
-                        "type": results[i].types.join()
+                        "type": results[i].types.join(),
+                        "rating": results[i].rating,
+                         "waypointNumber" : currentWaypoint
                     })
                     markers.push(marker)
                     marker.addListener("click", () => {
@@ -136,6 +141,7 @@ function TripIntegrated() {
                 radius: radiusRef.current.value,
                 type: preferenceRef.current.value.split(",")
             }, callback);
+
 
      }
 

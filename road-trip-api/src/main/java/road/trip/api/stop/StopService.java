@@ -19,7 +19,7 @@ public class StopService{
 
     public Optional<Stop> findStopByID(Long id){return stopRepository.findById(id);}
 
-    public List<Stop> findStopsByTripId(String tripId){ return stopRepository.findByTripId(tripId); }
+    public List<Stop> findStopsByTripId(Long tripId){ return stopRepository.findByTripId(tripId); }
 
-    public void deleteByTripId(String id){ stopRepository.deleteByTripId(id); }
+    public void deleteByTripId(Long id){ stopRepository.deleteByTripId(id); }
 }
