@@ -1,12 +1,6 @@
 # Set default image to podman, for docker builds.  
 # We have to use this because for some reason the official docker image does not work.
 image: docker
-services:
-- name: docker:dind
-  entrypoint: ["dockerd-entrypoint.sh", "--tls=false"]
-script:
-- export DOCKER_HOST=tcp://127.0.0.1:2375 && docker build --pull -t ${CI_REGISTRY_IMAGE} 
-
 stages:
   - "build"
   - "deploy"
@@ -19,6 +13,14 @@ build-api:
       when: always
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
+  services:
+   - name: docker:dind
+     alias: thedockerhost
+
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
   script:
   
     # This set of instructions simply navigates to the road-trip-api and
@@ -42,6 +44,15 @@ build-frontend:
       when: never
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-FRONTEND]/
       when: always
+
+  services:
+   - name: docker:dind
+     alias: thedockerhost
+
+  variables:
+    DOCKER_HOST: tcp://thedockerhost:2375/
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
      
   script:
     # This set of instructions simply navigates to the road-trip-api and
