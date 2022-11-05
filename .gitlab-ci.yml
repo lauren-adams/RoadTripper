@@ -22,7 +22,7 @@ build-api:
     # "Dockerfile" in each directory.
     - cd road-trip-api
     - chmod +x gradlew
-    - podman --privileged build -t road-trip-api .
+    - podman build -t road-trip-api .
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
     - echo $DOCKERUSER
     - echo $DOCKERKEY
@@ -44,7 +44,7 @@ build-frontend:
     # docker files it finds there. This assumes there is a file named
     # "Dockerfile" in each directory.
     - cd road-trip-frontend
-    - podman --privileged build -t road-trip-frontend .
+    - podman build -t road-trip-frontend .
     - podman tag road-trip-frontend docker.io/kaase/road-trip-frontend:latest
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-frontend:latest
