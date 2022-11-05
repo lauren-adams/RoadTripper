@@ -77,8 +77,8 @@ function ViewStops() {
     async function getRoute() {
         const directionsService = new google.maps.DirectionsService()
         const result = await directionsService.route({
-            origin: 'Waco, TX',
-            destination: 'Toronto, ON',
+            origin: userCtx.start,
+            destination: userCtx.end,
             waypoints:
                 [{location: 'Chicago, IL', stopover: true},
                     {location: 'Indianapolis, IN', stopover: true}],
@@ -182,17 +182,18 @@ function ViewStops() {
                     <Box flexGrow={1}>
                         <Text>
                             {/*TODO: The value need to be added*/}
-                            Trip: TripName Start: Waco, TX Destination: Toronto, ON
+                            Start: {userCtx.start} Destination: {userCtx.end}
                         </Text>
                         <Text>Distance: {distance} </Text>
                         <Text>Duration: {duration} </Text>
                     </Box>
                 </Box>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
-                    <Button onClick={getRoute}>Generate</Button>
+                    <Button colorScheme='pink' onClick={getRoute}>Generate</Button>
                     <IconButton
                         aria-label='center back'
                         icon={<FaLocationArrow/>}
+                        colorScheme='pink'
                         isRound
                         onClick={() => {
                             map.panTo(center)

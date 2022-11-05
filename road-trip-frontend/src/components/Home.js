@@ -22,13 +22,6 @@ const Home = () => {
                 </Link>
                 <div className="navbar-nav mr-auto">
                     <li className="nav-item">
-                        <Link to={"/maps"} className="nav-link">
-                            Make A Trip
-                        </Link>
-                    </li>
-                </div>
-                <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
                         <Link to={"/view-trips"} className="nav-link">
                             Trips
                         </Link>
@@ -67,8 +60,6 @@ const Home = () => {
                 )}
 
             </nav>
-            <p>Welcome {userCtx.username} at {userCtx.email} id of {userCtx.id}</p>
-            <p>test</p>
             <TripIntegrated />
 
         </div>

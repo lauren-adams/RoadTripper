@@ -28,6 +28,7 @@ import { useRef, useState } from 'react'
 import axios from "axios";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
+import {Link} from "react-router-dom";
 
 
 const center = { lat: 48.8584, lng: 2.2945 }
@@ -355,9 +356,16 @@ function TripIntegrated() {
                         <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
                             Calculate Route
                         </Button>
-                        <Button colorScheme='pink' type='submit' onClick={saveTrip}>
-                            Save
-                        </Button>
+                        {userCtx.isLoggedIn ? (
+                            <Button colorScheme='pink' type='submit' onClick={saveTrip}>
+                                Save
+                            </Button>) : (
+                                <p></p>
+
+                        )
+                        }
+
+
                         <IconButton
                             aria-label='center back'
                             icon={<FaTimes />}

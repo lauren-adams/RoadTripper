@@ -24,6 +24,15 @@ function TrpItem(props) {
         history.push("/edit-trip");
     }
 
+    function deleteHandler() {
+        console.log("Delete");
+        /*console.log(props.startLoc, props.endLoc, props.date, props.rating, props.id)
+        userCtx.setCurTrip(props.startLoc, props.endLoc, props.date, props.rating, props.id);
+        console.log(userCtx.start + userCtx.tid + userCtx.end + userCtx.rating + userCtx.date);
+ */
+        /*** TODO IMPLEMENT THIS RYAN ***/
+    }
+
     function addStopHandler() {
         console.log("add stop");
         userCtx.setCurTrip(props.startLoc, props.endLoc, props.date, props.rating, props.id);
@@ -52,11 +61,14 @@ function TrpItem(props) {
                     <button onClick={editHandler}>
                         {'Edit'}
                     </button>
+                    <button onClick={deleteHandler}>
+                        {'Delete'}
+                    </button>
                     <button onClick={addStopHandler}>
                         {'Add Stop'}
                     </button>
                     <button onClick={viewStopHandler}>
-                        {'View Stops'}
+                        {'View Route'}
                     </button>
                 </div>
             </div>
