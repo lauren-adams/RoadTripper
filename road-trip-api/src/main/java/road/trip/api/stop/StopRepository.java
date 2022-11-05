@@ -24,4 +24,5 @@ public interface StopRepository extends JpaRepository<Stop, Long>, JpaSpecificat
 
 
 
+
 }

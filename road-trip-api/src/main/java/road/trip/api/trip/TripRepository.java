@@ -13,8 +13,7 @@ public interface TripRepository extends JpaRepository<Trip, Long>, JpaSpecificat
     List<Trip> findByUserID(String userID);
 
     List<Trip> findByStartDate(String startDate);
-
-
+    
 
     void deleteById(Long id);
 

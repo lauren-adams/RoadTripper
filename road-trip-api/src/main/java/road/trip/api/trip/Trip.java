@@ -63,11 +63,8 @@ public class Trip {
     Long id;
 
 
-
     @Column(name="U_ID")
     String userID;
-
-
 
     @Column(name = "START_LOCATION")
     String startLoc;

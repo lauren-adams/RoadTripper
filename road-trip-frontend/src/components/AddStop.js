@@ -122,8 +122,6 @@ const AddStop = () => {
             //console.log(data.start + data.end + data.date +  userCtx.id + data.rating);
             console.log(responseA);
 
-
-
         }
         pushData();
 

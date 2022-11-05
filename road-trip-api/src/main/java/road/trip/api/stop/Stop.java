@@ -96,6 +96,7 @@ public class Stop {
         this.waypointNumber = waypointNumber;
     }
 
+
     @Column(name = "WAYPOINT")
         Long waypointNumber;
 

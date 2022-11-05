@@ -78,9 +78,6 @@ public class TripEndpoint {
     }
 
 
-
-
-
     @GetMapping("/stop/{id}")
     public Stop getStopById(@PathVariable Long id){
         var stop = stopService.findStopByID(id);

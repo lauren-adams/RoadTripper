@@ -180,6 +180,7 @@ function TripIntegrated() {
 
         pushData();
     };
+    
     const saveTrip = (event) => {
         event.preventDefault();
         const base = `https://subjecttochange.dev/api`
