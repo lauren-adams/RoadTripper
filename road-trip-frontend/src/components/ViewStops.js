@@ -3,9 +3,10 @@ import React, {useState, useEffect} from 'react';
 import {useContext} from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
-import {Box, Button, ButtonGroup, Flex, HStack, IconButton, Input, Text} from "@chakra-ui/react";
+import {Box, Button, ButtonGroup, Flex, HStack, IconButton, Input, Grid, Text} from "@chakra-ui/react";
 import {Autocomplete, DirectionsRenderer, GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 import {FaLocationArrow} from "react-icons/fa";
+import classes from "./TripItem.module.css";
 
 function ViewStops() {
     const {isLoaded} = useJsApiLoader({
@@ -38,7 +39,7 @@ function ViewStops() {
                         id: key,
                         ...data[key]
                     };
-
+                /* TODO only push to list when flagged */
                     trips.push(trip);
                 }
                 console.log("trips" + trips);
@@ -73,7 +74,7 @@ function ViewStops() {
     }
 
     const google = window.google;
-
+/*TODO need to write code that will fill waypoints based on data in Loaded trips*/
     async function getRoute() {
         const directionsService = new google.maps.DirectionsService()
         const result = await directionsService.route({
@@ -201,6 +202,30 @@ function ViewStops() {
                         }}
                     />
                 </HStack>
+
+                <Grid templateColumns='repeat(3, 1fr)' gap={6}>
+                <Box
+                    p={4}
+                    borderRadius='sm'
+                    m={4}
+                    bgColor='white'
+                    shadow='base'
+                    minW='100px'
+                    zIndex='1'>
+                    <Box flexGrow={1}>
+                        <div>
+                            <h2> Stops </h2>
+                            <ul className={classes.list}>
+                                {loadedTrips.map(item => {
+                                    return <li className={classes.item}><div className={classes.card} >
+
+                                        <div className={classes.content}>{item.stopLoc}</div></div></li>;
+                                })}
+                            </ul>
+                        </div>
+                    </Box>
+                </Box>
+                </Grid>
             </Flex>
         </div>
     )

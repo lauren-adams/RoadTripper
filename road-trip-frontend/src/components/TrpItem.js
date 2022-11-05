@@ -45,6 +45,12 @@ function TrpItem(props) {
         userCtx.setCurTrip(props.startLoc, props.endLoc, props.date, props.rating, props.id);
         history.push("/view-stops");
     }
+
+    function viewStopListHandler() {
+        console.log("view stoplist");
+        userCtx.setCurTrip(props.startLoc, props.endLoc, props.date, props.rating, props.id);
+        history.push("/view-stoplist");
+    }
     //[{"id":1,"userID":"1","startLoc":"your","endLoc":"NO","startDate":"today","rating":5,"stopList":[]},
     return (
         <li className={classes.item}>
@@ -66,6 +72,9 @@ function TrpItem(props) {
                     </button>
                     <button onClick={addStopHandler}>
                         {'Add Stop'}
+                    </button>
+                    <button onClick={viewStopListHandler}>
+                        {'View Stops'}
                     </button>
                     <button onClick={viewStopHandler}>
                         {'View Route'}

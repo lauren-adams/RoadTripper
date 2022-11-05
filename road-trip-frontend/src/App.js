@@ -9,6 +9,7 @@ import Trp from "./components/Trp";
 import EditTrip from "./components/EditTrip";
 import addStop from "./components/AddStop";
 import ViewStops from "./components/ViewStops";
+import StopList from "./components/StopList";
 import Music from "./components/Music";
 
 function App() {
@@ -26,6 +27,7 @@ function App() {
         <Route path="/edit-trip" component={EditTrip} />
         <Route path="/add-stop" component={addStop} />
         <Route path="/view-stops" component={ViewStops} />
+        <Route path="/view-stoplist" component={StopList} />
         <Route path="/music" component={Music} />
         <Redirect from="/" to="/home" />
       </Switch>
