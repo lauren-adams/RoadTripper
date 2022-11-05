@@ -22,7 +22,7 @@ build-api:
     # "Dockerfile" in each directory.
     - cd road-trip-api
     - chmod +x gradlew
-    - podman --privileged build -t road-trip-api .
+    - podman --privileged build -t road-trip-api . 
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
     - echo $DOCKERUSER
     - echo $DOCKERKEY
