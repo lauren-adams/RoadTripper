@@ -13,12 +13,9 @@ build-api:
       when: always
     - if: $CI_COMMIT_MESSAGE =~ /\[NOTHING]/
       when: never
-  services:
-   - name: docker:dind
-     alias: thedockerhost
 
   variables:
-    DOCKER_HOST: tcp://thedockerhost:2375/
+    DOCKER_HOST: tcp://docker:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
   script:
@@ -45,12 +42,8 @@ build-frontend:
     - if: $CI_COMMIT_MESSAGE =~ /\[BUILD-FRONTEND]/
       when: always
 
-  services:
-   - name: docker:dind
-     alias: thedockerhost
-
   variables:
-    DOCKER_HOST: tcp://thedockerhost:2375/
+    DOCKER_HOST: tcp://docker:2375/
     DOCKER_DRIVER: overlay2
     DOCKER_TLS_CERTDIR: ""
      
