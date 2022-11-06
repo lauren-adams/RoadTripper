@@ -46,7 +46,6 @@ function ViewStops() {
                         lat: trip.lattitude,
                         lng: trip.longitude
                     }
-
                     const waypoint = {
                         location: loc,
                         stopover: true
@@ -78,14 +77,13 @@ function ViewStops() {
 
     /**
      * This is to get new route with waypoints along
-     * @returns {Promise<void>}
      */
     async function getRoute() {
         const directionsService = new google.maps.DirectionsService()
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
-            waypoints: userCtx.wayPts,
+            waypoints: loadedWaypoints,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
@@ -93,6 +91,22 @@ function ViewStops() {
         setDuration(result.routes[0].legs[0].duration.text)
 
         setMap(map);
+    }
+
+    //TODO: delete the stop
+    /**
+     * To delete stops when click button
+     */
+    const deleteStop = () => {
+
+    }
+
+    //TODO: set rating
+    /**
+     * To set rating for each stop
+     */
+    const setStopRating = () => {
+
     }
 
     return (
@@ -157,7 +171,7 @@ function ViewStops() {
                     />
                 </HStack>
 
-                {userCtx.wayPts == null ? <></> :
+                {loadedWaypoints == null ? <></> :
                 <Box
                     p={4}
                     borderRadius='lg'
@@ -175,11 +189,11 @@ function ViewStops() {
                         <h1> Stops </h1>
                         <nav>
                             <ul className={classes.list}>
-                                {userCtx.wayPts.map(item => {
+                                {loadedTrips.map(stop => {
                                     return (
                                         <li className={classes.item}>
                                             <div className={classes.card}>
-                                                <div className={classes.content}>{item}</div>
+                                                <div className={classes.content}>{stop.stopLoc}</div>
                                             </div>
                                             <Select placeholder='Rating'>
                                                 <option value='1'>1</option>

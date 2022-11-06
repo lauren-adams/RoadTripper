@@ -5,6 +5,7 @@ import {Link} from "react-router-dom";
 import { notify } from "./toast";
 import styled from 'styled-components';
 import axios from "axios";
+import WebHeader from "./WebHeader";
 
 
 
@@ -77,6 +78,7 @@ function Music()  {
     if (!playlistReturned) {
         return (
             <div>
+                <WebHeader />
                 <section>
                     <div>
                         <center>

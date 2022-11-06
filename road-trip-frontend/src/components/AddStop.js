@@ -30,6 +30,7 @@ import {
     AccordionIcon,
     Box,
 } from '@chakra-ui/react'
+import WebHeader from "./WebHeader";
 
 
 const AddStop = () => {
@@ -128,6 +129,7 @@ const AddStop = () => {
 
     return (
         <div>
+            <WebHeader />
             {/* <Accordion defaultIndex={[0]} allowMultiple >
                 {wayPoints.forEach(element => { 
                     return <AccordionItem>

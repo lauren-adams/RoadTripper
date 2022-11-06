@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import bcrypt from "bcryptjs";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
+import WebHeader from "./WebHeader";
 
 
 const preferenceValues = [
@@ -184,6 +185,7 @@ const Profile = () => {
 
     return (
         <div>
+            <WebHeader />
             {loading ? (
                 <label>loading</label>
             ) : (
