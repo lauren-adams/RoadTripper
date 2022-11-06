@@ -1,11 +1,13 @@
-import { useContext } from 'react';
+import { useContext, useState } from 'react';
 
 
 import classes from './TripItem.module.css';
 import UserContext from "./UserContext";
 import { useHistory } from "react-router-dom";
+import axios from "axios";
 
 function TrpItem(props) {
+    const [showBox, setShowBox] = useState(true);
     const userCtx = useContext(UserContext);
     console.log(props);
     const history = useHistory();
@@ -52,6 +54,9 @@ function TrpItem(props) {
                     <button onClick={editHandler}>
                         {'Edit'}
                     </button>
+                    <button onClick={() => props.show(props.id)}>
+                        {'Delete'}
+                    </button>
                     <button onClick={addStopHandler}>
                         {'Add Stop'}
                     </button>
@@ -61,6 +66,7 @@ function TrpItem(props) {
                 </div>
             </div>
         </li>
+
     );
 }
 

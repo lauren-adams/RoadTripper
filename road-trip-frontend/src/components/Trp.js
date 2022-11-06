@@ -4,6 +4,9 @@ import TrpList from './TrpList';
 import { useContext } from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
+import {Alert} from "react-bootstrap";
+import DeleteConfirmation from "./DeleteConfirmation";
+import axios from "axios";
 
 
 
@@ -14,6 +17,10 @@ function Trp() {
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
     const [loadedTrips, setLoadedTrips] = useState([]);
+    const [displayConfirmationModal, setDisplayConfirmationModal] = useState(false);
+    const [deleteMessage, setDeleteMessage] = useState(null);
+    const [tripMessage, setTripMessage] = useState(null);
+    const [trpId, setTrpId] = useState(null);
 
     useEffect(() => {
         console.log(userCtx.username + userCtx.email + userCtx.id);
@@ -41,6 +48,42 @@ function Trp() {
                 setLoadedTrips(trips);
             });
     }, []);
+    // Handle the displaying of the modal based on type and id
+    const showDeleteModal = (id) => {
+        console.log(loadedTrips);
+        setTrpId(id);
+        setTripMessage(null);
+        setDeleteMessage(`Are you sure you want to delete the trip '${loadedTrips.find((x) => x.id === id).id}'?`);
+        setDisplayConfirmationModal(true);
+    };
+
+    // Hide the modal
+    const hideConfirmationModal = () => {
+        setDisplayConfirmationModal(false);
+    };
+
+    // Handle the actual deletion of the item
+    const submitDelete =  (id) => {
+        console.log(id);
+        setTripMessage(`The trip '${loadedTrips.find((x) => x.id === id).id}' was deleted successfully.`);
+        setLoadedTrips(loadedTrips.filter((trip) => trip.id !== id));
+        setDisplayConfirmationModal(false);
+        console.log("Delete");
+        let delUrl = 'https://subjecttochange.dev/api/trip/' + id;
+        let delUrl2 = 'http://localhost:8080/trip/' + id;
+        const delData = async () => {
+            //const responseA = axios.post(urlApi);
+            const responseA = axios({
+                method: 'delete',
+                url: delUrl,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                }
+            });
+        }
+        delData()
+    };
 
     if (isLoading) {
         return (
@@ -55,8 +98,13 @@ function Trp() {
         <div>
             <section>
                 <h1>Saved Trips</h1>
-                <TrpList trips={loadedTrips}/>
+                {tripMessage && <Alert variant="success">{tripMessage}</Alert>}
+                <TrpList trips={loadedTrips}
+                    show = {showDeleteModal}
+                    hide = {hideConfirmationModal}
+                    submit = {submitDelete}/>
             </section>
+            <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete} hideModal={hideConfirmationModal} id={trpId} message={deleteMessage}  />
             <Link to="/home">Home</Link></div>
     );
 } else {

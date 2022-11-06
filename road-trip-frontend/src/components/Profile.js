@@ -102,10 +102,9 @@ const Profile = () => {
         history.push("/home");
         const base = `https://subjecttochange.dev/api`
         const base2 = 'http://localhost:8080'
-
         const urlApi = base + `/user`;
         const prefApi = base + '/user/' + userCtx.id + '/preferences'
-        console.log(data.start + data.end);
+        console.log(userCtx);
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
             const responseA = axios({
@@ -116,9 +115,9 @@ const Profile = () => {
                     'Access-Control-Allow-Origin': '*'
                 },
                 data: {
-                    'id': userCtx.id,
+                    'id': parseInt(userCtx.id),
                     'emailAddress': data.end,
-                    'username': data.start
+                    'username': data.start,
                 }
             });
 
