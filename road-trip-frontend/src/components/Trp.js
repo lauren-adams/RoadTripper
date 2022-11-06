@@ -4,10 +4,7 @@ import TrpList from './TrpList';
 import { useContext } from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
-
-
-
-
+import WebHeader from "./WebHeader";
 
 
 function Trp() {
@@ -53,6 +50,7 @@ function Trp() {
 
     return (
         <div>
+            <WebHeader />
             <section>
                 <h1>Saved Trips</h1>
                 <TrpList trips={loadedTrips}/>
@@ -62,6 +60,7 @@ function Trp() {
 } else {
         return (
             <div>
+                <WebHeader />
                 <section>
                     <h1>Saved Trips</h1>
                     <p> log in to be able to save trips</p>

@@ -2,17 +2,18 @@ import React, {useState, useEffect} from 'react';
 
 import {useContext} from 'react';
 import UserContext from "./UserContext";
-import {Link} from "react-router-dom";
-import {Box, Button, ButtonGroup, Flex, HStack, IconButton, Input, Grid, Text} from "@chakra-ui/react";
+import {Box, Button, Flex, HStack, IconButton, Grid, Text, Select} from "@chakra-ui/react";
 import {Autocomplete, DirectionsRenderer, GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 import {FaLocationArrow} from "react-icons/fa";
 import classes from "./TripItem.module.css";
+import WebHeader from "./WebHeader";
 
 function ViewStops() {
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyDm3fa141BAW4SlncLns36sYTTk4gx2BOw',
         libraries: ['places'],
     })
+
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
     const [loadedTrips, setLoadedTrips] = useState([]);
@@ -52,7 +53,7 @@ function ViewStops() {
                     }
                     console.log(trip);
                     console.log(waypoint);
-                /* TODO only push to list when flagged */
+                    /* TODO only push to list when flagged */
                     trips.push(trip);
                     waypoints.push(waypoint);
                 }
@@ -71,10 +72,6 @@ function ViewStops() {
         );
     }
 
-    const logOut = () => {
-        userCtx.setMyUser("", "", false);
-    };
-
     const center = {lat: 31.559814, lng: -97.141800}
 
     // TODO: get data from backend
@@ -89,15 +86,16 @@ function ViewStops() {
     }
 
     const google = window.google;
-/*TODO need to write code that will fill waypoints based on data in Loaded trips*/
+
+    /*TODO need to write code that will fill waypoints based on data in Loaded trips*/
     async function getRoute() {
         const directionsService = new google.maps.DirectionsService()
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
             waypoints: loadedWaypoints
-                /*[{location: 'Chicago, IL', stopover: true},
-                    {location: 'Indianapolis, IN', stopover: true}]*/,
+            /*[{location: 'Chicago, IL', stopover: true},
+                {location: 'Indianapolis, IN', stopover: true}]*/,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
@@ -109,57 +107,7 @@ function ViewStops() {
 
     return (
         <div>
-            <nav className="navbar navbar-expand navbar-dark bg-dark">
-                <Link to={"/home"} className="navbar-brand">
-                    SubjectToChange
-                </Link>
-                <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link to={"/maps"} className="nav-link">
-                            Make A Trip
-                        </Link>
-                    </li>
-                </div>
-                <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link to={"/view-trips"} className="nav-link">
-                            Trips
-                        </Link>
-                    </li>
-                </div>
-                <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link to={"/music"} className="nav-link">
-                            Music
-                        </Link>
-                    </li>
-                </div>
-
-
-                {userCtx.isLoggedIn ? (
-                    <div className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <Link to={"/profile"} className="nav-link">
-                                {userCtx.username}
-                            </Link>
-                        </li>
-                        <li className="nav-item">
-                            <a href="/home" className="nav-link" onClick={logOut}>
-                                LogOut
-                            </a>
-                        </li>
-                    </div>
-                ) : (
-                    <div className="navbar-nav ml-auto">
-                        <li className="nav-item">
-                            <Link to={"/login"} className="nav-link">
-                                Login
-                            </Link>
-                        </li>
-                    </div>
-                )}
-
-            </nav>
+            <WebHeader/>
 
             <Flex
                 position='relative'
@@ -219,27 +167,40 @@ function ViewStops() {
                 </HStack>
 
                 <Grid templateColumns='repeat(3, 1fr)' gap={6}>
-                <Box
-                    p={4}
-                    borderRadius='sm'
-                    m={4}
-                    bgColor='white'
-                    shadow='base'
-                    minW='100px'
-                    zIndex='1'>
-                    <Box flexGrow={1}>
-                        <div>
-                            <h2> Stops </h2>
-                            <ul className={classes.list}>
-                                {loadedTrips.map(item => {
-                                    return <li className={classes.item}><div className={classes.card} >
-
-                                        <div className={classes.content}>{item.stopLoc}</div></div></li>;
-                                })}
-                            </ul>
-                        </div>
+                    <Box
+                        p={4}
+                        borderRadius='sm'
+                        m={4}
+                        bgColor='white'
+                        shadow='base'
+                        minW='200px'
+                        zIndex='1'>
+                        <Box flexGrow={1}>
+                            <div>
+                                <h2> Stops </h2>
+                                <nav>
+                                    <ul className={classes.list}>
+                                        {loadedWaypoints.map(item => {
+                                            return (
+                                                <li className={classes.item}>
+                                                    <div className={classes.card}>
+                                                        <div className={classes.content}>hi</div>
+                                                    </div>
+                                                    <Select placeholder='Rating'>
+                                                        <option value='1'>1</option>
+                                                        <option value='2'>2</option>
+                                                        <option value='3'>3</option>
+                                                        <option value='4'>4</option>
+                                                        <option value='5'>5</option>
+                                                    </Select>
+                                                </li>
+                                            );
+                                        })}
+                                    </ul>
+                                </nav>
+                            </div>
+                        </Box>
                     </Box>
-                </Box>
                 </Grid>
             </Flex>
         </div>
