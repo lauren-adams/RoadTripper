@@ -2,7 +2,7 @@ import React, {useState, useEffect} from 'react';
 
 import {useContext} from 'react';
 import UserContext from "./UserContext";
-import {Box, Button, Flex, HStack, IconButton, Grid, Text, Select} from "@chakra-ui/react";
+import {Box, Button, Flex, HStack, IconButton, Grid, Text, Select, extendTheme, ChakraProvider} from "@chakra-ui/react";
 import {Autocomplete, DirectionsRenderer, GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
 import {FaLocationArrow} from "react-icons/fa";
 import classes from "./TripItem.module.css";
@@ -109,6 +109,19 @@ function ViewStops() {
 
     }
 
+    // const styles = StyleSheet.create({
+    //     saveButton: {
+    //         colorScheme: "#4AD0CCFF",
+    //         size: "sm",
+    //         margin: 1
+    //     },
+    //     delButton: {
+    //         colorScheme: "#77002e",
+    //         size: "sm",
+    //         margin: 1
+    //     }
+    // });
+
     return (
         <div>
             <WebHeader/>
@@ -172,45 +185,46 @@ function ViewStops() {
                 </HStack>
 
                 {loadedWaypoints == null ? <></> :
-                <Box
-                    p={4}
-                    borderRadius='lg'
-                    m={4}
-                    bgColor='white'
-                    shadow='base'
-                    height='60%'
-                    width='300px'
-                    zIndex='1'
-                    alignSelf='flex-start'
-                    scrollBehavior='smooth'
-                    overflow='scroll'
-                >
-                    <div align='center'>
-                        <h1> Stops </h1>
-                        <nav>
-                            <ul className={classes.list}>
-                                {loadedTrips.map(stop => {
-                                    return (
-                                        <li className={classes.item}>
-                                            <div className={classes.card}>
-                                                <div className={classes.content}>{stop.stopLoc}</div>
-                                            </div>
-                                            <Select placeholder='Rating'>
-                                                <option value='1'>1</option>
-                                                <option value='2'>2</option>
-                                                <option value='3'>3</option>
-                                                <option value='4'>4</option>
-                                                <option value='5'>5</option>
-                                            </Select>
-                                            {/*TODO: No idea how to actually delete...*/}
-                                            <Button colorScheme='pink' size='sm'>delete</Button>
-                                        </li>
-                                    );
-                                })}
-                            </ul>
-                        </nav>
-                    </div>
-                </Box>}
+                    <Box
+                        p={4}
+                        borderRadius='lg'
+                        m={4}
+                        bgColor='white'
+                        shadow='base'
+                        height='60%'
+                        width='300px'
+                        zIndex='1'
+                        alignSelf='flex-start'
+                        scrollBehavior='smooth'
+                        overflow='scroll'
+                    >
+                        <div align='center'>
+                            <h1> Stops </h1>
+                            <nav>
+                                <ul className={classes.list}>
+                                    {loadedTrips.map(stop => {
+                                        return (
+                                            <li className={classes.item}>
+                                                <div className={classes.card}>
+                                                    <div className={classes.content}>{stop.stopLoc}</div>
+                                                </div>
+                                                <Select placeholder='Rating'>
+                                                    <option value='1'>1</option>
+                                                    <option value='2'>2</option>
+                                                    <option value='3'>3</option>
+                                                    <option value='4'>4</option>
+                                                    <option value='5'>5</option>
+                                                </Select>
+                                                {/*TODO: No idea how to actually delete...*/}
+                                                <Button colorScheme="blue" size='sm' margin='1'>Save</Button>
+                                                <Button colorScheme='pink' size='sm' margin='1'>Delete</Button>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </nav>
+                        </div>
+                    </Box>}
             </Flex>
         </div>
     )
