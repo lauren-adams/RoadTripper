@@ -18,6 +18,7 @@ import java.util.Optional;
 @RestController
 @RequestMapping("/")
 public class UserEndpoint {
+
     @Autowired
     private UserService userService;
 

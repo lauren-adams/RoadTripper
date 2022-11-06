@@ -25,4 +25,14 @@ public class Preference {
 
     @Column(name="USER_ID")
     String userId;
+
+    public Preference(Long id, String type, String userId) {
+        this.id = id;
+        this.type = type;
+        this.userId = userId;
+    }
+
+    public Preference() {
+
+    }
 }

@@ -8,11 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class UserService {
 
     @Autowired
-    //@Qualifier("datasource")
     public UserRepository userRepository;
 
     public Optional<User> findUser(Long userId) {
@@ -23,9 +24,12 @@ public class UserService {
         return userRepository.findByEmailAddress(email);
     }
 
+    @Transactional
     public void deleteUser(Long id){ userRepository.deleteById(id); }
+    @Transactional
     public void deleteAllUsers() { userRepository.deleteAll(); }
 
+    @Transactional
     //Create User
     public User saveUser(User user) {
         return userRepository.save(user);
