@@ -12,6 +12,7 @@ import road.trip.api.trip.TripService;
 import road.trip.api.Email;
 import road.trip.api.user.UserService;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -56,9 +57,11 @@ public class TripEndpoint {
         return trip.orElse(null);
     }
 
+    @Transactional
     @DeleteMapping("/trip/{id}")
     public void deleteTrip(@PathVariable("id") Long id){ tripService.deleteTrip(id); }
 
+    @Transactional
     @DeleteMapping("/trip")
     public void deleteAllTrips(){ tripService.deleteAllTrip(); }
 
