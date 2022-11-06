@@ -93,9 +93,7 @@ function ViewStops() {
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
-            waypoints: loadedWaypoints
-            /*[{location: 'Chicago, IL', stopover: true},
-                {location: 'Indianapolis, IN', stopover: true}]*/,
+            waypoints: loadedWaypoints,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
@@ -166,42 +164,46 @@ function ViewStops() {
                     />
                 </HStack>
 
-                <Grid templateColumns='repeat(3, 1fr)' gap={6}>
-                    <Box
-                        p={4}
-                        borderRadius='sm'
-                        m={4}
-                        bgColor='white'
-                        shadow='base'
-                        minW='200px'
-                        zIndex='1'>
-                        <Box flexGrow={1}>
-                            <div>
-                                <h2> Stops </h2>
-                                <nav>
-                                    <ul className={classes.list}>
-                                        {loadedWaypoints.map(item => {
-                                            return (
-                                                <li className={classes.item}>
-                                                    <div className={classes.card}>
-                                                        <div className={classes.content}>hi</div>
-                                                    </div>
-                                                    <Select placeholder='Rating'>
-                                                        <option value='1'>1</option>
-                                                        <option value='2'>2</option>
-                                                        <option value='3'>3</option>
-                                                        <option value='4'>4</option>
-                                                        <option value='5'>5</option>
-                                                    </Select>
-                                                </li>
-                                            );
-                                        })}
-                                    </ul>
-                                </nav>
-                            </div>
-                        </Box>
-                    </Box>
-                </Grid>
+                <Box
+                    p={4}
+                    borderRadius='lg'
+                    m={4}
+                    bgColor='white'
+                    shadow='base'
+                    height='60%'
+                    width='300px'
+                    zIndex='1'
+                    alignSelf='flex-start'
+                    scrollBehavior='smooth'
+                    overflow='scroll'
+                >
+                    {/*<Box flexGrow={1}>*/}
+                        <div align='center'>
+                            <h1> Stops </h1>
+                            <nav>
+                                <ul className={classes.list}>
+                                    {loadedWaypoints.map(item => {
+                                        return (
+                                            <li className={classes.item} >
+                                                <div className={classes.card}>
+                                                    <div className={classes.content}>hi</div>
+                                                </div>
+                                                <Select placeholder='Rating'>
+                                                    <option value='1'>1</option>
+                                                    <option value='2'>2</option>
+                                                    <option value='3'>3</option>
+                                                    <option value='4'>4</option>
+                                                    <option value='5'>5</option>
+                                                </Select>
+                                                <Button colorScheme='pink' size='sm'>delete</Button>
+                                            </li>
+                                        );
+                                    })}
+                                </ul>
+                            </nav>
+                        </div>
+                    {/*</Box>*/}
+                </Box>
             </Flex>
         </div>
     )
