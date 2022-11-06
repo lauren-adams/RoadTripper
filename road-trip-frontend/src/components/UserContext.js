@@ -12,12 +12,12 @@ const UserContext = createContext({
     isLoggedIn: false,
     id: "",
     start: "",
-    // stops: [],
+    wayPts: [],
     end: "",
     date: "",
     rating: "",
     tid: "",
-    setCurTrip: (start, end, date, rating, tid) => {}
+    setCurTrip: (start, end, wayPts, date, rating, tid) => {}
 
 });
 

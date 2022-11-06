@@ -74,26 +74,18 @@ function ViewStops() {
 
     const center = {lat: 31.559814, lng: -97.141800}
 
-    // TODO: get data from backend
-    const getTrip = (event) => {
-        event.preventDefault();
-        const base = `https://subjecttochange.dev/api`
-        const urlApi = base + `trip`;
-
-        const getData = async (data) => {
-            // TODO: how to get data
-        }
-    }
-
     const google = window.google;
 
-    /*TODO need to write code that will fill waypoints based on data in Loaded trips*/
+    /**
+     * This is to get new route with waypoints along
+     * @returns {Promise<void>}
+     */
     async function getRoute() {
         const directionsService = new google.maps.DirectionsService()
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
-            waypoints: loadedWaypoints,
+            waypoints: userCtx.wayPts,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
@@ -164,6 +156,7 @@ function ViewStops() {
                     />
                 </HStack>
 
+                {userCtx.wayPts == null ? <></> :
                 <Box
                     p={4}
                     borderRadius='lg'
@@ -177,33 +170,31 @@ function ViewStops() {
                     scrollBehavior='smooth'
                     overflow='scroll'
                 >
-                    {/*<Box flexGrow={1}>*/}
-                        <div align='center'>
-                            <h1> Stops </h1>
-                            <nav>
-                                <ul className={classes.list}>
-                                    {loadedWaypoints.map(item => {
-                                        return (
-                                            <li className={classes.item} >
-                                                <div className={classes.card}>
-                                                    <div className={classes.content}>hi</div>
-                                                </div>
-                                                <Select placeholder='Rating'>
-                                                    <option value='1'>1</option>
-                                                    <option value='2'>2</option>
-                                                    <option value='3'>3</option>
-                                                    <option value='4'>4</option>
-                                                    <option value='5'>5</option>
-                                                </Select>
-                                                <Button colorScheme='pink' size='sm'>delete</Button>
-                                            </li>
-                                        );
-                                    })}
-                                </ul>
-                            </nav>
-                        </div>
-                    {/*</Box>*/}
-                </Box>
+                    <div align='center'>
+                        <h1> Stops </h1>
+                        <nav>
+                            <ul className={classes.list}>
+                                {loadedWaypoints.map(item => {
+                                    return (
+                                        <li className={classes.item}>
+                                            <div className={classes.card}>
+                                                <div className={classes.content}>{userCtx.wayPts}</div>
+                                            </div>
+                                            <Select placeholder='Rating'>
+                                                <option value='1'>1</option>
+                                                <option value='2'>2</option>
+                                                <option value='3'>3</option>
+                                                <option value='4'>4</option>
+                                                <option value='5'>5</option>
+                                            </Select>
+                                            <Button colorScheme='pink' size='sm'>delete</Button>
+                                        </li>
+                                    );
+                                })}
+                            </ul>
+                        </nav>
+                    </div>
+                </Box>}
             </Flex>
         </div>
     )
