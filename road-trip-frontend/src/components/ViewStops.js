@@ -132,10 +132,11 @@ function ViewStops() {
                     bgColor='white'
                     shadow='base'
                     minW='container.md'
-                    zIndex='1'>
+                    zIndex='1'
+                    align='center'
+                >
                     <Box flexGrow={1}>
                         <Text>
-                            {/*TODO: The value need to be added*/}
                             Start: {userCtx.start} Destination: {userCtx.end}
                         </Text>
                         <Text>Distance: {distance} </Text>
@@ -174,11 +175,11 @@ function ViewStops() {
                         <h1> Stops </h1>
                         <nav>
                             <ul className={classes.list}>
-                                {loadedWaypoints.map(item => {
+                                {userCtx.wayPts.map(item => {
                                     return (
                                         <li className={classes.item}>
                                             <div className={classes.card}>
-                                                <div className={classes.content}>{userCtx.wayPts}</div>
+                                                <div className={classes.content}>{item}</div>
                                             </div>
                                             <Select placeholder='Rating'>
                                                 <option value='1'>1</option>
@@ -187,6 +188,7 @@ function ViewStops() {
                                                 <option value='4'>4</option>
                                                 <option value='5'>5</option>
                                             </Select>
+                                            {/*TODO: No idea how to actually delete...*/}
                                             <Button colorScheme='pink' size='sm'>delete</Button>
                                         </li>
                                     );

@@ -1,25 +1,25 @@
-import React, { useEffect, useState } from "react";
+import React, {useEffect, useState} from "react";
 //Icon
 import userIcon from "../img/user.svg";
 import emailIcon from "../img/email.svg";
 import passwordIcon from "../img/password.svg";
 // Validate
-import { validate } from "./validate";
+import {validate} from "./validate";
 // Styles
 import styles from "./SignUp.module.css";
 import "react-toastify/dist/ReactToastify.css";
 // Toast
-import { ToastContainer, toast } from "react-toastify";
-import { notify } from "./toast";
+import {ToastContainer, toast} from "react-toastify";
+import {notify} from "./toast";
 //
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 // Axios
 
 import axios from "axios";
 
-import { useHistory } from "react-router-dom";
+import {useHistory} from "react-router-dom";
 import bcrypt from "bcryptjs";
-import { useContext } from 'react';
+import {useContext} from 'react';
 import UserContext from "./UserContext";
 import Filter from "./StopFilter";
 import {
@@ -33,7 +33,7 @@ import {
 
 
 const AddStop = () => {
-   let wayPoints =  [];
+    let wayPoints = [];
     const userCtx = useContext(UserContext);
     console.log(userCtx.username + userCtx.email + userCtx.id + userCtx.tid);
     const [data, setData] = useState({
@@ -55,16 +55,16 @@ const AddStop = () => {
 
     const changeHandler = (event) => {
         if (event.target.name === "IsAccepted") {
-            setData({ ...data, [event.target.name]: event.target.checked });
+            setData({...data, [event.target.name]: event.target.checked});
         } else {
-            setData({ ...data, [event.target.name]: event.target.value });
+            setData({...data, [event.target.name]: event.target.value});
         }
     };
 
     const focusHandler = (event) => {
-        setTouched({ ...touched, [event.target.name]: true });
+        setTouched({...touched, [event.target.name]: true});
     };
-    
+
 
     const listStops = async () => {
         const base = `https://subjecttochange.dev/api`
@@ -80,15 +80,14 @@ const AddStop = () => {
         });
         console.log("trip response", responseA)
         responseA.data.forEach(element => {
-            let way_point = wayPoints.find(x=>x.way_point === element.waypointNumber)
-            if(way_point){
+            let way_point = wayPoints.find(x => x.way_point === element.waypointNumber)
+            if (way_point) {
                 way_point.stop.push(element)
-            }
-            else{
+            } else {
                 wayPoints.push({
-                way_point: element.waypointNumber,
-                stop: [element]
-            })
+                    way_point: element.waypointNumber,
+                    stop: [element]
+                })
             }
         });
         console.log("trip waypont", wayPoints)
@@ -175,8 +174,7 @@ const AddStop = () => {
 
             </form>
 
-            <ToastContainer />
-
+            <ToastContainer/>
 
 
         </div>
