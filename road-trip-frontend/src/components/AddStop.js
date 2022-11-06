@@ -1,27 +1,32 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 //Icon
 import userIcon from "../img/user.svg";
 import emailIcon from "../img/email.svg";
 import passwordIcon from "../img/password.svg";
 // Validate
-import {validate} from "./validate";
+import { validate } from "./validate";
 // Styles
 import styles from "./SignUp.module.css";
 import "react-toastify/dist/ReactToastify.css";
 // Toast
-import {ToastContainer, toast} from "react-toastify";
-import {notify} from "./toast";
+import { ToastContainer, toast } from "react-toastify";
+import { notify } from "./toast";
 //
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 // Axios
 
 import axios from "axios";
 
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import bcrypt from "bcryptjs";
-import {useContext} from 'react';
+import { useContext } from 'react';
 import UserContext from "./UserContext";
 import Filter from "./StopFilter";
+import { Center, Image, Flex, Badge, Text } from "@chakra-ui/react";
+import { MdStar } from "react-icons/md";
+import { Checkbox, CheckboxGroup } from '@chakra-ui/react';
+import { Button, ButtonGroup } from '@chakra-ui/react';
+import { Stack, HStack, VStack } from '@chakra-ui/react'
 import {
     Accordion,
     AccordionItem,
@@ -35,7 +40,10 @@ import WebHeader from "./WebHeader";
 
 const AddStop = () => {
     let wayPoints = [];
+    let selectedStops = [];
+    let isLoading = true;
     const userCtx = useContext(UserContext);
+    const [loadedTrips, setLoadedTrips] = useState([]);
     console.log(userCtx.username + userCtx.email + userCtx.id + userCtx.tid);
     const [data, setData] = useState({
         start: "",
@@ -52,25 +60,10 @@ const AddStop = () => {
 
     useEffect(() => {
         //setErrors(validate(data, "signUp"));
-    }, [data, touched]);
 
-    const changeHandler = (event) => {
-        if (event.target.name === "IsAccepted") {
-            setData({...data, [event.target.name]: event.target.checked});
-        } else {
-            setData({...data, [event.target.name]: event.target.value});
-        }
-    };
-
-    const focusHandler = (event) => {
-        setTouched({...touched, [event.target.name]: true});
-    };
-
-
-    const listStops = async () => {
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
-        const responseA = await axios({
+        axios({
             method: 'get',
             url: urlApi,
             headers: {
@@ -78,9 +71,10 @@ const AddStop = () => {
                 'Access-Control-Allow-Origin': '*'
             }
 
-        });
-        console.log("trip response", responseA)
-        responseA.data.forEach(element => {
+        })
+        .then((response) => {
+        console.log("trip response", response)
+        response.data.forEach(element => {
             let way_point = wayPoints.find(x => x.way_point === element.waypointNumber)
             if (way_point) {
                 way_point.stop.push(element)
@@ -92,11 +86,24 @@ const AddStop = () => {
             }
         });
         console.log("trip waypont", wayPoints)
-    }
-    listStops()
+        setLoadedTrips(wayPoints);
+        isLoading = false; })
+    }, [data, touched]);
 
-    const submitHandler = (event) => {
-        event.preventDefault();
+    const changeHandler = (event) => {
+        if (event.target.name === "IsAccepted") {
+            setData({ ...data, [event.target.name]: event.target.checked });
+        } else {
+            setData({ ...data, [event.target.name]: event.target.value });
+        }
+    };
+
+    const focusHandler = (event) => {
+        setTouched({ ...touched, [event.target.name]: true });
+    };
+
+
+    const submitHandler = (selectedStops) => {
         history.push("/view-trips");
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
@@ -112,10 +119,7 @@ const AddStop = () => {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                data: {
-                    'stopLoc': data.start,
-                    'tripId': userCtx.tid
-                }
+                data: selectedStops
 
             });
             console.log(urlApi);
@@ -127,60 +131,93 @@ const AddStop = () => {
 
     };
 
+
+
+
+
+    function addStop(e, stop) {
+        if (e.target.checked) {
+            stop.flagStop = true;
+            selectedStops.push(stop)
+        } 
+        else {
+            // let removeIndex = selectedStops.findIndex(x => x.id === stop.id);
+            // selectedStops.splice(removeIndex, 1)
+            stop.flagStop = false;
+            let foundStop = selectedStops.find(s=>s.id == stop.id)
+            if(foundStop){
+                foundStop.flagStop = false;
+            }
+            else{
+                selectedStops.push(stop)
+            }
+
+        }
+    }
+
+    function save() {
+        submitHandler(selectedStops)
+
+    }
+
+    function addCard(stop) {
+        return <Checkbox w="100%" onChange={(e) => addStop(e, stop)} defaultChecked={stop.flagStop}>
+                <Text>
+                    {stop.stopLoc}
+                </Text>
+        </Checkbox>
+
+
+    }
+
+
     return (
         <div>
             <WebHeader />
-            {/* <Accordion defaultIndex={[0]} allowMultiple >
-                {wayPoints.forEach(element => { 
-                    return <AccordionItem>
-                    <h2>
-                        <AccordionButton>
-                            <Box flex='1' textAlign='left'>
-                                Section 1 title
-                            </Box>
-                            <AccordionIcon />
-                        </AccordionButton>
-                    </h2>
-                    <AccordionPanel pb={4}>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-                        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-                        commodo consequat.
-                    </AccordionPanel>
-                </AccordionItem>
-                })
-                }
+            <div>
                 
-
-            </Accordion> */}
-            <form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
-                <h2>Add Stop</h2>
-                <div>
-                    <div
-                        className={errors.start && touched.start ? styles.unCompleted : !errors.start && touched.start ? styles.completed : undefined}>
-                        <input type="text" name="start" value={data.start} placeholder="Start Location"
-                               onChange={changeHandler} onFocus={focusHandler} autoComplete="off"/>
-                    </div>
-                    {errors.start && touched.start && <span className={styles.error}>{errors.start}</span>}
-                </div>
-
-                <div>
-                    <button type="submit">Submit</button>
-                    <span style={{color: "#a29494", textAlign: "center", display: "inline-block", width: "100%"}}>
-                        <Link to="/view-trips">Back</Link>
-                    </span>
-                </div>
-
-                <Filter>
-                </Filter>
-
-            </form>
-
-            <ToastContainer/>
-
+            </div>
+            <Box m="5%" border p="5%" w="90%" borderWidth="1px">
+            <Text fontSize="xl" fontWeight="semibold" lineHeight="short" flex='1' textAlign='center'>Select Stops</Text>   
+            <Accordion allowToggle>
+                {
+                    loadedTrips.map((x, index) => {
+                        // console.log("x", x);
+                        // console.log(x);
+                        return <AccordionItem>
+                            <h2>
+                                <AccordionButton>
+                                    <Box fontSize="l" fontWeight="semibold" lineHeight="short" flex='1' textAlign='left'>
+                                        Stops Center {index + 1}
+                                    </Box>
+                                    <AccordionIcon />
+                                </AccordionButton>
+                            </h2>
+                            <AccordionPanel pb={4}>
+                                {/* <CheckboxGroup colorScheme='green' defaultValue={[]} > */}
+                                    <VStack>
+                                        {
+                                            x.stop.map(stop => {
+                                                return addCard(stop)
+                                            })
+                                        }
+                                    </VStack>
+                                {/* </CheckboxGroup> */}
+                            </AccordionPanel>
+                        </AccordionItem>
+                    })
+                }
+            </Accordion>
+            <Center>
+                <Button m="4" onClick={save} colorScheme='blue' >Save</Button>
+            </Center>
+            </Box>
+            <ToastContainer />
 
         </div>
     );
+
+
 };
 
 export default AddStop;

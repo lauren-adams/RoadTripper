@@ -35,7 +35,7 @@ function Trp() {
                 }
 
                 setIsLoading(false);
-                setLoadedTrips(trips);
+                setLoadedTrips(trips.reverse());
             });
     }, []);
 

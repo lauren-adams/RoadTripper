@@ -6,8 +6,8 @@ import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
 import TrpItem from "./TrpItem";
 import classes from "./TripItem.module.css";
-
-
+import WebHeader from "./WebHeader";
+import { Center, Image, Flex, Badge, Text, Box} from "@chakra-ui/react";
 
 
 
@@ -26,27 +26,14 @@ function StopList() {
             .then((response) => {
                 return response.json();
             })
-            .then((data) => {
-                console.log(data);
-                const trips = [];
-
-                for (const key in data) {
-                    const trip = {
-                        id: key,
-                        ...data[key]
-                    };
-                    /*** TODO when stops get flagged we will need to
-                     * implement somehting that limits the stops because database is flooded
-                     */
-                   /* if (trip.flagstop = true) {
-                        trips.push(trip);
-                    }*/
-
-                    trips.push(trip);
+            .then((stops) => {
+                console.log(stops);
+                if(stops && stops.length > 0){
+                    stops = stops.filter(x=>x.flagStop === true)
+                    setIsLoading(false);
+                    setLoadedTrips(stops);
                 }
-                console.log("trips" + trips);
-                setIsLoading(false);
-                setLoadedTrips(trips);
+                
             });
     }, []);
 
@@ -60,8 +47,9 @@ function StopList() {
 
     return (
         <div>
-            <section>
-                <h1>Stops</h1>
+            <WebHeader />
+            <Box m="5%" border p="5%" w="90%" borderWidth="1px">
+                <Text fontSize="xl" fontWeight="semibold" lineHeight="short" flex='1' textAlign='left' >Stops</Text>
                 <div>
                     <ul className={classes.list}>
                         {loadedTrips.map(item => {
@@ -71,8 +59,10 @@ function StopList() {
                         })}
                     </ul>
                 </div>
-            </section>
-            <Link to="/view-trips">Back</Link></div>
+            </Box>
+            
+            
+            </div>
     );
 
 
