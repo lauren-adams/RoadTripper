@@ -53,6 +53,7 @@ function ViewStops() {
                     console.log(trip);
                     console.log(waypoint);
                     /* TODO only push to list when flagged */
+                    // FIXME: Something wrong getting the stops
                     trips.push(trip);
                     waypoints.push(waypoint);
                 }
@@ -83,7 +84,8 @@ function ViewStops() {
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
-            waypoints: loadedWaypoints,
+            // FIXME: Here is a big problem, if the here are too many stops and this will break
+            // waypoints: loadedWaypoints,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
@@ -94,6 +96,7 @@ function ViewStops() {
     }
 
     //TODO: delete the stop
+    // similar to what view stop did
     /**
      * To delete stops when click button
      */
