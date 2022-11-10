@@ -75,7 +75,7 @@ const SignUp = () => {
         const response = await toast.promise(responseA, {
           pending: "Check your data",
           success: "Checked!",
-          error: "Something went wrong!",
+          error: "You have already registered, log in to your account",
         });
         console.log("test");
         if (response.data.ok) {
