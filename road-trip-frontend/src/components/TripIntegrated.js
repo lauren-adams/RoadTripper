@@ -31,7 +31,7 @@ import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
 
 
-const center = { lat: 48.8584, lng: 2.2945 }
+const center = { lat: 31.5501, lng: -97.1135 }
 let markers = [];
 let PolygonBound;
 let waypoints = [];
