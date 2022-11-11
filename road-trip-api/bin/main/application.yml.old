@@ -1,0 +1,10 @@
+server:
+  port : 8080
+spring:
+  datasource:
+    url: jdbc:mysql://mysql.gitlab-runner.svc.cluster.local:3306/roadtrip
+    username: root
+    password: password
+  jpa:
+    hibernate:
+      ddl-auto: update

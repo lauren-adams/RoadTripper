@@ -10,7 +10,8 @@ const WebHeader = () => {
         userCtx.setMyUser("", "", false);
     };
 
-    return (<div>
+    return (
+        <div>
             <nav class="navbar navbar-expand navbar-dark bg-dark">
                 <Link to={"/home"} className="navbar-brand">
                     SubjectToChange
