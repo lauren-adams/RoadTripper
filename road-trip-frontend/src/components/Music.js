@@ -96,7 +96,14 @@ function Music()  {
                             <Button type="button" onClick={setCalm}>zzz</Button>
                         </div>
                         <div>
-                            <Button type="button" onClick={submit}>Submit</Button>
+                            <Link to="/home">
+                                <Button type="button">
+                                    Back
+                                </Button>
+                            </Link>
+                            <Button type="button" onClick={submit}>
+                                Submit
+                            </Button>
                         </div>
                         <div>
                             <iframe
@@ -109,7 +116,7 @@ function Music()  {
                             </center>
                     </div>
                 </section>
-                <Link to="/home">Back</Link></div>
+                </div>
         );}
 
 
