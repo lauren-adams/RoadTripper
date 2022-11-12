@@ -11,7 +11,9 @@ public class StopService{
     @Autowired
     public StopRepository stopRepository;
 
-    public Stop saveStop(Stop stop){ return stopRepository.save(stop); }
+    public Stop saveStop(Stop stop){
+        return stopRepository.save(stop);
+    }
     public List<Stop> saveAllStop(List<Stop> stops){ return stopRepository.saveAll(stops); }
     public void deleteStop(Long id){ stopRepository.deleteById(id);}
 
@@ -22,4 +24,6 @@ public class StopService{
     public List<Stop> findStopsByTripId(Long tripId){ return stopRepository.findByTripId(tripId); }
 
     public void deleteByTripId(Long id){ stopRepository.deleteByTripId(id); }
+
+
 }

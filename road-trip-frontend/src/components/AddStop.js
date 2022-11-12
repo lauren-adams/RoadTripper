@@ -43,6 +43,8 @@ const AddStop = () => {
     let selectedStops = [];
     let isLoading = true;
     const userCtx = useContext(UserContext);
+    //renders the html again when there is a change int the loadedtrips
+    // the useState()
     const [loadedTrips, setLoadedTrips] = useState([]);
     console.log(userCtx.username + userCtx.email + userCtx.id + userCtx.tid);
     const [data, setData] = useState({
@@ -61,7 +63,7 @@ const AddStop = () => {
     useEffect(() => {
         //setErrors(validate(data, "signUp"));
 
-        const base = `https://subjecttochange.dev/api`
+        const base = `http://localhost:8080`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         axios({
             method: 'get',
@@ -105,7 +107,7 @@ const AddStop = () => {
 
     const submitHandler = (selectedStops) => {
         history.push("/view-trips");
-        const base = `https://subjecttochange.dev/api`
+        const base = `http://localhost:8080`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
         console.log("ID: " + userCtx.id);
@@ -163,7 +165,7 @@ const AddStop = () => {
     function addCard(stop) {
         return <Checkbox w="100%" onChange={(e) => addStop(e, stop)} defaultChecked={stop.flagStop}>
                 <Text>
-                    {stop.stopLoc}
+                    {`${stop.stopLoc}   ,   ${stop.address}`},
                 </Text>
         </Checkbox>
 

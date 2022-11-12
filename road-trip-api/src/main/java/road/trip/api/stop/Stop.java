@@ -23,7 +23,18 @@ public class Stop {
         @Column(name = "STOP_ID")
         Long id;
 
-        @Column(name = "TYPE")
+        @Column(name = "ADDRESS")
+        String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Column(name = "TYPE")
         String type;
 
         @Column(name = "LONGITUDE")

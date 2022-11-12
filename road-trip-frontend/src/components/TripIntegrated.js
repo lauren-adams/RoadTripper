@@ -54,6 +54,7 @@ function TripIntegrated() {
     const ratingRef = useRef()
     const radiusRef = useRef()
     const preferenceRef = useRef()
+    
 
     const polyline = require("google-polyline");
     
@@ -113,13 +114,15 @@ function TripIntegrated() {
                             fontSize: "18px",
                         },
                     });
+                    console.log(results[i].photos[0].getUrl())
                     arrayStops.push({
                         "stopLoc": results[i].name,
-                        //"image": (results[i].photos && results[i].photos.length > 0) ? results[i].photos[0].getUrl() : "",
+                        "image": (results[i].photos && results[i].photos.length > 0) ? results[i].photos[0].getUrl() : "",
                         "lattitude": results[i].geometry.location.lat(),
                         "longitude": results[i].geometry.location.lng(),
                         "type": results[i].types.join(),
                         "rating": results[i].rating,
+                        "address": results[i].vicinity,
                          "waypointNumber" : currentWaypoint
                     })
                     markers.push(marker)
@@ -135,11 +138,11 @@ function TripIntegrated() {
 
             }
         }
-
+        console.log("length waypoint", waypoints.length)
         for (let j = 0; j < waypoints.length; j += 40) {
             service.nearbySearch({
                 location: { lat: waypoints[j][0], lng: waypoints[j][1] },
-                radius: radiusRef.current.value,
+                radius: (radiusRef.current.value*1609.344),
                 type: preferenceRef.current.value.split(",")
             }, callback);
 
@@ -159,7 +162,7 @@ function TripIntegrated() {
         setDuration(results.routes[0].legs[0].duration.text)
     }
     const saveStops = (trip) => {
-        const base = `https://subjecttochange.dev/api`
+        const base = `http://localhost:8080`
         const urlApi = base + `/trip/${trip.id}/stop`;
         arrayStops.map(x=>x.tripId = trip.id)
         console.log("Data" , arrayStops)
@@ -184,7 +187,8 @@ function TripIntegrated() {
     
     const saveTrip = (event) => {
         event.preventDefault();
-        const base = `https://subjecttochange.dev/api`
+        //const base = `https://subjecttochange.dev/api`
+        const base = `http://localhost:8080`
         const urlApi = base + `/trip`;
         console.log("Savetrip function")
         console.log("Waypoints", waypoints)
@@ -347,7 +351,7 @@ function TripIntegrated() {
                     <Box flexGrow={1}>
                         <Input
                             type='text'
-                            placeholder='Radius {in meters}'
+                            placeholder='Radius {in miles}'
                             ref={radiusRef}
                         />
                     </Box>
