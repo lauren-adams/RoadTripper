@@ -63,7 +63,7 @@ const AddStop = () => {
     useEffect(() => {
         //setErrors(validate(data, "signUp"));
 
-        const base = `http://localhost:8080`
+        const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         axios({
             method: 'get',
@@ -107,7 +107,7 @@ const AddStop = () => {
 
     const submitHandler = (selectedStops) => {
         history.push("/view-trips");
-        const base = `http://localhost:8080`
+        const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
         console.log("ID: " + userCtx.id);
@@ -210,6 +210,7 @@ const AddStop = () => {
                     })
                 }
             </Accordion>
+
             <Center>
                 <Button m="4" onClick={save} colorScheme='blue' >Save</Button>
             </Center>
