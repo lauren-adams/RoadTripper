@@ -72,6 +72,7 @@ public class User {
         msg = msg + generatedResetLink;
         emailObj.sendMessage(msg, this.emailAddress);
 
+
     }
 
     public void sendTripMessage(String trip) throws Exception {

@@ -104,6 +104,7 @@ public class UserEndpoint {
         List<User> userList = getUsersByEmail(emailAddress);
         if (!userList.isEmpty()) {
             userList.get(0).sendResetMessage();
+            userService.saveUser(userList.get(0));
         }
         return "Message sent";
     }
@@ -120,6 +121,7 @@ public class UserEndpoint {
             else {
                 if (resetToken == readLink) {
                     userList.get(0).setResetLink(null);
+                    userService.saveUser(userList.get(0));
                     return "What you just did worked";
                 }
             }
