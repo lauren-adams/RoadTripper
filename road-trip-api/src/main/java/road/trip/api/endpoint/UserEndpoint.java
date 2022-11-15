@@ -124,9 +124,12 @@ public class UserEndpoint {
                     userService.saveUser(userList.get(0));
                     return "What you just did worked";
                 }
+                else {
+                    return "Token doesn't match";
+                }
             }
         }
-        return "Message sent";
+        return "Message not sent";
     }
 
 
