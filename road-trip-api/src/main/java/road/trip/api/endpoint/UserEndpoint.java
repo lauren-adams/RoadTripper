@@ -29,23 +29,7 @@ public class UserEndpoint {
         return user.orElse(null);
     }
 
-
-    //Delete a user
-    @DeleteMapping("/user/{id}")
-    public void deleteUser(@PathVariable("id") Long id){
-        userService.deleteUser(id);
-    }
-
-    //delete all users (probably not a great idea to use this)
-    @DeleteMapping("/user")
-    public void deleteAllUsers(){
-        userService.deleteAllUsers();
-    }
-//    @PostMapping("/user/{id}")
-//    public User saveUserFix(@RequestBody User user){
-//
-//    }
-
+    
 
 
     //create a user, also updates a user if matching id
