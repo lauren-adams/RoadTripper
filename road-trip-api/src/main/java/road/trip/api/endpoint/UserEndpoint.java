@@ -103,8 +103,9 @@ public class UserEndpoint {
     public String forgotPassword(@RequestParam(value="emailAddress") String emailAddress) throws Exception {
         List<User> userList = getUsersByEmail(emailAddress);
         if (!userList.isEmpty()) {
-            userList.get(0).sendResetMessage();
-            userService.saveUser(userList.get(0));
+            User readUser = userList.get(0);
+            readUser.sendResetMessage();
+            userService.saveUser(readUser);
         }
         return "Message sent";
     }
