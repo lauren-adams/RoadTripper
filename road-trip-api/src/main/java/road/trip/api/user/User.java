@@ -1,19 +1,13 @@
 package road.trip.api.user;
 
-import javax.mail.Message;
-import javax.mail.Session;
-import javax.mail.Transport;
-import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import lombok.Data;
 import road.trip.api.Email;
+
+import javax.persistence.*;
+import java.security.SecureRandom;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+
 
 @Data
 @Table(name = User.TABLE_NAME)
@@ -55,9 +49,27 @@ public class User {
 
     public void sendWelcomeMessage() throws Exception {
 
-
         Email emailObj = new Email();
         String msg = "Welcome to the trip planner!";
+        emailObj.sendMessage(msg, this.emailAddress);
+
+    }
+
+    //Generates reset message for a user who forgets their password
+    public void sendResetMessage() throws Exception {
+
+        Email emailObj = new Email();
+
+        String msg = "Your reset link is the following: ";
+        String resetToken = String.valueOf(System.currentTimeMillis());
+
+        BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
+        resetToken = passwordEncoder.encode(resetToken);
+
+        this.resetLink = resetToken;
+
+        String generatedResetLink = "https://subjecttochange.dev/api/user/generateNewPassword?emailAddress=" + this.emailAddress + "&resetToken=" + resetToken;
+        msg = msg + generatedResetLink;
         emailObj.sendMessage(msg, this.emailAddress);
 
     }
@@ -89,6 +101,8 @@ public class User {
 
     @Column(name = "USER_TYPE")
     String userType;
+    @Column(name = "RESETLINK")
+    String resetLink = "";
 
 
 }

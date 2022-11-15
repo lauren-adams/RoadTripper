@@ -29,7 +29,7 @@ public class UserEndpoint {
         return user.orElse(null);
     }
 
-    
+
 
 
     //create a user, also updates a user if matching id
@@ -52,6 +52,7 @@ public class UserEndpoint {
     public List<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
         return userService.findUserByEmail(email);
     }
+
 
     //Get the hashed password from storage, used to authenticate. It would be a good idea to limit access to this.
     @GetMapping("/user/getPassword")
@@ -96,6 +97,34 @@ public class UserEndpoint {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/57UzxeOSaSbw4UyySlTWHp?utm_source=generator\"}";
         }
         return "Bad";
+    }
+
+    @GetMapping("/user/forgotPassword")
+    public String forgotPassword(@RequestParam(value="emailAddress") String emailAddress) throws Exception {
+        List<User> userList = getUsersByEmail(emailAddress);
+        if (!userList.isEmpty()) {
+            userList.get(0).sendResetMessage();
+        }
+        return "Message sent";
+    }
+
+    @GetMapping("/user/generateNewPassword")
+    public String resetPassword(@RequestParam(value="emailAddress") String emailAddress, @RequestParam(value="resetToken") String resetToken) throws Exception {
+        List<User> userList = getUsersByEmail(emailAddress);
+        if (!userList.isEmpty()) {
+            String readLink = userList.get(0).getResetLink();
+
+            if (readLink == null) {
+                return "Nice try, buddy";
+            }
+            else {
+                if (resetToken == readLink) {
+                    userList.get(0).setResetLink(null);
+                    return "What you just did worked";
+                }
+            }
+        }
+        return "Message sent";
     }
 
 

@@ -125,6 +125,7 @@ dependencies {
     testAnnotationProcessor 'org.projectlombok:lombok:1.18.20'
     implementation('mysql:mysql-connector-java')
     implementation 'javax.mail:mail:1.4.1'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
 }
 
 configurations.all {

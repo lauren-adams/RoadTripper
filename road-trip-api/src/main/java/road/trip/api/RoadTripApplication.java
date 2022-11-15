@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.data.jpa.JpaRepositoriesAutoConfiguration;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration;
+import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -27,8 +28,7 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-@SpringBootApplication
-//@EntityScan("road.trip.api.user")
+@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })//@EntityScan("road.trip.api.user")
 //@Primary
 //@EnableJpaRepositories("road.trip.api.user")
 public class RoadTripApplication {
