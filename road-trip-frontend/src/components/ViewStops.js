@@ -2,8 +2,8 @@ import React, {useState, useEffect} from 'react';
 
 import {useContext} from 'react';
 import UserContext from "./UserContext";
-import {Box, Button, Flex, HStack, IconButton, Grid, Text, Select, extendTheme, ChakraProvider} from "@chakra-ui/react";
-import {Autocomplete, DirectionsRenderer, GoogleMap, Marker, useJsApiLoader} from "@react-google-maps/api";
+import {Box, Button, Flex, HStack, IconButton, Text, Select } from "@chakra-ui/react";
+import { DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 import {FaLocationArrow} from "react-icons/fa";
 import classes from "./TripItem.module.css";
 import WebHeader from "./WebHeader";
@@ -36,7 +36,7 @@ function ViewStops() {
                 console.log(data);
                 const trips = [];
                 const waypoints = [];
-
+                data = data.filter(x => x.flagStop === true);
                 for (const key in data) {
                     const trip = {
                         id: key,
@@ -47,37 +47,18 @@ function ViewStops() {
                         lng: trip.longitude
                     }
                     const waypoint = {
-                        location: loc.value,
+                        location: loc,
                         stopover: true
                     }
                     console.log(trip);
                     console.log(waypoint);
-                    // waypoints.push(waypoint);
+                    waypoints.push(waypoint);
                     trips.push(trip);
                 }
                 console.log("trips" + trips);
                 setIsLoading(false);
                 setLoadedTrips(trips);
-                // setLoadedWaypoints(waypoints);
-                // let stop = [];
-                if (data && data.length > 0) {
-                    data = data.filter(x => x.flagStop === true)
-                    // for (const waypointsKey in data) {
-                    //     const trip = {
-                    //         id: waypointsKey,
-                    //         ...data[waypointsKey]
-                    //     };
-                    //     const loc = {
-                    //         lat: trip.lattitude,
-                    //         lng: trip.longitude
-                    //     }
-                    //     waypoints.push({
-                    //         location: waypointsKey.value,
-                    //         stopover: true
-                    //     });
-                    // }
-                }
-                setLoadedWaypoints(data);
+                setLoadedWaypoints(waypoints);
             });
     }, []);
 
@@ -101,8 +82,7 @@ function ViewStops() {
         const result = await directionsService.route({
             origin: userCtx.start,
             destination: userCtx.end,
-            // FIXME: Here is a big problem, if the here are too many stops and this will break
-            waypoints: loadedWaypoints.value,
+            waypoints: loadedWaypoints,
             optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING,
         })
@@ -223,7 +203,7 @@ function ViewStops() {
                             <h1> Stops </h1>
                             <nav>
                                 <ul className={classes.list}>
-                                    {loadedWaypoints.map(stop => {
+                                    {loadedTrips.map(stop => {
                                         return (
                                             <li className={classes.item}>
                                                 <div className={classes.card}>

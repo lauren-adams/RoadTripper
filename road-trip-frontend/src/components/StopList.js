@@ -1,15 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { MdStar } from "react-icons/md";
+import React, {useState, useEffect} from 'react';
+import {MdStar} from "react-icons/md";
 import TrpList from './TrpList';
-import { useContext } from 'react';
+import {useContext} from 'react';
 import UserContext from "./UserContext";
-import { Link } from "react-router-dom";
+import {Link} from "react-router-dom";
 import TrpItem from "./TrpItem";
 import classes from "./TripItem.module.css";
 import WebHeader from "./WebHeader";
-import { Center, Image, Flex, Badge, Text, Box, List, ListItem, Stack, HStack, VStack } from "@chakra-ui/react";
-
-
+import {Center, Image, Flex, Badge, Text, Box, List, ListItem, Stack, HStack, VStack} from "@chakra-ui/react";
 
 
 function StopList() {
@@ -33,7 +31,6 @@ function StopList() {
                     setIsLoading(false);
                     setLoadedTrips(stops);
                 }
-
             });
     }, []);
 
@@ -48,16 +45,16 @@ function StopList() {
     function stopCard(stop) {
         return (<ListItem border="1px" p="10px">
             <HStack>
-                <Box w='120px' h='120px' >
-                    <Image src={stop.image} fallbackSrc='https://via.placeholder.com/150' />
+                <Box w='120px' h='120px'>
+                    <Image src={stop.image} fallbackSrc='https://via.placeholder.com/150'/>
                 </Box>
                 <Box>
                     <VStack w="100%" alignItems="left">
                         <Box>
-                        <HStack>
-                            <Box as={MdStar} color="orange.400"></Box>
-                            <Text>{stop.rating}</Text>
-                        </HStack>
+                            <HStack>
+                                <Box as={MdStar} color="orange.400"></Box>
+                                <Text>{stop.rating}</Text>
+                            </HStack>
                         </Box>
                         <Box w="100%" h="100%">
                             <b>{stop.stopLoc}</b>
@@ -76,9 +73,10 @@ function StopList() {
 
     return (
         <div>
-            <WebHeader />
+            <WebHeader/>
             <Box m="5%" border p="5%" w="90%" borderWidth="1px">
-                <Text fontSize="xl" fontWeight="semibold" lineHeight="short" flex='1' textAlign='left' m="5%">Stops</Text>
+                <Text fontSize="xl" fontWeight="semibold" lineHeight="short" flex='1' textAlign='left'
+                      m="5%">Stops</Text>
                 <div>
                     <List spacing={3}>
                         {loadedTrips.map(item => {
