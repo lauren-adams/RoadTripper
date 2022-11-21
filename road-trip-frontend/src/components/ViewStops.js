@@ -47,20 +47,37 @@ function ViewStops() {
                         lng: trip.longitude
                     }
                     const waypoint = {
-                        location: loc,
+                        location: loc.value,
                         stopover: true
                     }
                     console.log(trip);
                     console.log(waypoint);
-                    /* TODO only push to list when flagged */
-                    // FIXME: Something wrong getting the stops
+                    // waypoints.push(waypoint);
                     trips.push(trip);
-                    waypoints.push(waypoint);
                 }
                 console.log("trips" + trips);
                 setIsLoading(false);
                 setLoadedTrips(trips);
-                setLoadedWaypoints(waypoints);
+                // setLoadedWaypoints(waypoints);
+                // let stop = [];
+                if (data && data.length > 0) {
+                    data = data.filter(x => x.flagStop === true)
+                    // for (const waypointsKey in data) {
+                    //     const trip = {
+                    //         id: waypointsKey,
+                    //         ...data[waypointsKey]
+                    //     };
+                    //     const loc = {
+                    //         lat: trip.lattitude,
+                    //         lng: trip.longitude
+                    //     }
+                    //     waypoints.push({
+                    //         location: waypointsKey.value,
+                    //         stopover: true
+                    //     });
+                    // }
+                }
+                setLoadedWaypoints(data);
             });
     }, []);
 
@@ -85,7 +102,8 @@ function ViewStops() {
             origin: userCtx.start,
             destination: userCtx.end,
             // FIXME: Here is a big problem, if the here are too many stops and this will break
-            // waypoints: loadedWaypoints,
+            waypoints: loadedWaypoints.value,
+            optimizeWaypoints: true,
             travelMode: google.maps.TravelMode.DRIVING,
         })
         setDirectionsResponse(result)
@@ -205,7 +223,7 @@ function ViewStops() {
                             <h1> Stops </h1>
                             <nav>
                                 <ul className={classes.list}>
-                                    {loadedTrips.map(stop => {
+                                    {loadedWaypoints.map(stop => {
                                         return (
                                             <li className={classes.item}>
                                                 <div className={classes.card}>
