@@ -46,7 +46,9 @@ public class TripEndpoint {
         var user = userService.findUser(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
             //System.out.print("In user" + user.toString());
-            user.get().sendTripMessage(trip.toString());
+            List<Stop> stopList = stopService.findStopsByTripId(trip.getId());
+            String message = trip.toString() + "/n" + stopList.toString();
+            user.get().sendTripMessage(message);
         }
         return tripService.saveTrip(trip); }
 

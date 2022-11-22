@@ -93,7 +93,7 @@ public class Trip {
 
     @Override
     public String toString() {
-        return "Trip " + id +
+        return "Trip " +
                 "\nFrom: " + startLoc +
                 "\nTo: " + endLoc +
                 "\n Date: " + startDate +
