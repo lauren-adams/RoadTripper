@@ -9,9 +9,6 @@ import DeleteConfirmation from "./DeleteConfirmation";
 import axios from "axios";
 import WebHeader from "./WebHeader";
 
- 
-
-
 function Trp() {
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);

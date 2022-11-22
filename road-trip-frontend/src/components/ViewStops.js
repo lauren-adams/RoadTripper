@@ -2,18 +2,21 @@ import React, {useState, useEffect} from 'react';
 
 import {useContext} from 'react';
 import UserContext from "./UserContext";
-import {Box, Button, Flex, HStack, IconButton, Text, Select } from "@chakra-ui/react";
-import { DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
+import {Box, Button, Flex, HStack, IconButton, Text, Select, Link, textDecoration} from "@chakra-ui/react";
+import {DirectionsRenderer, GoogleMap, useJsApiLoader} from "@react-google-maps/api";
 import {FaLocationArrow} from "react-icons/fa";
 import classes from "./TripItem.module.css";
 import WebHeader from "./WebHeader";
+import {useHistory} from "react-router-dom";
+import axios from "axios";
 
-function ViewStops() {
+function ViewStops(props) {
     const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: 'AIzaSyDm3fa141BAW4SlncLns36sYTTk4gx2BOw',
         libraries: ['places'],
     })
 
+    const history = useHistory();
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
     const [loadedTrips, setLoadedTrips] = useState([]);
@@ -22,6 +25,7 @@ function ViewStops() {
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
+    const [selectedStops, setSelectedStops] = useState([]);
 
     useEffect(() => {
         console.log(userCtx.username + userCtx.email + userCtx.id);
@@ -34,9 +38,12 @@ function ViewStops() {
             })
             .then((data) => {
                 console.log(data);
+
                 const trips = [];
                 const waypoints = [];
                 data = data.filter(x => x.flagStop === true);
+                setSelectedStops(data);
+                console.log("selected" + selectedStops);
                 for (const key in data) {
                     const trip = {
                         id: key,
@@ -98,8 +105,31 @@ function ViewStops() {
     /**
      * To delete stops when click button
      */
-    const deleteStop = () => {
+    function deleteStop(stop) {
+        console.log("remove stop " + stop)
+        console.log(stop);
+        stop.flagStop = false;
+        console.log("check this " + stop.flagStop);
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        const pushData = async () => {
+            const responseA = axios({
+                method: 'put',
+                url: urlApi.toString(),
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                data: stop
+            });
+            console.log(urlApi);
+            console.log(responseA);
+        }
+        pushData();
 
+        const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
+        setLoadedTrips(newLoadTripStop);
+        ViewStops();
     }
 
     //TODO: set rating
@@ -110,18 +140,10 @@ function ViewStops() {
 
     }
 
-    // const styles = StyleSheet.create({
-    //     saveButton: {
-    //         colorScheme: "#4AD0CCFF",
-    //         size: "sm",
-    //         margin: 1
-    //     },
-    //     delButton: {
-    //         colorScheme: "#77002e",
-    //         size: "sm",
-    //         margin: 1
-    //     }
-    // });
+    function addStopHandler() {
+        console.log("add stop");
+        history.push("/add-stop");
+    }
 
     return (
         <div>
@@ -172,6 +194,7 @@ function ViewStops() {
                     </Box>
                 </Box>
                 <HStack spacing={4} mt={4} justifyContent='space-between'>
+                    <Button colorScheme='pink' onClick={addStopHandler}>Add Stop</Button>
                     <Button colorScheme='pink' onClick={getRoute}>Generate</Button>
                     <IconButton
                         aria-label='center back'
@@ -185,7 +208,9 @@ function ViewStops() {
                     />
                 </HStack>
 
-                {loadedWaypoints == null ? <></> :
+                {Object.keys(loadedTrips).length === 0 ?
+                    <div></div>
+                    :
                     <Box
                         p={4}
                         borderRadius='lg'
@@ -205,7 +230,7 @@ function ViewStops() {
                                 <ul className={classes.list}>
                                     {loadedTrips.map(stop => {
                                         return (
-                                            <li className={classes.item}>
+                                            <li className={classes.item} key={stop}>
                                                 <div className={classes.card}>
                                                     <div className={classes.content}>{stop.stopLoc}</div>
                                                 </div>
@@ -218,14 +243,16 @@ function ViewStops() {
                                                 </Select>
                                                 {/*TODO: No idea how to actually delete...*/}
                                                 <Button colorScheme="blue" size='sm' margin='1'>Save</Button>
-                                                <Button colorScheme='pink' size='sm' margin='1'>Delete</Button>
+                                                <Button onClick={() => deleteStop(stop)} colorScheme='pink' size='sm'
+                                                        margin='1'>Delete</Button>
                                             </li>
                                         );
                                     })}
                                 </ul>
                             </nav>
                         </div>
-                    </Box>}
+                    </Box>
+                }
             </Flex>
         </div>
     )
