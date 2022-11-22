@@ -137,7 +137,6 @@ function ViewStops(props) {
      * To set rating for each stop
      */
     const setStopRating = () => {
-
     }
 
     function addStopHandler() {
@@ -233,15 +232,15 @@ function ViewStops(props) {
                                             <li className={classes.item} key={stop}>
                                                 <div className={classes.card}>
                                                     <div className={classes.content}>{stop.stopLoc}</div>
+                                                    <div className={classes.content}>{stop.rating}</div>
                                                 </div>
-                                                <Select placeholder='Rating'>
-                                                    <option value='1'>1</option>
-                                                    <option value='2'>2</option>
-                                                    <option value='3'>3</option>
-                                                    <option value='4'>4</option>
-                                                    <option value='5'>5</option>
-                                                </Select>
-                                                {/*TODO: No idea how to actually delete...*/}
+                                                {/*<Select placeholder='Rating'>*/}
+                                                {/*    <option value='1'>1</option>*/}
+                                                {/*    <option value='2'>2</option>*/}
+                                                {/*    <option value='3'>3</option>*/}
+                                                {/*    <option value='4'>4</option>*/}
+                                                {/*    <option value='5'>5</option>*/}
+                                                {/*</Select>*/}
                                                 <Button colorScheme="blue" size='sm' margin='1'>Save</Button>
                                                 <Button onClick={() => deleteStop(stop)} colorScheme='pink' size='sm'
                                                         margin='1'>Delete</Button>
