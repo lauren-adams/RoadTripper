@@ -125,11 +125,18 @@ function ViewStops(props) {
             console.log(urlApi);
             console.log(responseA);
         }
-        pushData();
+        // pushData();
 
         const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
         setLoadedTrips(newLoadTripStop);
-        ViewStops();
+        setLoadedWaypoints(current =>
+            current.filter(s => {
+                console.log(s);
+                console.log(s.location.lat);
+                console.log(stop.lattitude);
+                return s.location.lat !== stop.lattitude;
+            }),
+        );
     }
 
     //TODO: set rating
@@ -231,8 +238,8 @@ function ViewStops(props) {
                                         return (
                                             <li className={classes.item} key={stop}>
                                                 <div className={classes.card}>
-                                                    <div className={classes.content}>{stop.stopLoc}</div>
-                                                    <div className={classes.content}>{stop.rating}</div>
+                                                    <Text className={classes.content}>{stop.stopLoc}</Text>
+                                                    <Text className={classes.content}>Rating: {stop.rating}</Text>
                                                 </div>
                                                 {/*<Select placeholder='Rating'>*/}
                                                 {/*    <option value='1'>1</option>*/}
