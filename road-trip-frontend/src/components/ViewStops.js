@@ -41,6 +41,7 @@ function ViewStops(props) {
 
                 const trips = [];
                 const waypoints = [];
+                // Not refreshable because of this line
                 data = data.filter(x => x.flagStop === true);
                 setSelectedStops(data);
                 console.log("selected" + selectedStops);
@@ -100,8 +101,6 @@ function ViewStops(props) {
         setMap(map);
     }
 
-    //TODO: delete the stop
-    // similar to what view stop did
     /**
      * To delete stops when click button
      */
