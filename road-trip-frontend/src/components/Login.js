@@ -37,9 +37,9 @@ const Login = () => {
         'Authorization': `Bearer ${cookies.get('jwt')}`
       }
     });
-    console.log(response.data[0].id);
-    userCtx.setMyUser(response.data[0].username, data.email, true);
-    userCtx.setId(response.data[0].id);
+    console.log(response.data.id);
+    userCtx.setMyUser(response.data.username, data.email, true);
+    userCtx.setId(response.data.id);
 
     history.push('/home');
   }
