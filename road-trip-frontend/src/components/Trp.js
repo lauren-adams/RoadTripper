@@ -8,8 +8,11 @@ import {Alert} from "react-bootstrap";
 import DeleteConfirmation from "./DeleteConfirmation";
 import axios from "axios";
 import WebHeader from "./WebHeader";
+import Cookies from "universal-cookie";
 
 function Trp() {
+
+    const cookies = new Cookies();
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
     const [loadedTrips, setLoadedTrips] = useState([]);
@@ -22,7 +25,11 @@ function Trp() {
         console.log(userCtx.username + userCtx.email + userCtx.id);
         setIsLoading(true);
         fetch(
-            'https://subjecttochange.dev/api/trip?userID=' + userCtx.id
+            'https://subjecttochange.dev/api/trip?userID=' + userCtx.id, {
+                headers: {
+                    'Authorization': `Bearer + ${cookies.get('jwt')}`
+                }
+            }
         )
             .then((response) => {
                 return response.json();
@@ -74,7 +81,8 @@ function Trp() {
                 url: delUrl,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    'Authorization': `${cookies.get('jwt')}`
                 }
             });
         }
