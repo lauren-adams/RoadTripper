@@ -12,6 +12,7 @@ import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
 import road.trip.api.Email;
+import road.trip.api.user.CustomUserDetails;
 import road.trip.api.user.User;
 import road.trip.api.user.UserService;
 
@@ -57,7 +58,7 @@ public class TripEndpoint {
     @GetMapping("/trip/{id}")
     public Trip findTripById(@PathVariable Long id){
         var trip = tripService.findTripByID(id);
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (trip.isPresent()) {
             if (loggedIn.getId().toString() == trip.get().getUserID()) {
                 return trip.get();
@@ -69,7 +70,7 @@ public class TripEndpoint {
     @Transactional
     @DeleteMapping("/trip/{id}")
     public void deleteTrip(@PathVariable("id") Long id){
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!tripService.findTripByID(id).isEmpty()) {
             if (loggedIn.getId().toString() == tripService.findTripByID(id).get().getUserID()) {
                 tripService.deleteTrip(id);
@@ -82,7 +83,7 @@ public class TripEndpoint {
 
     @GetMapping("/trip")
     public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedIn.getId().toString() == userId) {
             return tripService.findTripByUserID(userId);
         }

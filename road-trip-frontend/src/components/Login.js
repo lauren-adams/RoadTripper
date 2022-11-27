@@ -34,7 +34,7 @@ const Login = () => {
     console.log(cookies.get('jwt').toString());
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
       headers: {
-        'Authorization': `token ${cookies.get('jwt')}`
+        'Authorization': `Bearer ${cookies.get('jwt')}`
       }
     });
     console.log(response.data[0].id);
