@@ -8,6 +8,8 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
+import road.trip.api.preference.Preference;
+import road.trip.api.preference.PreferenceService;
 import road.trip.api.user.*;
 import lombok.extern.log4j.Log4j2;
 
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import road.trip.api.JwtUtil;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -171,6 +174,29 @@ public class UserEndpoint {
 
         return ResponseEntity.ok(new AuthResponse(jwt));
 
+    }
+
+    @Autowired
+    private PreferenceService preferenceService;
+
+    @PostMapping("/user/{userId}/preferences")
+    public Preference savePreference(@PathVariable String userId, @RequestBody Preference pref){
+        return preferenceService.savePreference(pref);
+    }
+    @GetMapping("/user/{userId}/preferences")
+    public List<Preference> getPreferencesByUser(@PathVariable String userId){
+        return preferenceService.findPreferenceByUser(userId);
+    }
+
+    @DeleteMapping("/preferences/{id}")
+    public void deleteById(@PathVariable Long id){
+        preferenceService.deletePreference(id);
+    }
+
+    @Transactional
+    @DeleteMapping("user/{userId}/preferences")
+    public void deleteByUser(@PathVariable String userId){
+        preferenceService.deletePrefByUserId(userId);
     }
 
 
