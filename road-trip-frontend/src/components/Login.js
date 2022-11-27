@@ -34,7 +34,7 @@ const Login = () => {
     console.log(cookies.get('jwt'));
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
       headers: {
-        'Authorization': `token ${cookies.get('jwt').toString()}`
+        'Authorization': `token ${cookies.get('jwt')}`
       }
     });
     console.log(response.data[0].id);
@@ -91,7 +91,7 @@ const Login = () => {
         error: "Something went wrong!",
       });
       token = response.data.jwt;
-      cookies.set('jwt', token, { path: '/' });
+      cookies.set('jwt', token.toString(), { path: '/' });
       console.log(token);
     };
 
