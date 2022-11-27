@@ -24,8 +24,8 @@ class UserTest {
     @ValueSource(strings = {"123@gmail.com", "123@baylor.edu", "testing1@gmail.com"})
     public void testEmail(String email) {
         User user = new User();
-        user.setEmailAddress(email);
-        assertEquals(email, user.getEmailAddress());
+        user.setUsername(email);
+        assertEquals(email, user.getUsername());
     }
 
     @DisplayName("test set/get user password")

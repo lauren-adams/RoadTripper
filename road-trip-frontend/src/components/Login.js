@@ -30,9 +30,13 @@ const Login = () => {
   const userCtx = useContext(UserContext);
 
   const logHandler = async () => {
-    notify("You login to your account successfully", "success")
-    //    //https://subjecttochange.dev/api/user?emailAddress=g@g.com
-    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email);console.log(response.data[0].id);
+    notify("Logged in successfully!", "success")
+    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
+      headers: {
+        'Authorization': `token ${window.localStorage.getItem('jwt').toString()}`
+      }
+    });
+    console.log(response.data[0].id);
     userCtx.setMyUser(response.data[0].username, data.email, true);
     userCtx.setId(response.data[0].id);
 
@@ -91,7 +95,6 @@ const Login = () => {
       cookies.set('jwt', token, { path: '/' });
       console.log(token);
       window.localStorage.setItem('jwt', toString(token));
-      localStorage.setItem('jwt', toString(token));
     };
 
     loginApi();

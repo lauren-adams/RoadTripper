@@ -23,14 +23,6 @@ public class User {
         this.id = id;
     }
 
-    public String getEmailAddress() {
-        return emailAddress;
-    }
-
-    public void setEmailAddress(String emailAddress) {
-        this.emailAddress = emailAddress;
-    }
-
     public String getPassword() {
         return password;
     }
@@ -51,7 +43,7 @@ public class User {
 
         Email emailObj = new Email();
         String msg = "Welcome to the trip planner!";
-        emailObj.sendMessage(msg, this.emailAddress);
+        emailObj.sendMessage(msg, this.username);
 
     }
 
@@ -68,9 +60,9 @@ public class User {
 
         this.resetLink = resetToken;
 
-        String generatedResetLink = "https://subjecttochange.dev/api/user/generateNewPassword?emailAddress=" + this.emailAddress + "&resetToken=" + resetToken;
+        String generatedResetLink = "https://subjecttochange.dev/api/user/generateNewPassword?emailAddress=" + this.username + "&resetToken=" + resetToken;
         msg = msg + generatedResetLink;
-        emailObj.sendMessage(msg, this.emailAddress);
+        emailObj.sendMessage(msg, this.username);
 
 
     }
@@ -78,7 +70,7 @@ public class User {
     public void sendTripMessage(String trip) throws Exception {
         Email emailObj = new Email();
         //String msg = "Welcome to the trip planner!";
-        emailObj.sendMessage(trip, this.emailAddress);
+        emailObj.sendMessage(trip, this.username);
 
     }
 
@@ -93,9 +85,6 @@ public class User {
 
     @Column(name = "USERNAME")
     String username;
-
-    @Column(name = "EMAIL_ADDRESS")
-    String emailAddress;
 
     @Column(name = "PASSWORD", columnDefinition = "VARCHAR(255)")
     String password;

@@ -59,7 +59,7 @@ public class UserEndpoint {
     @PostMapping("/user")
 
     public User saveUser(@RequestBody User user) throws Exception {
-        if (getUsersByEmail(user.getEmailAddress()).isEmpty()) {
+        if (getUsersByEmail(user.getUsername()).isEmpty()) {
             user.sendWelcomeMessage();
             return userService.saveUser(user);
         } else {
