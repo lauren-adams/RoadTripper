@@ -28,7 +28,7 @@ function Trp() {
         fetch(
             'https://subjecttochange.dev/api/trip?userID=' + userCtx.id, {
                 headers: {
-                    'Authorization': `Bearer + ${cookies.get('jwt')}`
+                    'Authorization': `Bearer ${cookies.get('jwt')}`
                 }
             }
         ).then((response) => {
