@@ -70,6 +70,7 @@ public class UserEndpoint {
     @GetMapping("/user")
     public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        System.out.println(loggedIn.getUsername());
         if (loggedIn.getUsername() == email) {
             return userService.findUserByEmail(email);
         }
