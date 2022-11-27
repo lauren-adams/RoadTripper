@@ -31,7 +31,7 @@ const Login = () => {
 
   const logHandler = async () => {
     notify("Logged in successfully!", "success")
-    console.log(cookies.get('jwt'));
+    console.log(cookies.get('jwt').toString());
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
       headers: {
         'Authorization': `token ${cookies.get('jwt')}`
@@ -44,13 +44,13 @@ const Login = () => {
     history.push('/home');
   }
 
-  const checkProvidedInfo = (obj) => {
+  const checkProvidedInfo = async (obj) => {
     const email = data.email;
     let passwordGiven = data.password;
     let base = `https://subjecttochange.dev/api/`;
     //let base = `http://localhost:8080/`;
-    let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
-    let authUrl = base+'authenticate';
+    let urlApi = base + `user/getPassword?emailAddress=${email.toLowerCase()}`;
+    let authUrl = base + 'authenticate';
     let retrievedHash = "";
     const loginApi = async () => {
 
@@ -67,14 +67,12 @@ const Login = () => {
       });
       retrievedHash = response1.data.password;
       //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
-      bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
+      bcrypt.compare(passwordGiven, retrievedHash, function (err, result) {
         if (result) {
           console.log("Success");
-          logHandler();
-          userCtx.setMyUser( "user", email, true);
+          userCtx.setMyUser("user", email, true);
 
-        }
-        else {
+        } else {
           console.log(":(");
           notify("Incorrect login")
         }
@@ -91,11 +89,13 @@ const Login = () => {
         error: "Something went wrong!",
       });
       token = response.data.jwt;
-      cookies.set('jwt', token.toString(), { path: '/' });
+      cookies.set('jwt', token.toString(), {path: '/'});
       console.log(token);
+      return token;
     };
 
-    loginApi();
+    cookies.set('jwt', await loginApi(), {path: '/'});
+    await logHandler();
 
 
   };
