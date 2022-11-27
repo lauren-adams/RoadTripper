@@ -3,6 +3,7 @@ package road.trip.api.endpoint;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PostAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
@@ -70,13 +71,16 @@ public class UserEndpoint {
 
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
     //get all users with the supplied email address
+    @PostAuthorize("returnObject.get().emailAddress == authentication.name")
     @GetMapping("/user")
     public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
         return userService.findUserByEmail(email);
     }
 
 
-    //Get the hashed password from storage, used to authenticate. It would be a good idea to limit access to this.
+    //Get the hashed password from stor
+    // age, used to authenticate. It would be a good idea to limit access to this.
+
     @GetMapping("/user/getPassword")
     public String getPassword(@RequestParam(value="emailAddress") String email){
         Optional<User> potentialUser = userService.findUserByEmail(email);
@@ -103,7 +107,6 @@ public class UserEndpoint {
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
     }
-
     @GetMapping("/user/getPlaylist")
     public String getPlaylist(@RequestParam(value="sad") boolean sad, @RequestParam(value="happy") boolean happy, @RequestParam(value="energetic") boolean energetic, @RequestParam(value="calm") boolean calm){
         if (sad && energetic) {

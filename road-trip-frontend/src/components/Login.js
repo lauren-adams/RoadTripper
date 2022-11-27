@@ -48,9 +48,11 @@ const Login = () => {
     let authUrl = base+'authenticate';
     let retrievedHash = "";
     const loginApi = async () => {
+      let passwordHashed = bcrypt.hashSync(passwordGiven, 10);
+      console.log(passwordHashed);
       const responseA = axios.post(authUrl, {
         username: email,
-        password: passwordGiven
+        password: passwordHashed
       });
       const response = await toast.promise(responseA, {
         pending: "Check your data",
@@ -62,19 +64,18 @@ const Login = () => {
       console.log(token);
       window.localStorage.setItem('jwt', toString(token));
       localStorage.setItem('jwt', toString(token));
-    };
-    const pushData = async () => {
-      const responseA = axios.get(urlApi, {
+
+      const responseB = axios.get(urlApi, {
         headers: {
           Authorization: `Bearer ${token}`
         }
       })
-      const response = await toast.promise(responseA, {
+      const response1 = await toast.promise(responseB, {
         pending: "Check your data",
         success: "Checked!",
         error: "Something went wrong!",
       });
-      retrievedHash = response.data.password;
+      retrievedHash = response1.data.password;
       //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
       bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
         if (result) {
@@ -91,8 +92,9 @@ const Login = () => {
         }
       });
     };
+
     loginApi();
-    pushData();
+
 
   };
 
