@@ -23,6 +23,7 @@ function Trp() {
 
     useEffect(() => {
         console.log(userCtx.username + userCtx.email + userCtx.id);
+        console.log(cookies.get('jwt').toString());
         setIsLoading(true);
         fetch(
             'https://subjecttochange.dev/api/trip?userID=' + userCtx.id, {
