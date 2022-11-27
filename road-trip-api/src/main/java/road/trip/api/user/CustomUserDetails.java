@@ -14,10 +14,12 @@ public class CustomUserDetails implements UserDetails {
     private String username;
     private String password;
     private boolean active;
+    private Long id;
     private List<GrantedAuthority> authorities;
 
     public CustomUserDetails(User user) {
         this.username = user.getUsername();
+        this.id = user.getId();
         this.password = user.getPassword();
         this.active = user.isActive();
         this.authorities = Arrays.stream(user.getRoles().split(","))
@@ -41,6 +43,9 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public String getUsername() {
         return username;
+    }
+    public Long getId() {
+        return id;
     }
 
     @Override

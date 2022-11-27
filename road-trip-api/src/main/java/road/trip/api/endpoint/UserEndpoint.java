@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
@@ -57,7 +58,6 @@ public class UserEndpoint {
 
     //create a user, also updates a user if matching id
     @PostMapping("/user")
-
     public User saveUser(@RequestBody User user) throws Exception {
         if (getUsersByEmail(user.getUsername()).isEmpty()) {
             user.sendWelcomeMessage();
@@ -71,10 +71,13 @@ public class UserEndpoint {
 
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
     //get all users with the supplied email address
-    @PostAuthorize("returnObject.get().emailAddress == authentication.name")
     @GetMapping("/user")
     public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
-        return userService.findUserByEmail(email);
+        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedIn.getUsername() == email) {
+            return userService.findUserByEmail(email);
+        }
+        return null;
     }
 
 

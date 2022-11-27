@@ -68,8 +68,7 @@ const SignUp = () => {
           data: {
             'emailAddress': data.email.toLowerCase(),
             'password': bcrypt.hashSync(data.password, 10),
-            'userType': "a",
-            'username': data.name
+            'userType': "a"
           }
         });
         const response = await toast.promise(responseA, {
@@ -89,7 +88,6 @@ const SignUp = () => {
     } else {
       notify("Please Check fileds again", "error");
       setTouched({
-        name: true,
         email: true,
         password: true,
         confirmPassword: true,
@@ -102,13 +100,6 @@ const SignUp = () => {
     <div className={styles.container}>
       <form className={styles.formLogin} onSubmit={submitHandler} autoComplete="off">
         <h2>Sign Up</h2>
-        <div>
-          <div className={errors.name && touched.name ? styles.unCompleted : !errors.name && touched.name ? styles.completed : undefined}>
-            <input type="text" name="name" value={data.name} placeholder="Name" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
-            <img src={userIcon} alt="" />
-          </div>
-          {errors.name && touched.name && <span className={styles.error}>{errors.name}</span>}
-        </div>
         <div>
           <div className={errors.email && touched.email ? styles.unCompleted : !errors.email && touched.email ? styles.completed : undefined}>
             <input type="text" name="email" value={data.email} placeholder="E-mail" onChange={changeHandler} onFocus={focusHandler} autoComplete="off" />
