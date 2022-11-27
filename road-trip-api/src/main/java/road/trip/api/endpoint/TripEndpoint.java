@@ -86,6 +86,7 @@ public class TripEndpoint {
         if (loggedIn.getId().toString() == userId) {
             return tripService.findTripByUserID(userId);
         }
+        return null;
     }
 
 
