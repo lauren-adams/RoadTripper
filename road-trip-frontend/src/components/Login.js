@@ -33,7 +33,7 @@ const Login = () => {
     notify("Logged in successfully!", "success")
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
       headers: {
-        'Authorization': `token ${window.localStorage.getItem('jwt').toString()}`
+        'Authorization': `token ${cookies.get('jwt')}`
       }
     });
     console.log(response.data[0].id);
