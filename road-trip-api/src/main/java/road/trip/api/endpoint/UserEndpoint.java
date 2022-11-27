@@ -84,7 +84,7 @@ public class UserEndpoint {
     @GetMapping("/user/getPassword")
     public String getPassword(@RequestParam(value="emailAddress") String email){
         Optional<User> potentialUser = userService.findUserByEmail(email);
-        if (potentialUser.isPresent()) {
+        if (potentialUser.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
         }
         else {
