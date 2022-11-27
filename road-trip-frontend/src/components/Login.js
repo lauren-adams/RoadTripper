@@ -31,9 +31,10 @@ const Login = () => {
 
   const logHandler = async () => {
     notify("Logged in successfully!", "success")
+    console.log(cookies.get('jwt'));
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
       headers: {
-        'Authorization': `token ${cookies.get('jwt')}`
+        'Authorization': `token ${cookies.get('jwt').toString()}`
       }
     });
     console.log(response.data[0].id);
@@ -69,10 +70,8 @@ const Login = () => {
       bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
         if (result) {
           console.log("Success");
-          notify("Success, pimp. Redirecting you.")
           logHandler();
           userCtx.setMyUser( "user", email, true);
-
 
         }
         else {
@@ -94,7 +93,6 @@ const Login = () => {
       token = response.data.jwt;
       cookies.set('jwt', token, { path: '/' });
       console.log(token);
-      window.localStorage.setItem('jwt', toString(token));
     };
 
     loginApi();
