@@ -19,12 +19,14 @@ import { useHistory } from "react-router-dom";
 import bcrypt from "bcryptjs";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
+import Cookies from "universal-cookie";
 
 
 
 
 const Maps = () => {
 
+    const cookies = new Cookies();
     const userCtx = useContext(UserContext);
     console.log(userCtx.username + userCtx.email + userCtx.id);
     const [data, setData] = useState({
@@ -71,7 +73,8 @@ const Maps = () => {
                 url: urlApi,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: {
                     'startLoc': data.start,

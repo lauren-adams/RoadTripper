@@ -6,6 +6,7 @@ import { notify } from "./toast";
 import styled from 'styled-components';
 import axios from "axios";
 import WebHeader from "./WebHeader";
+import Cookies from "universal-cookie";
 
 
 
@@ -36,6 +37,7 @@ let playlistURL;
 
 function Music()  {
     const userCtx = useContext(UserContext);
+    const cookies = new Cookies();
     let isSad = false;
     let isHappy = false;
     let isCalm = false;
@@ -65,7 +67,11 @@ function Music()  {
         else {
             let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
             const pushData = async () => {
-                const responseA = await axios.get(urlApi);
+                const responseA = await axios.get(urlApi, {
+                    headers: {
+                        Authentication: `Bearer ${cookies.get('jwt')}`
+                    }
+                });
                 playlistURL = responseA.data.playlist;
                 document.querySelector('#spotifyembed').src = playlistURL;
                 document.querySelector('#spotifyembed').height = "800";

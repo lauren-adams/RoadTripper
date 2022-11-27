@@ -9,6 +9,7 @@ import classes from "./TripItem.module.css";
 import WebHeader from "./WebHeader";
 import {useHistory} from "react-router-dom";
 import axios from "axios";
+import Cookies from "universal-cookie";
 
 function ViewStops(props) {
     const {isLoaded} = useJsApiLoader({
@@ -16,6 +17,7 @@ function ViewStops(props) {
         libraries: ['places'],
     })
 
+    const cookies = new Cookies();
     const history = useHistory();
     const userCtx = useContext(UserContext);
     const [isLoading, setIsLoading] = useState(true);
@@ -117,7 +119,8 @@ function ViewStops(props) {
                 url: urlApi.toString(),
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: stop
             });

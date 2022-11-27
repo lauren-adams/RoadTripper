@@ -31,8 +31,7 @@ function Trp() {
                     'Authorization': `Bearer + ${cookies.get('jwt')}`
                 }
             }
-        )
-            .then((response) => {
+        ).then((response) => {
                 return response.json();
             })
             .then((data) => {
