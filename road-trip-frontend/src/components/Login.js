@@ -86,7 +86,7 @@ const Login = () => {
         pending: "Check your data",
         success: "Checked!",
         error: "Something went wrong!",
-      });
+      }); 
       token = response.data.jwt;
       cookies.set('jwt', token, { path: '/' });
       console.log(token);
