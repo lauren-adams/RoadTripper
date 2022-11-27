@@ -71,7 +71,7 @@ public class UserEndpoint {
     public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         System.out.println(loggedIn.getUsername());
-        if (loggedIn.getUsername() == email) {
+        if (loggedIn.getUsername().compareTo(email) == 0)  {
             return userService.findUserByEmail(email);
         }
         return null;

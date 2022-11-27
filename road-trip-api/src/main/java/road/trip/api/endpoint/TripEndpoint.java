@@ -60,7 +60,7 @@ public class TripEndpoint {
         var trip = tripService.findTripByID(id);
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (trip.isPresent()) {
-            if (loggedIn.getId().toString() == trip.get().getUserID()) {
+            if (loggedIn.getId().toString().compareTo(trip.get().getUserID()) == 0) {
                 return trip.get();
             }
         }
@@ -72,7 +72,7 @@ public class TripEndpoint {
     public void deleteTrip(@PathVariable("id") Long id){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (!tripService.findTripByID(id).isEmpty()) {
-            if (loggedIn.getId().toString() == tripService.findTripByID(id).get().getUserID()) {
+            if (loggedIn.getId().toString().compareTo(tripService.findTripByID(id).get().getUserID()) == 0) {
                 tripService.deleteTrip(id);
             }
         }
@@ -84,7 +84,7 @@ public class TripEndpoint {
     @GetMapping("/trip")
     public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (loggedIn.getId().toString() == userId) {
+        if (loggedIn.getId().toString().compareTo(userId) == 0) {
             return tripService.findTripByUserID(userId);
         }
         return null;
