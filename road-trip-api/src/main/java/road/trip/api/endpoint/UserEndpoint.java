@@ -8,8 +8,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import org.springframework.web.server.ResponseStatusException;
-import road.trip.api.user.User;
-import road.trip.api.user.UserService;
+import road.trip.api.user.*;
 import lombok.extern.log4j.Log4j2;
 
 import org.springframework.http.ResponseEntity;
@@ -22,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import road.trip.api.JwtUtil;
-import road.trip.api.user.AuthRequest;
-import road.trip.api.user.AuthResponse;
-import road.trip.api.user.CustomUserDetailsService;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -73,7 +69,7 @@ public class UserEndpoint {
     //get all users with the supplied email address
     @GetMapping("/user")
     public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
-        User loggedIn = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedIn.getUsername() == email) {
             return userService.findUserByEmail(email);
         }
