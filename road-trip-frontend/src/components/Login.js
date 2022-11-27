@@ -11,9 +11,14 @@ import { useHistory } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
 import UserContext from "./UserContext";
 import { useContext } from 'react';
+import Cookies from 'universal-cookie';
+
 
 import bcrypt from 'bcryptjs';
 
+const cookies = new Cookies();
+
+let token = "";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -37,14 +42,33 @@ const Login = () => {
   const checkProvidedInfo = (obj) => {
     const email = data.email;
     let passwordGiven = data.password;
-    console.log(email, passwordGiven);
     let base = `https://subjecttochange.dev/api/`;
     //let base = `http://localhost:8080/`;
     let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
+    let authUrl = base+'authenticate';
     let retrievedHash = "";
-    console.log("First");
+    const loginApi = async () => {
+      const responseA = axios.post(authUrl, {
+        username: email,
+        password: passwordGiven
+      });
+      const response = await toast.promise(responseA, {
+        pending: "Check your data",
+        success: "Checked!",
+        error: "Something went wrong!",
+      });
+      token = response.data.jwt;
+      cookies.set('jwt', token, { path: '/' });
+      console.log(token);
+      window.localStorage.setItem('jwt', toString(token));
+      localStorage.setItem('jwt', toString(token));
+    };
     const pushData = async () => {
-      const responseA = axios.get(urlApi);
+      const responseA = axios.get(urlApi, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
       const response = await toast.promise(responseA, {
         pending: "Check your data",
         success: "Checked!",
@@ -56,7 +80,6 @@ const Login = () => {
         if (result) {
           console.log("Success");
           notify("Success, pimp. Redirecting you.")
-          window.sessionStorage.setItem("loginToken", passwordGiven);
           logHandler();
           userCtx.setMyUser( "user", email, true);
 
@@ -68,20 +91,11 @@ const Login = () => {
         }
       });
     };
+    loginApi();
     pushData();
 
-    /*
-    urlApi = base+`user/validatePassword?emailAddress=${email.toLowerCase()}&password=${passwordGivenSalted}`;
-
-    let api = axios.get(urlApi).then((response) => response.data)
-        .then((data) => (data.ok ? logHandler() : notify("Your password or your email is wrong", "error")));
-    toast.promise(api, {
-      pending: "Loading your data...",
-      success: false,
-      error: "Something went wrong!",
-    });
-    */
   };
+
 
 
   const changeHandler = (event) => {

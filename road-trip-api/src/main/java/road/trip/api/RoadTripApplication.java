@@ -15,9 +15,10 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })//@EntityScan("road.trip.api.user")
+//@SpringBootApplication(exclude = {SecurityAutoConfiguration.class })//@EntityScan("road.trip.api.user")
 //@Primary
 //@EnableJpaRepositories("road.trip.api.user")
+@SpringBootApplication
 public class RoadTripApplication {
     @Autowired
     private UserRepository userRepository;

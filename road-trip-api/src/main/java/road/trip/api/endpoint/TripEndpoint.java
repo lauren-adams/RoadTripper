@@ -61,9 +61,6 @@ public class TripEndpoint {
     @DeleteMapping("/trip/{id}")
     public void deleteTrip(@PathVariable("id") Long id){ tripService.deleteTrip(id); }
 
-    @Transactional
-    @DeleteMapping("/trip")
-    public void deleteAllTrips(){ tripService.deleteAllTrip(); }
 
     @GetMapping("/trip")
     public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {

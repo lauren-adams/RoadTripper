@@ -53,8 +53,8 @@ public class UserTest {
                 .andExpect(status().isOk());
 
         // find the created user
-        List<User> list =  userService.findUserByEmail("xxx8@gmail.com");
-        User user = list.get(0);
+        Optional<User> list =  userService.findUserByEmail("xxx8@gmail.com");
+        User user = list.get();
         String url = "/user/" + user.getId();
 
         // log in

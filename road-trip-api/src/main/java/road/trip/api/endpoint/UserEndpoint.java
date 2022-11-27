@@ -10,6 +10,20 @@ import road.trip.api.user.User;
 import road.trip.api.user.UserService;
 import lombok.extern.log4j.Log4j2;
 
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import road.trip.api.JwtUtil;
+import road.trip.api.user.AuthRequest;
+import road.trip.api.user.AuthResponse;
+import road.trip.api.user.CustomUserDetailsService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -21,6 +35,14 @@ public class UserEndpoint {
 
     @Autowired
     private UserService userService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
+    @Autowired
+    private CustomUserDetailsService userDetailsService;
+    @Autowired
+    private JwtUtil jwtUtil;
 
     //Get a user
     @GetMapping("/user/{id}")
@@ -49,7 +71,7 @@ public class UserEndpoint {
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
     //get all users with the supplied email address
     @GetMapping("/user")
-    public List<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
+    public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
         return userService.findUserByEmail(email);
     }
 
@@ -57,12 +79,12 @@ public class UserEndpoint {
     //Get the hashed password from storage, used to authenticate. It would be a good idea to limit access to this.
     @GetMapping("/user/getPassword")
     public String getPassword(@RequestParam(value="emailAddress") String email){
-        List<User> potentialUser = userService.findUserByEmail(email);
-        if (potentialUser.isEmpty()) {
+        Optional<User> potentialUser = userService.findUserByEmail(email);
+        if (potentialUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
         }
         else {
-            return "{\"password\": \""+potentialUser.get(0).getPassword()+"\"}";
+            return "{\"password\": \""+potentialUser.get().getPassword()+"\"}";
         }
     }
 
@@ -70,12 +92,12 @@ public class UserEndpoint {
     //Get the salt for the password.
     @GetMapping("/user/validatePassword")
     public String validatePassword(@RequestParam(value="emailAddress") String email, @RequestParam(value="password") String password){
-        List<User> potentialUser = userService.findUserByEmail(email);
-        if (potentialUser.isEmpty()) {
+        Optional<User> potentialUser = userService.findUserByEmail(email);
+        if (!potentialUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
         }
         else {
-            if (potentialUser.get(0).getPassword() == password) {
+            if (potentialUser.get().getPassword() == password) {
                 return "All good";
             }
         }
@@ -101,9 +123,9 @@ public class UserEndpoint {
 
     @GetMapping("/user/forgotPassword")
     public String forgotPassword(@RequestParam(value="emailAddress") String emailAddress) throws Exception {
-        List<User> userList = getUsersByEmail(emailAddress);
-        if (!userList.isEmpty()) {
-            User readUser = userList.get(0);
+        Optional<User> user = getUsersByEmail(emailAddress);
+        if (user.isPresent()) {
+            User readUser = user.get();
             readUser.sendResetMessage();
             userService.saveUser(readUser);
         }
@@ -112,17 +134,17 @@ public class UserEndpoint {
 
     @GetMapping("/user/generateNewPassword")
     public String resetPassword(@RequestParam(value="emailAddress") String emailAddress, @RequestParam(value="resetToken") String resetToken) throws Exception {
-        List<User> userList = getUsersByEmail(emailAddress);
-        if (!userList.isEmpty()) {
-            String readLink = userList.get(0).getResetLink();
+        Optional<User> user = getUsersByEmail(emailAddress);
+        if (user.isPresent()) {
+            String readLink = user.get().getResetLink();
 
             if (readLink == null) {
                 return "Nice try, buddy";
             }
             else {
                 if (resetToken == readLink) {
-                    userList.get(0).setResetLink(null);
-                    userService.saveUser(userList.get(0));
+                    user.get().setResetLink(null);
+                    userService.saveUser(user.get());
                     return "What you just did worked";
                 }
                 else {
@@ -131,6 +153,21 @@ public class UserEndpoint {
             }
         }
         return "Message not sent";
+    }
+
+    @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
+    public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest request) throws Exception {
+        try {
+            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
+        } catch (AuthenticationException ex) {
+            throw new Exception("Incorrect Credentials", ex);
+        }
+
+        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+        String jwt = jwtUtil.generateToken(userDetails);
+
+        return ResponseEntity.ok(new AuthResponse(jwt));
+
     }
 
 

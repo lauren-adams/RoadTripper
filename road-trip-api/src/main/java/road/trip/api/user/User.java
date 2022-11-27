@@ -105,5 +105,11 @@ public class User {
     @Column(name = "RESETLINK")
     String resetLink = "";
 
+    @Column(name = "ACTIVE")
+    boolean active;
+
+    @Column(name = "ROLES")
+    String roles;
+
 
 }
