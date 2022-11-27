@@ -48,22 +48,7 @@ const Login = () => {
     let authUrl = base+'authenticate';
     let retrievedHash = "";
     const loginApi = async () => {
-      let passwordHashed = bcrypt.hashSync(passwordGiven, 10);
-      console.log(passwordHashed);
-      const responseA = axios.post(authUrl, {
-        username: email,
-        password: passwordHashed
-      });
-      const response = await toast.promise(responseA, {
-        pending: "Check your data",
-        success: "Checked!",
-        error: "Something went wrong!",
-      });
-      token = response.data.jwt;
-      cookies.set('jwt', token, { path: '/' });
-      console.log(token);
-      window.localStorage.setItem('jwt', toString(token));
-      localStorage.setItem('jwt', toString(token));
+
 
       const responseB = axios.get(urlApi, {
         headers: {
@@ -91,6 +76,22 @@ const Login = () => {
           notify("Incorrect login")
         }
       });
+
+      console.log(retrievedHash);
+      const responseA = axios.post(authUrl, {
+        username: email,
+        password: retrievedHash
+      });
+      const response = await toast.promise(responseA, {
+        pending: "Check your data",
+        success: "Checked!",
+        error: "Something went wrong!",
+      });
+      token = response.data.jwt;
+      cookies.set('jwt', token, { path: '/' });
+      console.log(token);
+      window.localStorage.setItem('jwt', toString(token));
+      localStorage.setItem('jwt', toString(token));
     };
 
     loginApi();
