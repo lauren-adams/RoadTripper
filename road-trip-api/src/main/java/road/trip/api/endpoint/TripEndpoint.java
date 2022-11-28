@@ -34,19 +34,26 @@ public class TripEndpoint {
     @Autowired
     private UserService userService;
 
-    public void emailTrip(Trip trip) throws Exception {
+    public void emailTrip(Trip trip, String addmessage) throws Exception {
         var user = userService.findUser(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
             //System.out.print("In user" + user.toString());
             List<Stop> stopList = stopService.findStopsByTripId(trip.getId());
-            String message = trip.toString() + "\nStops: \n" + stopList.toString();
+            String stopsAsList = "";
+            for (Stop stop : stopList) {
+                if (stop.getFlagStop()) {
+                    stopsAsList += stop.getAddress();
+                    stopsAsList += "\n";
+                }
+            }
+            String message = addmessage + trip.toString() + "\nStops: \n" + stopsAsList;
             user.get().sendTripMessage(message);
         }
     }
     @PostMapping("/trip")
     public Trip saveTrip(@RequestBody Trip trip){
         try {
-            emailTrip(trip);
+            emailTrip(trip, "Trip Planned: \n");
         } catch (Exception e) {
             System.out.println("Email failed");
         }
@@ -134,13 +141,13 @@ public class TripEndpoint {
             System.out.println(t.toString());
             for (int i = 0; i < t.size(); i++){
                 try {
-                    emailTrip(t.get(i));
+                    emailTrip(t.get(i), "Today is your TRIP!\n");
                 } catch (Exception e) {
                     System.out.println("Email failed");
                 }
             }
             try {
-                wait(86400000);
+                wait(1000000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }
