@@ -11,9 +11,14 @@ import { useHistory } from "react-router-dom";
 import {withRouter} from 'react-router-dom';
 import UserContext from "./UserContext";
 import { useContext } from 'react';
+import Cookies from 'universal-cookie';
+
 
 import bcrypt from 'bcryptjs';
 
+const cookies = new Cookies();
+
+let token = "";
 
 const Login = () => {
   const [data, setData] = useState({
@@ -25,63 +30,76 @@ const Login = () => {
   const userCtx = useContext(UserContext);
 
   const logHandler = async () => {
-    notify("You login to your account successfully", "success")
-    //    //https://subjecttochange.dev/api/user?emailAddress=g@g.com
-    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email);console.log(response.data[0].id);
-    userCtx.setMyUser(response.data[0].username, data.email, true);
-    userCtx.setId(response.data[0].id);
+    notify("Logged in successfully!", "success")
+    console.log(cookies.get('jwt').toString());
+    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
+      headers: {
+        'Authorization': `Bearer ${cookies.get('jwt')}`
+      }
+    });
+    console.log(response.data.id);
+    userCtx.setMyUser(response.data.username, data.email, true);
+    userCtx.setId(response.data.id);
 
     history.push('/home');
   }
 
-  const checkProvidedInfo = (obj) => {
+  const checkProvidedInfo = async (obj) => {
     const email = data.email;
     let passwordGiven = data.password;
-    console.log(email, passwordGiven);
     let base = `https://subjecttochange.dev/api/`;
     //let base = `http://localhost:8080/`;
-    let urlApi =  base+`user/getPassword?emailAddress=${email.toLowerCase()}`;
+    let urlApi = base + `user/getPassword?emailAddress=${email.toLowerCase()}`;
+    let authUrl = base + 'authenticate';
     let retrievedHash = "";
-    console.log("First");
-    const pushData = async () => {
-      const responseA = axios.get(urlApi);
+    const loginApi = async () => {
+
+
+      const responseB = axios.get(urlApi, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      })
+      const response1 = await toast.promise(responseB, {
+        pending: "Check your data",
+        success: "Checked!",
+        error: "Something went wrong!",
+      });
+      retrievedHash = response1.data.password;
+      //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
+      bcrypt.compare(passwordGiven, retrievedHash, function (err, result) {
+        if (result) {
+          console.log("Success");
+          userCtx.setMyUser("user", email, true);
+
+        } else {
+          console.log(":(");
+          notify("Incorrect login")
+        }
+      });
+
+      console.log(retrievedHash);
+      const responseA = axios.post(authUrl, {
+        username: email,
+        password: retrievedHash
+      });
       const response = await toast.promise(responseA, {
         pending: "Check your data",
         success: "Checked!",
         error: "Something went wrong!",
       });
-      retrievedHash = response.data.password;
-      //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
-      bcrypt.compare(passwordGiven, retrievedHash, function(err, result) {
-        if (result) {
-          console.log("Success");
-          notify("Success, pimp. Redirecting you.")
-          window.sessionStorage.setItem("loginToken", passwordGiven);
-          logHandler();
-          userCtx.setMyUser( "user", email, true);
-
-
-        }
-        else {
-          console.log(":(");
-          notify("Incorrect login")
-        }
-      });
+      token = response.data.jwt;
+      cookies.set('jwt', token.toString(), {path: '/'});
+      console.log(token);
+      return token;
     };
-    pushData();
 
-    /*
-    urlApi = base+`user/validatePassword?emailAddress=${email.toLowerCase()}&password=${passwordGivenSalted}`;
+    cookies.set('jwt', await loginApi(), {path: '/'});
+    await logHandler();
 
-    let api = axios.get(urlApi).then((response) => response.data)
-        .then((data) => (data.ok ? logHandler() : notify("Your password or your email is wrong", "error")));
-    toast.promise(api, {
-      pending: "Loading your data...",
-      success: false,
-      error: "Something went wrong!",
-    });
-    */
+
   };
+
 
 
   const changeHandler = (event) => {

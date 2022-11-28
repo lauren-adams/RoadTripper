@@ -26,7 +26,6 @@ public class UserApiTest {
         user.setUserType("user");
         user.setId((long)1);
         user.setPassword("123456");
-        user.setEmailAddress("user@user.com");
         user.setUsername("user1");
         ur.save(user);
 
@@ -42,11 +41,10 @@ public class UserApiTest {
         user.setUserType("user");
         user.setId((long)1);
         user.setPassword("123456");
-        user.setEmailAddress("user@user.com");
         user.setUsername("user1");
         ur.save(user);
 
-        assertNotNull(ur.findByEmailAddress("user@user.com"));
+        assertNotNull(ur.findByUsername("user@user.com"));
     }
 
 

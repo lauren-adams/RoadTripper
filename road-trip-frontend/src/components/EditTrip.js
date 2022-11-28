@@ -19,6 +19,7 @@ import { useHistory } from "react-router-dom";
 import bcrypt from "bcryptjs";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
+import Cookies from "universal-cookie";
 
 
 
@@ -26,6 +27,7 @@ import UserContext from "./UserContext";
 const EditTrip = () => {
 
     const userCtx = useContext(UserContext);
+    const cookies = new Cookies();
     console.log(userCtx.username + userCtx.email + userCtx.id);
     const [data, setData] = useState({
         start: "",
@@ -83,7 +85,8 @@ const EditTrip = () => {
                 url: urlApi,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: {
                     'id': userCtx.tid,

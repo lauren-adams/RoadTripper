@@ -1,4 +1,4 @@
- 1. **Road-trip-api: Backend Setup**
+ 1. **Road-trip-api: Backend Setup** 
 
 	- Install Java 16(OpenJDK)
 	- Install Docker:  

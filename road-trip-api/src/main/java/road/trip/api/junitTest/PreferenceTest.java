@@ -20,7 +20,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.RequestBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import road.trip.api.endpoint.PreferenceEndpoint;
+import road.trip.api.endpoint.UserEndpoint;
 import road.trip.api.preference.Preference;
 import road.trip.api.preference.PreferenceRepository;
 import road.trip.api.preference.PreferenceService;

@@ -36,9 +36,11 @@ import {
     Box,
 } from '@chakra-ui/react'
 import WebHeader from "./WebHeader";
+import Cookies from "universal-cookie";
 
 
 const AddStop = () => {
+    const cookies = new Cookies();
     let wayPoints = [];
     let selectedStops = [];
     let isLoading = true;
@@ -70,7 +72,8 @@ const AddStop = () => {
             url: urlApi,
             headers: {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                Authentication: `Bearer ${cookies.get('jwt')}`
             }
 
         })
@@ -120,7 +123,8 @@ const AddStop = () => {
                 url: urlApi,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: selectedStops
 

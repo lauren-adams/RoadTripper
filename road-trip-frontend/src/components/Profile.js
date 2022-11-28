@@ -20,6 +20,7 @@ import bcrypt from "bcryptjs";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
 import WebHeader from "./WebHeader";
+import Cookies from "universal-cookie";
 
 
 const preferenceValues = [
@@ -32,12 +33,19 @@ const preferenceValues = [
 
 const Profile = () => {
     const userCtx = useContext(UserContext);
+
+    const cookies = new Cookies();
+
     const getPreferences = () => {
         //let base = 'http://localhost:8080'
         let base = 'https://subjecttochange.dev/api'
         let url = base + "/user/" + userCtx.id + "/preferences"
 
-        axios.get(url).then(res => {
+        axios.get(url, {
+            headers: {
+                Authentication: `Bearer ${cookies.get('jwt')}`
+            }
+        }).then(res => {
             const data = res.data;
             data.forEach(d => {
                 console.log(d)

@@ -4,12 +4,16 @@ import lombok.extern.log4j.Log4j2;
 import org.junit.jupiter.params.converter.JavaTimeConversionPattern;
 import org.springdoc.api.OpenApiResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 import road.trip.api.stop.Stop;
 import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
 import road.trip.api.Email;
+import road.trip.api.user.CustomUserDetails;
+import road.trip.api.user.User;
 import road.trip.api.user.UserService;
 
 import javax.transaction.Transactional;
@@ -56,30 +60,36 @@ public class TripEndpoint {
     @GetMapping("/trip/{id}")
     public Trip findTripById(@PathVariable Long id){
         var trip = tripService.findTripByID(id);
-        return trip.orElse(null);
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (trip.isPresent()) {
+            if (loggedIn.getId().toString().compareTo(trip.get().getUserID()) == 0) {
+                return trip.get();
+            }
+        }
+        return null;
     }
 
     @Transactional
     @DeleteMapping("/trip/{id}")
-    public void deleteTrip(@PathVariable("id") Long id){ tripService.deleteTrip(id); }
+    public void deleteTrip(@PathVariable("id") Long id){
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (!tripService.findTripByID(id).isEmpty()) {
+            if (loggedIn.getId().toString().compareTo(tripService.findTripByID(id).get().getUserID()) == 0) {
+                tripService.deleteTrip(id);
+            }
+        }
+        tripService.deleteTrip(id);
 
-    @Transactional
-    @DeleteMapping("/trip")
-    public void deleteAllTrips(){ tripService.deleteAllTrip(); }
+    }
+
 
     @GetMapping("/trip")
     public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {
-        /* email testing can be deleted
-        List<Trip>  t = tripService.findTripByUserID(userId);
-        var user = userService.findUser(Long.valueOf(t.get(0).getUserID()));
-        System.out.println(user.toString());
-        if (user.isPresent()) {
-            System.out.print("In user" + user.toString());
-            user.get().sendTripMessage(t.get(0).toString());
-        } else {
-            System.out.println("fail to get user");
-        }*/
-        return tripService.findTripByUserID(userId);
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (loggedIn.getId().toString().compareTo(userId) == 0) {
+            return tripService.findTripByUserID(userId);
+        }
+        return null;
     }
 
 

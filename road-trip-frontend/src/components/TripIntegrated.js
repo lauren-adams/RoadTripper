@@ -29,6 +29,7 @@ import axios from "axios";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
+import Cookies from "universal-cookie";
 
 
 const center = { lat: 31.5501, lng: -97.1135 }
@@ -43,6 +44,7 @@ function TripIntegrated() {
     })
 
     const userCtx = useContext(UserContext);
+    const cookies = new Cookies();
     const [map, setMap] = useState(/** @type google.maps.Map */(null))
     const [directionsResponse, setDirectionsResponse] = useState(null)
     const [distance, setDistance] = useState('')
@@ -174,10 +176,10 @@ function TripIntegrated() {
                 url: urlApi,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: arrayStops
-
             });
             console.log("Stops" + stopA);
         }
@@ -203,7 +205,8 @@ function TripIntegrated() {
                 url: urlApi,
                 headers: {
                     'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: {
                     'startLoc': originRef.current.value,
