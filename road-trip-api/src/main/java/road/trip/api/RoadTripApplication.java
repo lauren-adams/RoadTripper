@@ -9,6 +9,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import road.trip.api.endpoint.TripEndpoint;
 import road.trip.api.stop.StopRepository;
 import road.trip.api.trip.TripRepository;
+import road.trip.api.trip.TripService;
 import road.trip.api.user.UserRepository;
 
 import java.util.Calendar;
