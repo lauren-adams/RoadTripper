@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
+import road.trip.api.endpoint.TripEndpoint;
 import road.trip.api.stop.StopRepository;
 import road.trip.api.trip.TripRepository;
 import road.trip.api.user.UserRepository;
@@ -20,6 +21,7 @@ import java.util.TimerTask;
 //@EnableJpaRepositories("road.trip.api.user")
 @SpringBootApplication
 public class RoadTripApplication {
+
     @Autowired
     private UserRepository userRepository;
 
@@ -30,8 +32,12 @@ public class RoadTripApplication {
     private StopRepository stopRepository;
     public static void main(String[] args) {
         SpringApplication.run(RoadTripApplication.class, args);
-        Timer timer = new Timer();
         DailyNotification dn = new DailyNotification();
+        //dn.dailyNotify(tripRepository);
+        TripEndpoint te = new TripEndpoint();
+        te.dailyNotify();
+        Timer timer = new Timer();
+
         Calendar date = Calendar.getInstance();
         //date.set(Calendar.HOUR, 13);
         //date.set(Calendar.MINUTE, 21);
@@ -42,6 +48,7 @@ public class RoadTripApplication {
                     @Override
                     public void run() {
                         //System.out.println("Test");
+                       // dn.dailyNotify();
                     }
                 },
                 date.getTime(),

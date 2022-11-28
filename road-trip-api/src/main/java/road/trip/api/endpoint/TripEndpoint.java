@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import road.trip.api.stop.Stop;
 import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
+import road.trip.api.trip.TripRepository;
 import road.trip.api.trip.TripService;
 import road.trip.api.Email;
 import road.trip.api.user.CustomUserDetails;
@@ -32,29 +33,25 @@ public class TripEndpoint {
     private TripService tripService;
     @Autowired
     private UserService userService;
-    @PostMapping("/trip")
-    public Trip saveTrip(@RequestBody Trip trip) throws Exception {
-        /*Email emailObj = new Email();
-        String addy = "";
-        var user = userService.findUser(Long.valueOf(trip.getUserID()));
-        if (user.isPresent()) {
-            addy = user.get().getEmailAddress();
-        }
 
-        String msg = trip.toString();
-        try {
-            emailObj.sendMessage(msg, addy);
-        } catch (Exception e) {
-            throw new RuntimeException(e);
-        }*/
+    public void emailTrip(Trip trip) throws Exception {
         var user = userService.findUser(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
             //System.out.print("In user" + user.toString());
             List<Stop> stopList = stopService.findStopsByTripId(trip.getId());
-            String message = trip.toString() + "/n" + stopList.toString();
+            String message = trip.toString() + "\nStops: \n" + stopList.toString();
             user.get().sendTripMessage(message);
         }
+    }
+    @PostMapping("/trip")
+    public Trip saveTrip(@RequestBody Trip trip){
+        try {
+            emailTrip(trip);
+        } catch (Exception e) {
+            System.out.println("Email failed");
+        }
         return tripService.saveTrip(trip); }
+
 
     //get a trip by id
     @GetMapping("/trip/{id}")
@@ -125,5 +122,30 @@ public class TripEndpoint {
         return stopService.findStopsByTripId(tripId);
     }
 
+
+    public void dailyNotify(){
+        System.out.println("hehe");
+        List<Trip> tt = tripService.findTripByDate("abc");
+        System.out.println(tt.toString());
+        int x = 0;
+        while (x < 1000){
+            System.out.println("hehe");
+            List<Trip> t = tripService.findTripByDate("abc");
+            System.out.println(t.toString());
+            for (int i = 0; i < t.size(); i++){
+                try {
+                    emailTrip(t.get(i));
+                } catch (Exception e) {
+                    System.out.println("Email failed");
+                }
+            }
+            try {
+                wait(86400000);
+            } catch (InterruptedException e) {
+                throw new RuntimeException(e);
+            }
+            x++;
+        }
+    }
 
 }

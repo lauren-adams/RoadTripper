@@ -107,6 +107,23 @@ public class Stop {
         this.waypointNumber = waypointNumber;
     }
 
+    @Override
+    public String toString() {
+        return "Stop{" +
+                "id=" + id +
+                ", address='" + address + '\'' +
+                ", type='" + type + '\'' +
+                ", longitude=" + longitude +
+                ", lattitude=" + lattitude +
+                ", rating=" + rating +
+                ", image='" + image + '\'' +
+                ", tripId=" + tripId +
+                ", waypointNumber=" + waypointNumber +
+                ", stopLoc='" + stopLoc + '\'' +
+                ", flagStop=" + flagStop +
+                '}';
+    }
+
 
     @Column(name = "WAYPOINT")
         Long waypointNumber;

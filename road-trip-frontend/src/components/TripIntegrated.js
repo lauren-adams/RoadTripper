@@ -340,7 +340,7 @@ function TripIntegrated() {
                     <Box flexGrow={1}>
                         <Input
                             type='text'
-                            placeholder='Date'
+                            placeholder='Date: MM/DD/YYYY'
                             ref={dateRef}
                         />
                     </Box>
