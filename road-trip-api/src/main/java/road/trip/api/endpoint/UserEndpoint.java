@@ -74,7 +74,7 @@ public class UserEndpoint {
             return userService.getAllUsers();
         }
         //return userService.getAllUsers();
-        return null;
+        return null; 
     }
 
 
