@@ -48,6 +48,14 @@ const Home = () => {
                                 LogOut
                             </a>
                         </li>
+                        {userCtx.type === "o" ? (<div className="navbar-nav ml-auto">
+                                <li>
+                                    <Link to={"/admin-page"} className="nav-link">
+                                        ADMIN
+                                    </Link>
+                                </li>)
+                            </div>)
+                            :(<div></div>)}
                     </div>
                 ) : (
                     <div className="navbar-nav ml-auto">

@@ -84,12 +84,12 @@ public class TripEndpoint {
     @DeleteMapping("/trip/{id}")
     public void deleteTrip(@PathVariable("id") Long id){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!tripService.findTripByID(id).isEmpty()) {
+        if (tripService.findTripByID(id).isPresent()) {
             if (loggedIn.getId().toString().compareTo(tripService.findTripByID(id).get().getUserID()) == 0) {
                 tripService.deleteTrip(id);
             }
         }
-        tripService.deleteTrip(id);
+        //tripService.deleteTrip(id);
 
     }
 

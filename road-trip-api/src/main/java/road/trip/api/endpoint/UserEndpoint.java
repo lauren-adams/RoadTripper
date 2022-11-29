@@ -66,6 +66,16 @@ public class UserEndpoint {
         }
     }
 
+    @GetMapping("/users")
+    public List<User> getAllUser(){
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var user = userService.findUser(loggedIn.getId());
+        if(user.get().getUserType().compareTo("o") == 0){
+            return userService.getAllUsers();
+        }
+        //return userService.getAllUsers();
+        return null;
+    }
 
 
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
