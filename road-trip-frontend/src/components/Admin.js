@@ -18,7 +18,7 @@ function Admin() {
         console.log(cookies.get('jwt').toString());
         setIsLoading(true);
         fetch(
-            "http://localhost:8080/users", {
+            "https://subjecttochange.dev/api/users", {
                 headers: {
                     'Authorization': `Bearer ${cookies.get('jwt')}`
                 }
