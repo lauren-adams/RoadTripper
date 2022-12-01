@@ -22,8 +22,6 @@ build-api:
     # "Dockerfile" in each directory.
     - cd road-trip-api
     - ls
-    - curl --compressed https://github.com/icy/genvsub/releases/download/v1.2.3/genvsub_1.2.3_Linux_x86_64.tar.gz --output env.tar.gz
-    - tar -xf env.tar.gz
     - chmod +x genvsub
     - cp src/main/java/road/trip/api/Email.java emailTemp
     - ./genvsub < emailTemp
