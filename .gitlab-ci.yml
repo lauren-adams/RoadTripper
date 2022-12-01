@@ -22,13 +22,13 @@ build-api:
     # "Dockerfile" in each directory.
     - cd road-trip-api
     - ls
-    - curl https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-x86_64 > envsubst
-    - chmod +x envsubst
+    - curl https://github.com/icy/genvsub/releases/download/v1.2.3/genvsub_1.2.3_Linux_x86_64.tar.gz | tar xzv
+    - chmod +x genvsub
     - cp src/main/java/road/trip/api/Email.java emailTemp
-    - ./envsubst < emailTemp
+    - ./genvsub < emailTemp
     - cat src/main/java/road/trip/api/Email.java
     - cp src/main/resources/application.properties application
-    - ./envsubst < application > src/main/resources/application.properties
+    - ./genvsub < application > src/main/resources/application.properties
     - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
