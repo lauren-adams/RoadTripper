@@ -31,8 +31,6 @@ build-api:
     - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
-    - echo $DOCKERUSER
-    - echo $DOCKERKEY
     - podman login -u $DOCKERUSER -p $DOCKERKEY docker.io
     - podman push kaase/road-trip-api:latest
 
