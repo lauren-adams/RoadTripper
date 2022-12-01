@@ -25,10 +25,10 @@ build-api:
     - curl https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-x86_64 > envsubst
     - chmod +x envsubst
     - cp src/main/java/road/trip/api/Email.java emailTemp
-    - envsubst < emailTemp
+    - ./envsubst < emailTemp
     - cat src/main/java/road/trip/api/Email.java
     - cp src/main/resources/application.properties application
-    - envsubst < application > src/main/resources/application.properties
+    - ./envsubst < application > src/main/resources/application.properties
     - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
