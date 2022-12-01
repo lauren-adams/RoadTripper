@@ -11,7 +11,7 @@ public class Email {
 
     private static final String SMTP_HOST_NAME = "mail.privateemail.com";
     private static final String SMTP_AUTH_USER = "admin@subjecttochange.dev";
-    private static final String SMTP_AUTH_PWD  = "SoftwareII";
+    private static final String SMTP_AUTH_PWD  = "$EMAILPASSWORD";
 
     public Session generateSession() throws Exception{
         Properties props = new Properties();
