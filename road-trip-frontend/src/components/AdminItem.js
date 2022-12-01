@@ -24,7 +24,6 @@ function AdminItem(props) {
                     <p>Roles: {props.role}</p>
                 </div>
                 <div className={classes.actions}>
-                    <button >{'Promote to Admin'}</button>
                     <button onClick={() => props.show(props.id)}>{'Delete'}</button>
                 </div>
             </div>

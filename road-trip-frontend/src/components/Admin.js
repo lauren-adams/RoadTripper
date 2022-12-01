@@ -24,7 +24,7 @@ function Admin() {
 
 
     useEffect(() => {
-        console.log(cookies.get('jwt').toString());
+
         setIsLoading(true);
         fetch(
             "https://subjecttochange.dev/api/users", {
@@ -34,7 +34,6 @@ function Admin() {
             }).then((response) => {
                 return response.json();
         }).then((data) => {
-            console.log(data);
             const users = [];
 
             for (const key in data){
@@ -87,7 +86,7 @@ function Admin() {
         // }
         // delData()
 
-        const response = await axios.delete(delUrl, { 
+        const response = await axios.delete(delUrl, {
             headers: {
                 'Authorization': `Bearer ${cookies.get('jwt')}`
             }
