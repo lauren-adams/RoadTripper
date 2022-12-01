@@ -116,7 +116,6 @@ function TripIntegrated() {
                             fontSize: "18px",
                         },
                     });
-                    console.log(results[i].photos[0].getUrl())
                     arrayStops.push({
                         "stopLoc": results[i].name,
                         "image": (results[i].photos && results[i].photos.length > 0) ? results[i].photos[0].getUrl() : "",
