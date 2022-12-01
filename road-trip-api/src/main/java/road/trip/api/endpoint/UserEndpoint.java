@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PostAuthorize;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
@@ -57,10 +58,13 @@ public class UserEndpoint {
 
     //create a user, also updates a user if matching id
     @PostMapping("/user")
-    public User saveUser(@RequestBody User user) throws Exception {
-        if (getUsersByEmail(user.getUsername()).isEmpty()) {
-            user.sendWelcomeMessage();
-            return userService.saveUser(user);
+    public User saveUser(@RequestParam(value="emailAddress") String email, @RequestParam(value="password", defaultValue = "") String password) throws Exception {
+        if (getUsersByEmail(email).isEmpty()) {
+            User newUser = new User();
+            newUser.setUsername(email);
+            newUser.setPassword(password);
+            newUser.sendWelcomeMessage();
+            return userService.saveUser(newUser);
         } else {
             throw new ResponseStatusException(HttpStatus.CONFLICT, "User already exists\n");
         }
