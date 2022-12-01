@@ -82,7 +82,7 @@ const Maps = () => {
                     'startDate': data.date,
                     'userID': userCtx.id.toString(),
                     'rating': data.rating
-                }
+                } 
 
             });
             console.log(urlApi);
