@@ -52,6 +52,19 @@ public class UserEndpoint {
         return user.orElse(null);
     }
 
+    @Transactional
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable("id") Long id){
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var user = userService.findUser(loggedIn.getId());
+        if(userService.findUser(id).isPresent()){
+            if(user.get().getUserType().equals("o")){
+                userService.deleteUser(id);
+            }
+        }
+    }
+
+
 
 
 

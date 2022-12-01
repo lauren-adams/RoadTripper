@@ -14,6 +14,8 @@ function AdminList(props) {
                     active={meetup.active}
                     role={meetup.roles}
                     show={props.show}
+                    hide={props.hide}
+                    submit={props.submit}
                 />
             ))}
 
