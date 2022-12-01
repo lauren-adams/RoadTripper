@@ -115,8 +115,8 @@ function ViewStops(props) {
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         const pushData = async () => {
             const responseA = axios({
-                method: 'put',
-                url: urlApi.toString(),
+                method: 'post',
+                url: urlApi,
                 headers: {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*',
@@ -127,7 +127,7 @@ function ViewStops(props) {
             console.log(urlApi);
             console.log(responseA);
         }
-        // pushData();
+        pushData();
 
         const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
         setLoadedTrips(newLoadTripStop);

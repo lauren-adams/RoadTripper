@@ -53,6 +53,19 @@ public class UserEndpoint {
         return user.orElse(null);
     }
 
+    @Transactional
+    @DeleteMapping("/user/{id}")
+    public void deleteUser(@PathVariable("id") Long id){
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var user = userService.findUser(loggedIn.getId());
+        if(userService.findUser(id).isPresent()){
+            if(user.get().getUserType().equals("o")){
+                userService.deleteUser(id);
+            }
+        }
+    }
+
+
 
 
 
@@ -70,6 +83,16 @@ public class UserEndpoint {
         }
     }
 
+    @GetMapping("/users")
+    public List<User> getAllUser(){
+        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        var user = userService.findUser(loggedIn.getId());
+        if(user.get().getUserType().compareTo("o") == 0){
+            return userService.getAllUsers();
+        }
+        //return userService.getAllUsers();
+        return null;
+    }
 
 
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu

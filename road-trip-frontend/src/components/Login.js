@@ -38,7 +38,8 @@ const Login = () => {
       }
     });
     console.log(response.data.id);
-    userCtx.setMyUser(response.data.username, data.email, true);
+    console.log(response.data)
+    userCtx.setMyUser(response.data.username, data.email, true, response.data.userType);
     userCtx.setId(response.data.id);
 
     history.push('/home');
@@ -52,6 +53,7 @@ const Login = () => {
     let urlApi = base + `user/getPassword?emailAddress=${email.toLowerCase()}`;
     let authUrl = base + 'authenticate';
     let retrievedHash = "";
+    let retrievedType;
     const loginApi = async () => {
 
 
@@ -66,11 +68,12 @@ const Login = () => {
         error: "Something went wrong!",
       });
       retrievedHash = response1.data.password;
+      retrievedType = response1.data.userType;
       //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
       bcrypt.compare(passwordGiven, retrievedHash, function (err, result) {
         if (result) {
           console.log("Success");
-          userCtx.setMyUser("user", email, true);
+          userCtx.setMyUser("user", email, true, retrievedType);
 
         } else {
           console.log(":(");

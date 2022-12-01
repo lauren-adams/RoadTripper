@@ -7,10 +7,12 @@ const WebHeader = () => {
     const userCtx = useContext(UserContext);
 
     const logOut = () => {
-        userCtx.setMyUser("", "", false);
+
+        userCtx.setMyUser("", "", false, "");
     };
 
     return (
+
         <div>
             <nav class="navbar navbar-expand navbar-dark bg-dark">
                 <Link to={"/home"} className="navbar-brand">
@@ -43,7 +45,16 @@ const WebHeader = () => {
                             LogOut
                         </a>
                     </li>
-                </div>) : (<div className="navbar-nav ml-auto">
+                    {userCtx.type === "o" ? (<div className="navbar-nav ml-auto">
+                        <li>
+                            <Link to={"/admin-page"} className="nav-link">
+                                ADMIN
+                            </Link>
+                        </li>)
+                    </div>)
+                         :(<div></div>)}
+                </div>)
+                    : (<div className="navbar-nav ml-auto">
                     <li className="nav-item">
                         <Link to={"/login"} className="nav-link">
                             Login

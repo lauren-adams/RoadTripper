@@ -20,6 +20,7 @@ const UserContext = createContext({
     date: "",
     rating: "",
     tid: "",
+    type: "",
     setCurTrip: (start, end, date, rating, tid) => {}
 
 });
@@ -28,6 +29,7 @@ export function UserContextProvider(props) {
     const [userTrips, setUserTrips] = useState([]);
     const [userName, setUserName] = useState("");
     const [userEmail, setUserEmail] = useState("");
+    const [userType, setUserType] = useState("");
     const [idd, setIdd] = useState("");
     const [loggedIn, setLoggedIn] = useState(false);
     const [curTripS, setCurTripS] = useState("");
@@ -47,10 +49,11 @@ export function UserContextProvider(props) {
         });
     }
 
-    function setUser(username, email, log) {
+    function setUser(username, email, log, type) {
         setUserName(username);
         setUserEmail(email);
         setLoggedIn(log);
+        setUserType(type);
         return 0;
     }
 
@@ -86,6 +89,7 @@ export function UserContextProvider(props) {
         setId: setId,
         username: userName,
         email: userEmail,
+        type: userType,
         id: idd,
         isLoggedIn: loggedIn,
         start: curTripS,

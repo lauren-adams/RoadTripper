@@ -37,15 +37,22 @@ public class TripEndpoint {
     public void emailTrip(Trip trip, String addmessage) throws Exception {
         var user = userService.findUser(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
-            //System.out.print("In user" + user.toString());
+            System.out.print("In user" + user.toString());
             List<Stop> stopList = stopService.findStopsByTripId(trip.getId());
             String stopsAsList = "";
-            for (Stop stop : stopList) {
-                if (stop.getFlagStop()) {
-                    stopsAsList += stop.getAddress();
-                    stopsAsList += "\n";
+            System.out.println(stopList.toString());
+            for (int i = 0; i < stopList.size(); i++) {
+                System.out.println(stopList.get(i) + "\n");
+                if (stopList.get(i).getFlagStop() != null && stopList.get(i).getFlagStop()) {
+                    System.out.println(stopList.get(i).getFlagStop() + "\n");
+                    System.out.println(stopList.get(i).getStopLoc() + "\n");
+                    if(stopList.get(i).getStopLoc() != null) {
+                        stopsAsList += stopList.get(i).getStopLoc();
+                        stopsAsList += "\n";
+                    }
                 }
             }
+            System.out.println(stopsAsList);
             String message = addmessage + trip.toString() + "\nStops: \n" + stopsAsList;
             user.get().sendTripMessage(message);
         }
@@ -77,12 +84,12 @@ public class TripEndpoint {
     @DeleteMapping("/trip/{id}")
     public void deleteTrip(@PathVariable("id") Long id){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (!tripService.findTripByID(id).isEmpty()) {
+        if (tripService.findTripByID(id).isPresent()) {
             if (loggedIn.getId().toString().compareTo(tripService.findTripByID(id).get().getUserID()) == 0) {
                 tripService.deleteTrip(id);
             }
         }
-        tripService.deleteTrip(id);
+        //tripService.deleteTrip(id);
 
     }
 
@@ -129,10 +136,14 @@ public class TripEndpoint {
         return stopService.findStopsByTripId(tripId);
     }
 
+    @GetMapping("/trip/{tripId}/date")
+    public List<Trip> getTripsByDate(@PathVariable String date){
+        return tripService.findTripByDate("bbb");
+    }
 
     public void dailyNotify(){
         System.out.println("hehe");
-        List<Trip> tt = tripService.findTripByDate("abc");
+        List<Trip> tt = getTripsByDate("bbb");
         System.out.println(tt.toString());
         int x = 0;
         while (x < 1000){

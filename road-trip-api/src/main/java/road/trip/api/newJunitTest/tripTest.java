@@ -51,6 +51,7 @@ public class tripTest {
     private Trip trip = null;
     private String url = null;
 
+
     @DisplayName("create a trip")
     @Before
     public void setUp() throws Exception {

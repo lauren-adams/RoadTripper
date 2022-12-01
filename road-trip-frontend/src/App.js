@@ -11,6 +11,7 @@ import addStop from "./components/AddStop";
 import ViewStops from "./components/ViewStops";
 import StopList from "./components/StopList";
 import Music from "./components/Music";
+import Admin from "./components/Admin"
 
 function App() {
 
@@ -30,6 +31,7 @@ function App() {
         <Route path="/view-stops" component={ViewStops} />
         <Route path="/view-stoplist" component={StopList} />
         <Route path="/music" component={Music} />
+        <Route path="/admin-page" component={Admin} />}
         <Redirect from="/" to="/home" />
       </Switch>
     </>

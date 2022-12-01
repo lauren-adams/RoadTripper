@@ -66,7 +66,7 @@ function Trp() {
     };
 
     // Handle the actual deletion of the item
-    const submitDelete =  (id) => {
+    const submitDelete =  async (id) => {
         console.log(id);
         setTripMessage(`The trip '${loadedTrips.find((x) => x.id === id).id}' was deleted successfully.`);
         setLoadedTrips(loadedTrips.filter((trip) => trip.id !== id));
@@ -74,19 +74,25 @@ function Trp() {
         console.log("Delete");
         let delUrl = 'https://subjecttochange.dev/api/trip/' + id;
         let delUrl2 = 'http://localhost:8080/trip/' + id;
-        const delData = async () => {
-            //const responseA = axios.post(urlApi);
-            const responseA = axios({
-                method: 'delete',
-                url: delUrl,
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
-                    'Authorization': `${cookies.get('jwt')}`
-                }
-            });
-        }
-        delData()
+        // const delData = async () => {
+        //     //const responseA = axios.post(urlApi);
+        //     const responseA = axios({
+        //         method: 'delete',
+        //         url: delUrl2,
+        //         headers: {
+        //             'Content-Type': 'application/json',
+        //             'Access-Control-Allow-Origin': '*',
+        //             'Authorization': `Bearer ${cookies.get('jwt')}`
+        //         }
+        //     });
+        // }
+        // delData()
+
+        const response = await axios.delete(delUrl, {
+            headers: {
+                'Authorization': `Bearer ${cookies.get('jwt')}`
+            }
+        })
     };
 
     if (isLoading) {
