@@ -28,6 +28,7 @@ build-api:
     - cp src/main/resources/application.properties application
     - ./genvsub < application > src/main/resources/application.properties
     - cat src/main/resources/application.properties
+    - echo $DBPASSWORD $JWTKEY
     - chmod +x gradlew
     - podman build -t road-trip-api .
     - podman tag road-trip-api docker.io/kaase/road-trip-api:latest
