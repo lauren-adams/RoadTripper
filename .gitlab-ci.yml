@@ -22,8 +22,7 @@ build-api:
     # "Dockerfile" in each directory.
     - cd road-trip-api
     - ls
-    - curl https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-x86_64
-    - mv envsubst-Linux-x86_64 envsubst
+    - curl https://github.com/a8m/envsubst/releases/download/v1.2.0/envsubst-Linux-x86_64 > envsubst
     - chmod +x envsubst
     - ./envsubst < src/main/java/road/trip/api/Email.java > src/main/java/road/trip/api/Email.java
     - ./envsubst < src/main/resources/application.properties > src/main/resources/application.properties
