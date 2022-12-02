@@ -1,32 +1,32 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 //Icon
 import userIcon from "../img/user.svg";
 import emailIcon from "../img/email.svg";
 import passwordIcon from "../img/password.svg";
 // Validate
-import {validate} from "./validate";
+import { validate } from "./validate";
 // Styles
 import styles from "./SignUp.module.css";
 import "react-toastify/dist/ReactToastify.css";
 // Toast
-import {ToastContainer, toast} from "react-toastify";
-import {notify} from "./toast";
+import { ToastContainer, toast } from "react-toastify";
+import { notify } from "./toast";
 //
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 // Axios
 
 import axios from "axios";
 
-import {useHistory} from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import bcrypt from "bcryptjs";
-import {useContext} from 'react';
+import { useContext, useRef } from 'react';
 import UserContext from "./UserContext";
 import Filter from "./StopFilter";
-import {Center, Image, Flex, Badge, Text} from "@chakra-ui/react";
-import {MdStar} from "react-icons/md";
-import {Checkbox, CheckboxGroup} from '@chakra-ui/react';
-import {Button, ButtonGroup} from '@chakra-ui/react';
-import {Stack, HStack, VStack} from '@chakra-ui/react'
+import { Center, Image, Flex, Badge, Text } from "@chakra-ui/react";
+import { MdStar } from "react-icons/md";
+import { Checkbox, CheckboxGroup } from '@chakra-ui/react';
+import { Button, ButtonGroup } from '@chakra-ui/react';
+import { Stack, HStack, VStack } from '@chakra-ui/react'
 import {
     Accordion,
     AccordionItem,
@@ -34,9 +34,18 @@ import {
     AccordionPanel,
     AccordionIcon,
     Box,
+    Input,
 } from '@chakra-ui/react'
 import WebHeader from "./WebHeader";
 import Cookies from "universal-cookie";
+import {
+    useJsApiLoader,
+    GoogleMap,
+    Marker,
+    Autocomplete,
+    DirectionsRenderer,
+    MARKER_LAYER,
+} from '@react-google-maps/api'
 
 
 const AddStop = () => {
@@ -57,7 +66,8 @@ const AddStop = () => {
     });
 
     const history = useHistory();
-
+    
+    const [customLoc, setCustomLoc] = useState("");
     const [errors, setErrors] = useState({});
     const [touched, setTouched] = useState({});
 
@@ -98,19 +108,19 @@ const AddStop = () => {
 
     const changeHandler = (event) => {
         if (event.target.name === "IsAccepted") {
-            setData({...data, [event.target.name]: event.target.checked});
+            setData({ ...data, [event.target.name]: event.target.checked });
         } else {
-            setData({...data, [event.target.name]: event.target.value});
+            setData({ ...data, [event.target.name]: event.target.value });
         }
     };
 
     const focusHandler = (event) => {
-        setTouched({...touched, [event.target.name]: true});
+        setTouched({ ...touched, [event.target.name]: true });
     };
 
 
     const submitHandler = (selectedStops) => {
-        history.push("/view-trips");
+        //history.push("/view-trips");
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
@@ -132,6 +142,8 @@ const AddStop = () => {
             console.log(urlApi);
             //console.log(data.start + data.end + data.date +  userCtx.id + data.rating);
             console.log(responseA);
+            let c = document.getElementById("customLocations")
+            c.value=""
 
         }
         pushData();
@@ -161,6 +173,34 @@ const AddStop = () => {
 
     }
 
+    function addCustomStop() {
+        console.log(customLoc, "customLoc")
+        let c = document.getElementById("customLocations")
+        if(c){
+            console.log(c.value, "c val")
+        }
+       
+        const geocoder = new window.google.maps.Geocoder()
+            geocoder.geocode({ address: c.value }, function (results, status) {
+                if (status == window.google.maps.GeocoderStatus.OK) {
+                    console.log(results, "result")
+                    const newObj = {
+                        "stopLoc": c.value,
+                        "image": (results[0].photos && results[0].photos.length > 0) ? results[0].photos[0].getUrl() : "",
+                        "lattitude": results[0].geometry.location.lat(),
+                        "longitude": results[0].geometry.location.lng(),
+                        "type": results[0].types.join(),
+                        "address": results[0].formatted_address,
+                        "waypointNumber": 1,
+                        "flagStop": true,
+                        "tripId" : userCtx.tid
+                    }
+                    console.log(newObj)
+                    submitHandler([newObj])
+                }
+            })
+    }
+
     function addCard(stop) {
         return <Checkbox w="100%" onChange={(e) => addStop(e, stop)} defaultChecked={stop.flagStop}>
             <Text>
@@ -174,13 +214,19 @@ const AddStop = () => {
 
     return (
         <div>
-            <WebHeader/>
+            <WebHeader />
             <div>
 
             </div>
             <Box m="5%" border p="5%" w="90%" borderWidth="1px">
                 <Text fontSize="xl" fontWeight="semibold" lineHeight="short" flex='1' textAlign='center'>Select
                     Stops</Text>
+                <Box flexGrow={1} m={"1%"} className="addBox">
+                    <Autocomplete >
+                        <Input type='text' placeholder='Add Custom Stop' id='customLocations'/>
+                    </Autocomplete>
+                    <Button onClick={addCustomStop}>Add</Button>
+                </Box>
                 <Accordion allowToggle>
                     {
                         loadedTrips.map((x, index) => {
@@ -190,10 +236,10 @@ const AddStop = () => {
                                 <h2>
                                     <AccordionButton>
                                         <Box fontSize="l" fontWeight="semibold" lineHeight="short" flex='1'
-                                             textAlign='left'>
+                                            textAlign='left'>
                                             Stops Center {index + 1}
                                         </Box>
-                                        <AccordionIcon/>
+                                        <AccordionIcon />
                                     </AccordionButton>
                                 </h2>
                                 <AccordionPanel pb={4}>
@@ -216,7 +262,7 @@ const AddStop = () => {
                     <Button m="4" onClick={save} colorScheme='blue'>Save</Button>
                 </Center>
             </Box>
-            <ToastContainer/>
+            <ToastContainer />
 
         </div>
     );

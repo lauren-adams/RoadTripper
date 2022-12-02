@@ -22,14 +22,16 @@ import {
     SkeletonText,
     Text,
     Select,
+    VStack,
 } from '@chakra-ui/react'
 
 import { useRef, useState } from 'react'
 import axios from "axios";
 import { useContext } from 'react';
 import UserContext from "./UserContext";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 import Cookies from "universal-cookie";
+import mapStyle from './MapFiles';
 
 
 const center = { lat: 31.5501, lng: -97.1135 }
@@ -56,10 +58,10 @@ function TripIntegrated() {
     const ratingRef = useRef()
     const radiusRef = useRef()
     const preferenceRef = useRef()
-    
+
 
     const polyline = require("google-polyline");
-    
+
     const google = window.google;
 
     if (!isLoaded) {
@@ -97,7 +99,7 @@ function TripIntegrated() {
 
         const service = new google.maps.places.PlacesService(map);
         let currentWaypoint = 0;
-        let callback =(results, status) =>{
+        let callback = (results, status) => {
             currentWaypoint++;
             console.log(results)
             if (status == google.maps.places.PlacesServiceStatus.OK) {
@@ -110,7 +112,7 @@ function TripIntegrated() {
                         map,
                         title: results[i].name,
                         label: {
-                            text: getLabelByType(results[i].types), 
+                            text: getLabelByType(results[i].types),
                             fontFamily: "Material Icons",
                             color: "#ffffff",
                             fontSize: "18px",
@@ -124,7 +126,7 @@ function TripIntegrated() {
                         "type": results[i].types.join(),
                         "rating": results[i].rating,
                         "address": results[i].vicinity,
-                         "waypointNumber" : currentWaypoint
+                        "waypointNumber": currentWaypoint
                     })
                     markers.push(marker)
                     marker.addListener("click", () => {
@@ -133,7 +135,7 @@ function TripIntegrated() {
                         infoWindow.open(marker.getMap(), marker);
                     });
 
-                  
+
                     //}
                 }
 
@@ -143,19 +145,19 @@ function TripIntegrated() {
         for (let j = 0; j < waypoints.length; j += 40) {
             service.nearbySearch({
                 location: { lat: waypoints[j][0], lng: waypoints[j][1] },
-                radius: (radiusRef.current.value*1609.344),
+                radius: (radiusRef.current.value * 1609.344),
                 type: preferenceRef.current.value.split(",")
             }, callback);
 
 
-     }
+        }
 
-        let getLabelByType=(types)=>{
-            if(types.includes("church")) return "\ueaae"
-            if(types.includes("restaurant")) return "\ue56c"
-            if(types.includes("gas_station")) return "\ue546"
-            if(types.includes("doctor")) return "\uf033"
-            if(types.includes("car_wash")) return "\ue542"
+        let getLabelByType = (types) => {
+            if (types.includes("church")) return "\ueaae"
+            if (types.includes("restaurant")) return "\ue56c"
+            if (types.includes("gas_station")) return "\ue546"
+            if (types.includes("doctor")) return "\uf033"
+            if (types.includes("car_wash")) return "\ue542"
         }
 
         console.log(waypoints[0]);
@@ -165,8 +167,8 @@ function TripIntegrated() {
     const saveStops = (trip) => {
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/${trip.id}/stop`;
-        arrayStops.map(x=>x.tripId = trip.id)
-        console.log("Data" , arrayStops)
+        arrayStops.map(x => x.tripId = trip.id)
+        console.log("Data", arrayStops)
         const pushData = async () => {
             //const responseA = axios.post(urlApi);
 
@@ -185,7 +187,7 @@ function TripIntegrated() {
 
         pushData();
     };
-    
+
     const saveTrip = (event) => {
         event.preventDefault();
         const base = `https://subjecttochange.dev/api`
@@ -193,7 +195,7 @@ function TripIntegrated() {
         const urlApi = base + `/trip`;
         console.log("Savetrip function")
         console.log("Waypoints", waypoints)
-        console.log("Array Stops" , arrayStops)
+        console.log("Array Stops", arrayStops)
         //console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
         console.log("ID: " + userCtx.id + originRef.current.value + destinationRef.current.value);
         const pushData = async () => {
@@ -213,12 +215,12 @@ function TripIntegrated() {
                     'startDate': dateRef.current.value,
                     'userID': userCtx.id,
                     'rating': ratingRef.current.value,
-                    'radius':radiusRef.current.value,
+                    'radius': radiusRef.current.value,
                     'preference': preferenceRef.current.value
                 }
 
             });
-            console.log("responseA" , responseA);
+            console.log("responseA", responseA);
             saveStops(responseA.data)
         }
 
@@ -226,7 +228,7 @@ function TripIntegrated() {
 
     };
 
-    
+
     function PolygonPoints() {
 
         let polypoints = waypoints
@@ -265,7 +267,7 @@ function TripIntegrated() {
 
 
     function clearRoute() {
-        
+
         originRef.current.value = ''
         destinationRef.current.value = ''
         originRef.current.value = ''
@@ -276,15 +278,15 @@ function TripIntegrated() {
         setDirectionsResponse(null)
         setDistance('')
         setDuration('')
-        markers.forEach(x=>{
-            if(x)
-            x.setMap(null)
+        markers.forEach(x => {
+            if (x)
+                x.setMap(null)
         })
         markers = [];
         PolygonBound.setPath([])
         console.log(PolygonBound)
         //PolygonBound.remove()
-        
+
     }
 
 
@@ -307,6 +309,7 @@ function TripIntegrated() {
                         streetViewControl: false,
                         mapTypeControl: false,
                         fullscreenControl: false,
+                        styles: mapStyle
                     }}
                     onLoad={map => setMap(map)}
                 >
@@ -325,91 +328,95 @@ function TripIntegrated() {
                 minW='container.md'
                 zIndex='1'
             >
-                <HStack spacing={2} justifyContent='space-between'>
-                    <Box flexGrow={1}>
-                        <Autocomplete>
-                            <Input type='text' placeholder='Origin' ref={originRef} />
-                        </Autocomplete>
-                    </Box>
-                    <Box flexGrow={1}>
-                        <Autocomplete>
-                            <Input type='text' placeholder='Destination' ref={destinationRef} />
-                        </Autocomplete>
-                    </Box>
-                    <Box flexGrow={1}>
-                        <Input
-                            type='text'
-                            placeholder='Date: MM/DD/YYYY'
-                            ref={dateRef}
-                        />
-                    </Box>
-                    <Box flexGrow={1}>
-                        <Input
-                            type='text'
-                            placeholder='Rating {1..5}'
-                            ref={ratingRef}
-                        />
-                    </Box>
-                    <Box flexGrow={1}>
-                        <Input
-                            type='text'
-                            placeholder='Radius {in miles}'
-                            ref={radiusRef}
-                        />
-                    </Box>
+                <VStack spacing={2}>
+                    <HStack width={"89vw"} spacing={2} justifyContent='space-between'>
+                        <Box flexGrow={1}>
+                            <Autocomplete>
+                                <Input type='text' placeholder='Origin' ref={originRef} />
+                            </Autocomplete>
+                        </Box>
+                        <Box flexGrow={1}>
+                            <Autocomplete>
+                                <Input type='text' placeholder='Destination' ref={destinationRef} />
+                            </Autocomplete>
+                        </Box>
+                        <Box flexGrow={1}>
+                            <Input
+                                type='date' defaultValue={new Date().toString().substring(0, 10)}
+                                placeholder='Date: MM/DD/YYYY'
+                                ref={dateRef}
+                            />
+                        </Box>
+                        <Box flexGrow={1}>
+                            <Input
+                                type='number' min={1} max={5}
+                                minWidth={"100px"}
+                                placeholder='Rating {1..5}'
+                                ref={ratingRef}
+                            />
+                        </Box>
+                        <Box flexGrow={1}>
+                            <Input
+                                type='number'
+                                defaultValue={1}
+                                placeholder='Radius {in miles}'
+                                ref={radiusRef}
+                            />
+                        </Box>
 
-                    <ButtonGroup>
-                        <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
-                            Calculate Route
-                        </Button>
-                        {userCtx.isLoggedIn ? (
-                            <Button colorScheme='pink' type='submit' onClick={saveTrip}>
-                                Save
-                            </Button>) : (
+                        <ButtonGroup>
+                            <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
+                                Calculate Route
+                            </Button>
+                            {userCtx.isLoggedIn ? (
+                                <Button colorScheme='pink' type='submit' onClick={saveTrip}>
+                                    Save
+                                </Button>) : (
                                 <p></p>
 
-                        )
-                        }
+                            )
+                            }
 
 
-                        <IconButton
-                            aria-label='center back'
-                            icon={<FaTimes />}
-                            onClick={clearRoute}
-                        />
-                    </ButtonGroup>
-                </HStack>
-                <HStack spacing={2} justifyContent='space-between'>
+                            <IconButton
+                                aria-label='center back'
+                                icon={<FaTimes />}
+                                onClick={clearRoute}
+                            />
+                        </ButtonGroup>
+                    </HStack>
+                    <HStack width={"89vw"} spacing={2} justifyContent='space-between'>
 
-                    {/* <Box flexGrow={1}>
+                        {/* <Box flexGrow={1}>
                         <Input
                             type='text'
                             placeholder='Preference separated by comma'
                             ref={preferenceRef}
                         />
                     </Box> */}
-                    <Select placeholder='Select Preferences' ref={preferenceRef}>
-                        <option value='church'>Places of worship</option>
-                        <option value='restaurant'>Restaurants</option>
-                        <option value='gas_station'>Gas Station</option>
-                        <option value='doctor'>Doctor</option>
-                        <option value='car_wash'>Car Wash</option>
-                    </Select>
+                        <Select placeholder='Select Preferences' ref={preferenceRef} defaultValue={"restaurant"}>
+                            <option value='church'>Places of worship</option>
+                            <option value='restaurant'>Restaurants</option>
+                            <option value='gas_station'>Gas Station</option>
+                            <option value='doctor'>Doctor</option>
+                            <option value='car_wash'>Car Wash</option>
+                        </Select>
 
-                </HStack>
-                <HStack spacing={4} mt={4} justifyContent='space-between'>
-                    <Text>Distance: {distance} </Text>
-                    <Text>Duration: {duration} </Text>
-                    <IconButton
-                        aria-label='center back'
-                        icon={<FaLocationArrow />}
-                        isRound
-                        onClick={() => {
-                            map.panTo(center)
-                            map.setZoom(15)
-                        }}
-                    />
-                </HStack>
+                    </HStack>
+                    <HStack width={"89vw"} spacing={4} mt={4} justifyContent='space-between'>
+                        <Text>Distance: {distance} </Text>
+                        <Text>Duration: {duration} </Text>
+                        <IconButton
+                            aria-label='center back'
+                            icon={<FaLocationArrow />}
+                            isRound
+                            onClick={() => {
+                                map.panTo(center)
+                                map.setZoom(15)
+                            }}
+                        />
+                    </HStack>
+                </VStack>
             </Box>
         </Flex>
     )
