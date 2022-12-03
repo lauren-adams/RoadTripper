@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import {useContext, useState} from 'react';
 import UserContext from "./UserContext";
 import {Link} from "react-router-dom";
 import { notify } from "./toast";
@@ -42,7 +42,24 @@ function Music()  {
     let isHappy = false;
     let isCalm = false;
     let isEnergetic = false;
+    const [customRange1, setCR1] = useState(50);
+    const [customRange2, setCR2] = useState(50);
+    const [customRange3, setCR3] = useState(50);
 
+    const cr1Handler = (event) => {
+        setCR1(event.target.value);
+        //console.log("CR3:" + customRange3);
+    }
+
+    const cr2Handler = (event) => {
+        setCR2(event.target.value);
+        //console.log("CR3:" + customRange3);
+    }
+
+    const cr3Handler = (event) => {
+        setCR3(event.target.value);
+        //console.log("CR3:" + customRange3);
+    }
 
     const setSad = () => {
         isHappy = false;
@@ -61,11 +78,8 @@ function Music()  {
         isEnergetic = true;
     }
     const submit = () => {
-        if ((!isSad && !isHappy) || (!isCalm && !isEnergetic)) {
-            notify("You must select one from both categories!");
-        }
-        else {
-            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
+            //let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
+            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylistByVal?val1=${customRange1}&val2=${customRange2}&val3=${customRange3}`;
             const pushData = async () => {
                 const responseA = await axios.get(urlApi, {
                     headers: {
@@ -79,7 +93,7 @@ function Music()  {
             pushData();
             //window.location.reload();
 
-        }
+
     }
     if (!playlistReturned) {
         return (
@@ -91,15 +105,20 @@ function Music()  {
                             <h2><b>What kind of music do you want?</b></h2>
                             <br/><br/>
                             <h3>Are you <i>sad</i> or <i>happy</i>?</h3>
-                            <div>
-                                <Button type="button" onClick={setSad}>I'm Sad</Button>
-                                <Button type="button" onClick={setHappy}>I'm Happy</Button>
+                            <div width="200">
+                                <label htmlFor="customRange1" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange1" onChange={cr1Handler}></input>
                             </div>
                             <br/><br/>
                             <h3>Are you <i>energetic</i> or <i>calm?</i></h3>
-                            <div>
-                                <Button type="button" onClick={setEnergetic}>ENERGY</Button>
-                                <Button type="button" onClick={setCalm}>zzz</Button>
+                            <div width="200">
+                                <label htmlFor="customRange2" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange2" onChange={cr2Handler}></input>
+                            </div>
+                            <h3>Do you want <i>country</i> or <i>pop?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange3" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange3" onChange={cr3Handler}></input>
                             </div>
                             <div>
                                 <Link to="/home">
