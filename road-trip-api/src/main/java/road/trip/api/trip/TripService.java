@@ -39,7 +39,7 @@ public class TripService{
     @Async("threadTaskExecutor")
     public void doAsync() {
         //System.out.println("hehe");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM/dd/yyyy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
 
