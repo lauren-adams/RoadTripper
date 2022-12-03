@@ -7,6 +7,8 @@ import styled from 'styled-components';
 import axios from "axios";
 import WebHeader from "./WebHeader";
 import Cookies from "universal-cookie";
+import classes from './TripItem.module.css';
+
 
 
 
@@ -65,7 +67,8 @@ function Music()  {
             notify("You must select one from both categories!");
         }
         else {
-            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
+            //let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
+            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?val1=${customRange1.data()}&val2=${customRange1.data()}&val3=${customRange1.data()}`;
             const pushData = async () => {
                 const responseA = await axios.get(urlApi, {
                     headers: {
@@ -94,14 +97,25 @@ function Music()  {
                         <div>
                             <Button type="button" onClick={setSad}>I'm Sad</Button>
                             <Button type="button" onClick={setHappy}>I'm Happy</Button>
+                            <label htmlFor="customRange1" className="form-label">Example range</label>
+                            <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange1"></input>
+
                         </div>
                             <br/><br/>
                         <h3>Are you <i>energetic</i> or <i>calm?</i></h3>
-                        <div>
+                        <div width="200">
                             <Button type="button" onClick={setEnergetic}>ENERGY</Button>
                             <Button type="button" onClick={setCalm}>zzz</Button>
-                        </div>
+                            <label htmlFor="customRange2" className="form-label">Example range</label>
+                            <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange2"></input>
+                            </div>
                         <div>
+                            <h3>Do you want <i>country</i> or <i>pop?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange3" className="form-label">Example range</label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange3"></input>
+                            </div>
+                            <div>
                             <Link to="/home">
                                 <Button type="button">
                                     Back

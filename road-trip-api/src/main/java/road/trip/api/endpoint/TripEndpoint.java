@@ -141,6 +141,7 @@ public class TripEndpoint {
         return tripService.findTripByDate("bbb");
     }
 
+    /*
     public void dailyNotify(){
         System.out.println("hehe");
         List<Trip> tt = getTripsByDate("bbb");
@@ -165,5 +166,5 @@ public class TripEndpoint {
             x++;
         }
     }
-
+*/
 }

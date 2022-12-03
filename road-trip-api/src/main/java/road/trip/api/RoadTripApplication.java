@@ -36,7 +36,6 @@ public class RoadTripApplication {
     private StopRepository stopRepository;
     public static void main(String[] args) {
         SpringApplication.run(RoadTripApplication.class, args);
-        DailyNotification dn = new DailyNotification();
         //dn.dailyNotify(tripRepository);
         //TripEndpoint te = new TripEndpoint();
         //te.dailyNotify();
