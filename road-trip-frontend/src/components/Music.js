@@ -45,6 +45,9 @@ function Music()  {
     const [customRange1, setCR1] = useState(50);
     const [customRange2, setCR2] = useState(50);
     const [customRange3, setCR3] = useState(50);
+    const [customRange4, setCR4] = useState(50);
+    const [customRange5, setCR5] = useState(50);
+    const [customRange6, setCR6] = useState(50);
 
     const cr1Handler = (event) => {
         setCR1(event.target.value);
@@ -58,6 +61,21 @@ function Music()  {
 
     const cr3Handler = (event) => {
         setCR3(event.target.value);
+        //console.log("CR3:" + customRange3);
+    }
+
+    const cr4Handler = (event) => {
+        setCR4(event.target.value);
+        //console.log("CR3:" + customRange3);
+    }
+
+    const cr5Handler = (event) => {
+        setCR5(event.target.value);
+        //console.log("CR3:" + customRange3);
+    }
+
+    const cr6Handler = (event) => {
+        setCR6(event.target.value);
         //console.log("CR3:" + customRange3);
     }
 
@@ -79,7 +97,7 @@ function Music()  {
     }
     const submit = () => {
             //let urlApi =  `https://subjecttochange.dev/api/user/getPlaylist?sad=${isSad}&happy=${isHappy}&energetic=${isEnergetic}&calm=${isCalm}`;
-            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylistByVal?val1=${customRange1}&val2=${customRange2}&val3=${customRange3}`;
+            let urlApi =  `https://subjecttochange.dev/api/user/getPlaylistbyVal?val1=${customRange1}&val2=${customRange2}&val3=${customRange3}&val4=${customRange4}&val5=${customRange5}&val6=${customRange6}`;
             const pushData = async () => {
                 const responseA = await axios.get(urlApi, {
                     headers: {
@@ -109,7 +127,6 @@ function Music()  {
                                 <label htmlFor="customRange1" className="form-label"></label>
                                 <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange1" onChange={cr1Handler}></input>
                             </div>
-                            <br/><br/>
                             <h3>Are you <i>energetic</i> or <i>calm?</i></h3>
                             <div width="200">
                                 <label htmlFor="customRange2" className="form-label"></label>
@@ -119,6 +136,31 @@ function Music()  {
                             <div width="200">
                                 <label htmlFor="customRange3" className="form-label"></label>
                                 <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange3" onChange={cr3Handler}></input>
+                            </div>
+                            <h3>Do you want <i>long</i> or <i>short?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange4" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange4" onChange={cr4Handler}></input>
+                            </div>
+                            <h3>Do you want <i>chilll</i> or <i>fun?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange6" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange6" ></input>
+                            </div>
+                            <h3>Do you want <i>old</i> or <i>new?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange5" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange5" onChange={cr5Handler}></input>
+                            </div>
+                            <h3>Do you want <i>instrumental</i> or <i>vocals?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange6" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange6" onChange={cr6Handler}></input>
+                            </div>
+                            <h3>Do you want <i>normal</i> or <i>suprise me?</i></h3>
+                            <div width="200">
+                                <label htmlFor="customRange6" className="form-label"></label>
+                                <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange6" ></input>
                             </div>
                             <div>
                                 <Link to="/home">

@@ -150,13 +150,47 @@ public class UserEndpoint {
     }
 
     @GetMapping("/user/getPlaylistbyVal")
-    public String getPlaylist2(@RequestParam(value="val1") int v1, @RequestParam(value="val2") int v2, @RequestParam(value="val3") int v3, @RequestParam(value="val4") int v4){
-        //if (sad && energetic) {
-            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
-        /*}
-        else if (sad && calm) {
-            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4MYukieWIJWuLM3buEFk0B?utm_source=generator\"}";
+    public String getPlaylist2(@RequestParam(value="val1") int v1, @RequestParam(value="val2") int v2, @RequestParam(value="val3") int v3, @RequestParam(value="val4") int v4,  @RequestParam(value="val5") int v5,  @RequestParam(value="val6") int v6){
+        //return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
+        if ( v1 + v2 + v3 + v4 + v5 + v6 < 300){
+            if (v1 + v2 + v3 + v4 + v5 + v6 < 80){
+                //generic sad1
+            }
+            if (v5 < 40){
+                //oldies (maybe sad oldies)
+            }
+
+            if (v3 < 30 && v1 < 50){
+                //sad country
+            } else if ( v3 < 30){
+                //country
+            }
+
+            if (v6 < 25){
+                //instramental
+            }
+        } else if ( v1 + v2 + v3 + v4 + v5 + v6 > 300){
+            //generic happy
+            if (v1 + v2 + v3 + v4 + v5 + v6 > 520){
+                //generic happy 1
+            }
+
+            if (v4 > 70){
+                //long
+            }
+
+
+        } else {
+            //generic
         }
+
+
+        if (v1 < 50  && v2 > 50) {
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
+        }
+        else {//if (sad && calm) {
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4MYukieWIJWuLM3buEFk0B?utm_source=generator\"}";
+        }/*
         else if (happy && energetic) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?utm_source=generator\"}";
         }
