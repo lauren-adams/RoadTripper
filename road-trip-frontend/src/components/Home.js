@@ -4,14 +4,16 @@ import UserContext from "./UserContext";
 import { useContext } from 'react';
 import RenderMap from "./RenderMap";
 import TripIntegrated from "./TripIntegrated";
+import Cookies from "universal-cookie";
 
-
+const cookies = new Cookies();
 
 const Home = () => {
     const userCtx = useContext(UserContext);
 
     const logOut = () => {
         userCtx.setMyUser("", "", false);
+        cookies.remove('jwt', { path: '/' });
     };
 
     return (
@@ -20,13 +22,6 @@ const Home = () => {
                 <Link to={"/home"} className="navbar-brand">
                     SubjectToChange
                 </Link>
-                <div className="navbar-nav mr-auto">
-                    <li className="nav-item">
-                        <Link to={"/view-trips"} className="nav-link">
-                            Trips
-                        </Link>
-                    </li>
-                </div>
                 <div className="navbar-nav mr-auto">
                     <li className="nav-item">
                         <Link to={"/music"} className="nav-link">
@@ -47,6 +42,11 @@ const Home = () => {
                             <a href="/home" className="nav-link" onClick={logOut}>
                                 LogOut
                             </a>
+                        </li>
+                        <li className="nav-item">
+                            <Link to={"/view-trips"} className="nav-link">
+                                Trips
+                            </Link>
                         </li>
                         {userCtx.type === "o" ? (<div className="navbar-nav ml-auto">
                                 <li>

@@ -363,7 +363,6 @@ function TripIntegrated() {
                                 ref={radiusRef}
                             />
                         </Box>
-
                         <ButtonGroup>
                             <Button colorScheme='pink' type='submit' onClick={calculateRoute}>
                                 Calculate Route

@@ -6,6 +6,7 @@ WORKDIR /app
 COPY ["package.json", "package-lock.json*", "./"]
 
 RUN npm install --production --force
-
+RUN npm install -g serve
+RUN npm run build
 COPY . .
-CMD ["npm", "start"]
+CMD ["serve -s build"]
