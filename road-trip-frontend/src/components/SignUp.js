@@ -51,12 +51,11 @@ const SignUp = () => {
 
   const submitHandler = (event) => {
     event.preventDefault();
-    if (!Object.keys(errors).length) {
-      // Pushing data to database usuing PHP script
+    if (data.password.length>5 && (data.confirmPassword == data.password) && data.email.includes('@')) {
       const base = `https://subjecttochange.dev/api`
       //const base = `http://localhost:8080`
       const urlApi = base + `/user?`+'emailAddress='+data.email.toLowerCase() + '?'+ 'password='+bcrypt.hashSync(data.password, 10);
- 
+
       const pushData = async () => {
         //const responseA = axios.post(urlApi);
         const responseA = axios({
@@ -82,7 +81,7 @@ const SignUp = () => {
       };
       pushData();
     } else {
-      notify("Please Check fileds again", "error");
+      notify("Ensure all fields are propagated.", "error");
       setTouched({
         email: true,
         password: true,
