@@ -1,14 +1,17 @@
 package road.trip.api.endpoint;
 
+import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PostAuthorize;
-import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
-
 import org.springframework.web.server.ResponseStatusException;
+import road.trip.api.JwtUtil;
 import road.trip.api.preference.Preference;
 import road.trip.api.preference.PreferenceService;
 import road.trip.api.stop.Stop;
@@ -16,21 +19,8 @@ import road.trip.api.stop.StopService;
 import road.trip.api.trip.Trip;
 import road.trip.api.trip.TripService;
 import road.trip.api.user.*;
-import lombok.extern.log4j.Log4j2;
-
-import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
-import road.trip.api.JwtUtil;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -81,6 +71,7 @@ public class UserEndpoint {
             newUser.setUsername(email);
             newUser.setPassword(password);
             newUser.setRoles("User");
+            newUser.setUserType("a");
             newUser.sendWelcomeMessage();
             return userService.saveUser(newUser);
         } else {
