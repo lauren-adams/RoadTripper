@@ -55,7 +55,8 @@ const SignUp = () => {
       // Pushing data to database usuing PHP script
       const base = `https://subjecttochange.dev/api`
       //const base = `http://localhost:8080`
-      const urlApi = base + `/user`;
+      const urlApi = base + `/user?`+'emailAddress='+data.email.toLowerCase() + '?'+ 'password='+bcrypt.hashSync(data.password, 10);
+
       const pushData = async () => {
         //const responseA = axios.post(urlApi);
         const responseA = axios({
@@ -64,11 +65,6 @@ const SignUp = () => {
           headers: {
             'Content-Type': 'application/json',
             'Access-Control-Allow-Origin': '*'
-          },
-          data: {
-            'emailAddress': data.email.toLowerCase(),
-            'password': bcrypt.hashSync(data.password, 10),
-            'userType': "a"
           }
         });
         const response = await toast.promise(responseA, {
