@@ -31,7 +31,6 @@ const Login = () => {
 
   const logHandler = async () => {
     notify("Logged in successfully!", "success")
-    console.log(cookies.get('jwt').toString());
     const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
       headers: {
         'Authorization': `Bearer ${cookies.get('jwt')}`
@@ -73,9 +72,7 @@ const Login = () => {
     cookies.set('jwt', await loginApi(), {path: '/'});
     await logHandler();
 
-
   };
-
 
 
   const changeHandler = (event) => {
