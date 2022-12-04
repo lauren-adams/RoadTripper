@@ -4,14 +4,16 @@ import UserContext from "./UserContext";
 import { useContext } from 'react';
 import RenderMap from "./RenderMap";
 import TripIntegrated from "./TripIntegrated";
+import Cookies from "universal-cookie";
 
-
+const cookies = new Cookies();
 
 const Home = () => {
     const userCtx = useContext(UserContext);
 
     const logOut = () => {
         userCtx.setMyUser("", "", false);
+        cookies.remove('jwt', { path: '/' });
     };
 
     return (
