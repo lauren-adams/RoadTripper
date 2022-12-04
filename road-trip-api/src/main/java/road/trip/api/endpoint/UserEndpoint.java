@@ -80,6 +80,7 @@ public class UserEndpoint {
             User newUser = new User();
             newUser.setUsername(email);
             newUser.setPassword(password);
+            newUser.setRoles("User");
             newUser.sendWelcomeMessage();
             return userService.saveUser(newUser);
         } else {

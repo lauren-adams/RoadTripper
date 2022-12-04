@@ -39,6 +39,10 @@ public class User {
         this.userType = userType;
     }
 
+    public void setRoles(String roles) {
+        this.roles = roles;
+    }
+
     public void sendWelcomeMessage() throws Exception {
 
         Email emailObj = new Email();
