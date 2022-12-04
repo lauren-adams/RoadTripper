@@ -108,7 +108,7 @@ function Trp() {
         <div>
             <WebHeader />
             <section>
-                <h1>Saved Trips</h1>
+                <div className='heading' >Saved Trips</div>
                 {tripMessage && <Alert variant="success">{tripMessage}</Alert>}
                 <TrpList trips={loadedTrips}
                     show = {showDeleteModal}

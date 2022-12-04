@@ -32,3 +32,27 @@ a {
 a:hover {
   color: var(--main-color-hover);
 }
+
+.navbar{
+  padding: 1em !important;
+  border-bottom: 1px solid #5b5858;
+}
+
+.nav-link{
+  color: #3a3a3a !important;
+  font-weight: 600 !important;
+}
+
+.navbar-brand{
+  color: #3a3a3a !important;
+  font-weight: 800 !important;
+}
+
+.heading{
+  padding: 1em;
+  font-size: x-large;
+}
+
+.addBox{
+  margin: inherit;
+}

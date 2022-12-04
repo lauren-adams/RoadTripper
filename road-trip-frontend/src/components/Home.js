@@ -16,7 +16,7 @@ const Home = () => {
 
     return (
         <div>
-            <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <nav className ="navbar navbar-expand ">
                 <Link to={"/home"} className="navbar-brand">
                     SubjectToChange
                 </Link>

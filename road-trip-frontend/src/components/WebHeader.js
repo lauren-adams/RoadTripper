@@ -14,7 +14,7 @@ const WebHeader = () => {
     return (
 
         <div>
-            <nav class="navbar navbar-expand navbar-dark bg-dark">
+            <nav class="navbar navbar-expand ">
                 <Link to={"/home"} className="navbar-brand">
                     SubjectToChange
                 </Link>
