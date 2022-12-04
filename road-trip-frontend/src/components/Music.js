@@ -118,16 +118,17 @@ function Music()  {
             <div>
                 <WebHeader />
                 <section>
-                    <div>
+                    <div >
                         <center>
+                            <div style={{width:'300px'}}>
                             <h2><b>What kind of music do you want?</b></h2>
                             <br/><br/>
                             <h3>Are you <i>sad</i> or <i>happy</i>?</h3>
-                            <div width="200">
+                            <div>
                                 <label htmlFor="customRange1" className="form-label"></label>
                                 <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange1" onChange={cr1Handler}></input>
                             </div>
-                            <h3>Are you <i>energetic</i> or <i>calm?</i></h3>
+                            <h3>Are you <i>calm</i> or <i>energetic?</i></h3>
                             <div width="200">
                                 <label htmlFor="customRange2" className="form-label"></label>
                                 <input width="200px" type="range" className="form-range"  min="0" max="100" id="customRange2" onChange={cr2Handler}></input>
@@ -171,6 +172,7 @@ function Music()  {
                                 <Button type="button" onClick={submit}>
                                     Submit
                                 </Button>
+                            </div>
                             </div>
                             <div>
                                 <iframe

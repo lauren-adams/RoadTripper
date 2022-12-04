@@ -157,10 +157,6 @@ public class UserEndpoint {
                 //generic sad
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/32evNsgLAFS5QwHWZkT8Pl?utm_source=generator\"}";
             }
-            if (v5 < 40){
-                //oldies (maybe sad oldies)
-                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/26RNIQaae4ogcX6NO88Z9t?utm_source=generator\"}";
-            }
 
             if (v3 < 30 && v1 < 50){
                 //sad country
@@ -169,6 +165,12 @@ public class UserEndpoint {
                 //country
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1kWTrB4SL0gfBxNRnjVj4f?utm_source=generator\"}";
             }
+
+            if (v5 < 20){
+                //oldies (maybe sad oldies)
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/26RNIQaae4ogcX6NO88Z9t?utm_source=generator\"}";
+            }
+
 
             if (v6 < 25){
                 //instramental
