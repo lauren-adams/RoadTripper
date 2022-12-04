@@ -273,15 +273,16 @@ public class UserEndpoint {
             if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
                 UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
                 String jwt = jwtUtil.generateToken(userDetails);
-
                 return ResponseEntity.ok(new AuthResponse(jwt));
             } else {
                 Throwable ex = new Throwable();
                 throw new Exception("Incorrect Credentials", ex);
             }
         }
-        Throwable ex = new Throwable();
-        throw new Exception("Incorrect Credentials", ex);
+        else {
+            Throwable ex = new Throwable();
+            throw new Exception("Incorrect Credentials", ex);
+        }
     }
 
     @Autowired
