@@ -72,6 +72,7 @@ public class UserEndpoint {
             newUser.setPassword(password);
             newUser.setRoles("User");
             newUser.setUserType("a");
+            newUser.setActive(true);
             newUser.sendWelcomeMessage();
             return userService.saveUser(newUser);
         } else {

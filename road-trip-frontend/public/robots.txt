@@ -1,3 +1,4 @@
 # https://www.robotstxt.org/robotstxt.html
+# Attribution for favicon: <a href="https://www.flaticon.com/free-icons/map" title="map icons">Map icons created by Freepik - Flaticon</a>
 User-agent: *
 Disallow:
