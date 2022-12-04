@@ -5,10 +5,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.crypto.bcrypt.BCrypt;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 import road.trip.api.JwtUtil;
@@ -269,17 +268,20 @@ public class UserEndpoint {
 
     @RequestMapping(value = "/authenticate", method = RequestMethod.POST)
     public ResponseEntity<?> createAuthToken(@RequestBody AuthRequest request) throws Exception {
-        try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getUsername(), request.getPassword()));
-        } catch (AuthenticationException ex) {
-            throw new Exception("Incorrect Credentials", ex);
+        if (getUsersByEmail(request.getUsername()).isPresent()) {
+            User user = getUsersByEmail(request.getUsername()).get();
+            if (BCrypt.checkpw(request.getPassword(), user.getPassword())) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
+                String jwt = jwtUtil.generateToken(userDetails);
+
+                return ResponseEntity.ok(new AuthResponse(jwt));
+            } else {
+                Throwable ex = new Throwable();
+                throw new Exception("Incorrect Credentials", ex);
+            }
         }
-
-        UserDetails userDetails = userDetailsService.loadUserByUsername(request.getUsername());
-        String jwt = jwtUtil.generateToken(userDetails);
-
-        return ResponseEntity.ok(new AuthResponse(jwt));
-
+        Throwable ex = new Throwable();
+        throw new Exception("Incorrect Credentials", ex);
     }
 
     @Autowired

@@ -50,41 +50,14 @@ const Login = () => {
     let passwordGiven = data.password;
     let base = `https://subjecttochange.dev/api/`;
     //let base = `http://localhost:8080/`;
-    let urlApi = base + `user/getPassword?emailAddress=${email.toLowerCase()}`;
     let authUrl = base + 'authenticate';
     let retrievedHash = "";
     let retrievedType;
     const loginApi = async () => {
 
-
-      const responseB = axios.get(urlApi, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      })
-      const response1 = await toast.promise(responseB, {
-        pending: "Check your data",
-        success: "Checked!",
-        error: "Something went wrong!",
-      });
-      retrievedHash = response1.data.password;
-      retrievedType = response1.data.userType;
-      //passwordGiven = bcrypt.hashSync(passwordGiven, saltResult);
-      bcrypt.compare(passwordGiven, retrievedHash, function (err, result) {
-        if (result) {
-          console.log("Success");
-          userCtx.setMyUser("user", email, true, retrievedType);
-
-        } else {
-          console.log(":(");
-          notify("Incorrect login")
-        }
-      });
-
-      console.log(retrievedHash);
       const responseA = axios.post(authUrl, {
         username: email,
-        password: retrievedHash
+        password: passwordGiven
       });
       const response = await toast.promise(responseA, {
         pending: "Check your data",
