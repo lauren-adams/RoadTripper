@@ -28,6 +28,7 @@ function ViewStops(props) {
     const [distance, setDistance] = useState('')
     const [duration, setDuration] = useState('')
     const [selectedStops, setSelectedStops] = useState([]);
+    const [allStops, setAllStops] = useState([]);
 
     useEffect(() => {
         console.log(userCtx.username + userCtx.email + userCtx.id);
@@ -39,6 +40,7 @@ function ViewStops(props) {
                 return response.json();
             })
             .then((data) => {
+                setAllStops(data);
                 console.log(data);
 
                 const trips = [];
@@ -107,9 +109,8 @@ function ViewStops(props) {
      * To delete stops when click button
      */
     function deleteStop(stop) {
-        console.log("remove stop " + stop)
-        console.log(stop);
         stop.flagStop = false;
+        selectedStops.push(stop);
         console.log("check this " + stop.flagStop);
         const base = `https://subjecttochange.dev/api`
         //const base = `http://localhost`
@@ -123,7 +124,7 @@ function ViewStops(props) {
                     'Access-Control-Allow-Origin': '*',
                     Authentication: `Bearer ${cookies.get('jwt')}`
                 },
-                data: stop
+                data: selectedStops
             });
             console.log(urlApi);
             console.log(responseA);
@@ -242,15 +243,15 @@ function ViewStops(props) {
                                             <li className={classes.item} key={stop}>
                                                 <div className={classes.card}>
                                                     <Text className={classes.content}>{stop.stopLoc}</Text>
-                                                    <Text className={classes.content}>Rating: {stop.rating}</Text>
+                                                    {/*<Text className={classes.content}>Rating: {stop.rating}</Text>*/}
                                                 </div>
-                                                {/*<Select placeholder='Rating'>*/}
-                                                {/*    <option value='1'>1</option>*/}
-                                                {/*    <option value='2'>2</option>*/}
-                                                {/*    <option value='3'>3</option>*/}
-                                                {/*    <option value='4'>4</option>*/}
-                                                {/*    <option value='5'>5</option>*/}
-                                                {/*</Select>*/}
+                                                <Select placeholder='Rating'>
+                                                    <option value='1'>1</option>
+                                                    <option value='2'>2</option>
+                                                    <option value='3'>3</option>
+                                                    <option value='4'>4</option>
+                                                    <option value='5'>5</option>
+                                                </Select>
                                                 <Button colorScheme="blue" size='sm' margin='1'>Save</Button>
                                                 <Button onClick={() => deleteStop(stop)} colorScheme='pink' size='sm'
                                                         margin='1'>Delete</Button>

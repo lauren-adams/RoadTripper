@@ -120,7 +120,7 @@ const AddStop = () => {
 
 
     const submitHandler = (selectedStops) => {
-        //history.push("/view-trips");
+        history.push("/view-trips");
         const base = `https://subjecttochange.dev/api`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         console.log(data.start + data.end + data.date + userCtx.username + userCtx.email + userCtx.id);
