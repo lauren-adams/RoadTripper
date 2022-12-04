@@ -154,7 +154,7 @@ public class UserEndpoint {
         //return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
         if ( v1 + v2 + v3 + v4 + v5 + v6 < 300){
             if (v1 + v2 + v3 + v4 + v5 + v6 < 80){
-                //generic sad1
+                //generic sad
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/32evNsgLAFS5QwHWZkT8Pl?utm_source=generator\"}";
             }
             if (v5 < 40){
