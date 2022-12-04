@@ -143,7 +143,7 @@ public class Stop {
     Boolean flagStop = false;
 
     @Column(name = "myRating")
-    int myRating;
+    Integer myRating;
 
     public int getMyRating() {
         return myRating;
