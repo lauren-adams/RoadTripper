@@ -178,7 +178,6 @@ public class UserEndpoint {
 
             }
 
-
             if (v6 < 25){
                 //instramental
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/2onh26E3CZbSUS6cITKnCB?utm_source=generator\"}";
