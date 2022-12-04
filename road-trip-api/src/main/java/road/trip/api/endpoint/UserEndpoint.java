@@ -155,42 +155,55 @@ public class UserEndpoint {
         if ( v1 + v2 + v3 + v4 + v5 + v6 < 300){
             if (v1 + v2 + v3 + v4 + v5 + v6 < 80){
                 //generic sad1
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/32evNsgLAFS5QwHWZkT8Pl?utm_source=generator\"}";
             }
             if (v5 < 40){
                 //oldies (maybe sad oldies)
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/26RNIQaae4ogcX6NO88Z9t?utm_source=generator\"}";
             }
 
             if (v3 < 30 && v1 < 50){
                 //sad country
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4BYfItn9xgCEovBGN1jTsO?utm_source=generator\"}";
             } else if ( v3 < 30){
                 //country
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1kWTrB4SL0gfBxNRnjVj4f?utm_source=generator\"}";
             }
 
             if (v6 < 25){
                 //instramental
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/2onh26E3CZbSUS6cITKnCB?utm_source=generator\"}";
             }
+            //gen sad 2
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0I55TIz4Hsk4iihs2uYojd?utm_source=generator\"}";
         } else if ( v1 + v2 + v3 + v4 + v5 + v6 > 300){
             //generic happy
             if (v1 + v2 + v3 + v4 + v5 + v6 > 520){
                 //generic happy 1
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0cIuS0aWZPYFFFbTvU6USs?utm_source=generator\"}";
             }
 
             if (v4 > 70){
                 //long
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/430QWq9IU4d7xtbUlAM5sh?utm_source=generator\"}";
             }
+
+            //gen happy 2
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1PxQYikP1YrIIcflPtomKv?utm_source=generator\"}";
 
 
         } else {
             //generic
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/6u6fTF7tmAeESJi5ZKg7wY?utm_source=generator\"}";
         }
 
 
-        if (v1 < 50  && v2 > 50) {
+        /*if (v1 < 50  && v2 > 50) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
         }
         else {//if (sad && calm) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4MYukieWIJWuLM3buEFk0B?utm_source=generator\"}";
-        }/*
+        }
         else if (happy && energetic) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?utm_source=generator\"}";
         }
