@@ -13,18 +13,18 @@ import javax.persistence.*;
 @Table(name = Stop.TABLE_NAME)
 @Entity
 public class Stop {
-        public static final String TABLE_NAME = "STOPS";
-        @Id
-        @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
-        @SequenceGenerator(
-                name = TABLE_NAME + "_GENERATOR",
-                sequenceName = TABLE_NAME + "_SEQUENCE"
-        )
-        @Column(name = "STOP_ID")
-        Long id;
+    public static final String TABLE_NAME = "STOPS";
+    @Id
+    @GeneratedValue(generator = TABLE_NAME + "_GENERATOR")
+    @SequenceGenerator(
+            name = TABLE_NAME + "_GENERATOR",
+            sequenceName = TABLE_NAME + "_SEQUENCE"
+    )
+    @Column(name = "STOP_ID")
+    Long id;
 
-        @Column(name = "ADDRESS")
-        String address;
+    @Column(name = "ADDRESS")
+    String address;
 
     public String getAddress() {
         return address;
@@ -35,13 +35,13 @@ public class Stop {
     }
 
     @Column(name = "TYPE")
-        String type;
+    String type;
 
-        @Column(name = "LONGITUDE")
-        Float longitude;
+    @Column(name = "LONGITUDE")
+    Float longitude;
 
-        @Column(name = "LATTITUDE")
-        Float lattitude;
+    @Column(name = "LATTITUDE")
+    Float lattitude;
 
     public Float getRating() {
         return rating;
@@ -52,10 +52,10 @@ public class Stop {
     }
 
     @Column(name = "RATING")
-        Float rating;
+    Float rating;
 
-        @Column(name = "IMAGE", columnDefinition = "TEXT")
-        String image;
+    @Column(name = "IMAGE", columnDefinition = "TEXT")
+    String image;
 
     public String getType() {
         return type;
@@ -96,8 +96,8 @@ public class Stop {
     //        this.trip = trip;
     //    }
 
-        @Column(name = "T_ID")
-        Long tripId;
+    @Column(name = "T_ID")
+    Long tripId;
 
     public Long getWaypointNumber() {
         return waypointNumber;
@@ -126,46 +126,55 @@ public class Stop {
 
 
     @Column(name = "WAYPOINT")
-        Long waypointNumber;
+    Long waypointNumber;
 
-        public Boolean getFlagStop() {
-            return flagStop;
-        }
+    public Boolean getFlagStop() {
+        return flagStop;
+    }
 
-        public void setFlagStop(Boolean flagStop) {
-            this.flagStop = flagStop;
-        }
+    public void setFlagStop(Boolean flagStop) {
+        this.flagStop = flagStop;
+    }
 
-        @Column(name = "LOCATION")
-        String stopLoc;
+    @Column(name = "LOCATION")
+    String stopLoc;
 
-        @Column(name = "IS_SELECTED")
-        Boolean flagStop = false;
+    @Column(name = "IS_SELECTED")
+    Boolean flagStop = false;
 
-        public Long getId() {
-            return id;
-        }
+    @Column(name = "myRating")
+    int myRating;
 
-        public void setId(Long id) {
-            this.id = id;
-        }
+    public int getMyRating() {
+        return myRating;
+    }
 
-        public Long getTripId() {
-            return tripId;
-        }
+    public void setMyRating(int myRating) {
+        this.myRating = myRating;
+    }
+    public Long getId() {
+        return id;
+    }
 
-        public void setTripId(Long tripId) {
-            this.tripId = tripId;
-        }
+    public void setId(Long id) {
+        this.id = id;
+    }
 
-        public String getStopLoc() {
-            return stopLoc;
-        }
+    public Long getTripId() {
+        return tripId;
+    }
 
-        public void setStopLoc(String stopLoc) {
-            this.stopLoc = stopLoc;
-        }
+    public void setTripId(Long tripId) {
+        this.tripId = tripId;
+    }
 
+    public String getStopLoc() {
+        return stopLoc;
+    }
+
+    public void setStopLoc(String stopLoc) {
+        this.stopLoc = stopLoc;
+    }
 
 
     //    @ManyToOne(fetch = FetchType.LAZY, optional = false)

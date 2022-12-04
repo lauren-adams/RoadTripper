@@ -134,19 +134,170 @@ function ViewStops(props) {
         setLoadedTrips(newLoadTripStop);
         setLoadedWaypoints(current =>
             current.filter(s => {
-                console.log(s);
-                console.log(s.location.lat);
-                console.log(stop.lattitude);
                 return s.location.lat !== stop.lattitude;
             }),
         );
     }
 
-    //TODO: set rating
+
     /**
      * To set rating for each stop
      */
-    const setStopRating = () => {
+    function setRating1(stop) {
+        console.log("check this " + stop.myRating);
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        stop.myRating = 1;
+        selectedStops.push(stop);
+
+        const pushData = async () => {
+            const responseA = axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
+                },
+                data: selectedStops
+            });
+            console.log(urlApi);
+            console.log(responseA);
+        }
+        pushData();
+
+        const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
+        setLoadedTrips(newLoadTripStop);
+        setLoadedWaypoints(current =>
+            current.filter(s => {
+                return s.location.lat !== stop.lattitude;
+            }),
+        );
+    }
+
+    function setRating2(stop) {
+        console.log("check this " + stop.myRating);
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        stop.myRating = 2;
+        selectedStops.push(stop);
+
+        const pushData = async () => {
+            const responseA = axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
+                },
+                data: selectedStops
+            });
+            console.log(urlApi);
+            console.log(responseA);
+        }
+        pushData();
+
+        const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
+        setLoadedTrips(newLoadTripStop);
+        setLoadedWaypoints(current =>
+            current.filter(s => {
+                return s.location.lat !== stop.lattitude;
+            }),
+        );
+    }
+    function setRating3(stop) {
+        console.log("check this " + stop.myRating);
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        stop.myRating = 3;
+        selectedStops.push(stop);
+
+        const pushData = async () => {
+            const responseA = axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
+                },
+                data: selectedStops
+            });
+            console.log(urlApi);
+            console.log(responseA);
+        }
+        pushData();
+
+        const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
+        setLoadedTrips(newLoadTripStop);
+        setLoadedWaypoints(current =>
+            current.filter(s => {
+                return s.location.lat !== stop.lattitude;
+            }),
+        );
+    }
+    function setRating4(stop) {
+        console.log("check this " + stop.myRating);
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        stop.myRating = 4;
+        selectedStops.push(stop);
+
+        const pushData = async () => {
+            const responseA = axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
+                },
+                data: selectedStops
+            });
+            console.log(urlApi);
+            console.log(responseA);
+        }
+        pushData();
+
+        const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
+        setLoadedTrips(newLoadTripStop);
+        setLoadedWaypoints(current =>
+            current.filter(s => {
+                return s.location.lat !== stop.lattitude;
+            }),
+        );
+    }
+    function setRating5(stop) {
+        console.log("check this " + stop.myRating);
+        const base = `https://subjecttochange.dev/api`
+        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        stop.myRating = 5;
+        selectedStops.push(stop);
+
+        const pushData = async () => {
+            const responseA = axios({
+                method: 'post',
+                url: urlApi,
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*',
+                    Authentication: `Bearer ${cookies.get('jwt')}`
+                },
+                data: selectedStops
+            });
+            console.log(urlApi);
+            console.log(responseA);
+        }
+        pushData();
+
+        const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
+        setLoadedTrips(newLoadTripStop);
+        setLoadedWaypoints(current =>
+            current.filter(s => {
+                return s.location.lat !== stop.lattitude;
+            }),
+        );
     }
 
     function addStopHandler() {
@@ -242,16 +393,16 @@ function ViewStops(props) {
                                             <li className={classes.item} key={stop}>
                                                 <div className={classes.card}>
                                                     <Text className={classes.content}>{stop.stopLoc}</Text>
-                                                    {/*<Text className={classes.content}>Rating: {stop.rating}</Text>*/}
                                                 </div>
-                                                <Select placeholder='Rating'>
-                                                    <option value='1'>1</option>
-                                                    <option value='2'>2</option>
-                                                    <option value='3'>3</option>
-                                                    <option value='4'>4</option>
-                                                    <option value='5'>5</option>
+                                                <Select placeholder={stop.myRating? stop.myRating : "Rating"}>
+                                                    <option value='1' onSelect={() => setRating1(stop)}>1</option>
+                                                    <option value='2' onSelect={() => setRating2(stop)}>2</option>
+                                                    <option value='3' onSelect={() => setRating3(stop)}>3</option>
+                                                    <option value='4' onSelect={() => setRating4(stop)}>4</option>
+                                                    <option value='5' onSelect={() => setRating5(stop)}>5</option>
                                                 </Select>
-                                                <Button colorScheme="blue" size='sm' margin='1'>Save</Button>
+                                                {/*<Button colorScheme="blue" size='sm' margin='1'*/}
+                                                {/*        onClick={() => setStopRating(stop)}>Save</Button>*/}
                                                 <Button onClick={() => deleteStop(stop)} colorScheme='pink' size='sm'
                                                         margin='1'>Delete</Button>
                                             </li>

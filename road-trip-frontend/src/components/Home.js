@@ -2,7 +2,6 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from "react-router-dom";
 import UserContext from "./UserContext";
 import { useContext } from 'react';
-import RenderMap from "./RenderMap";
 import TripIntegrated from "./TripIntegrated";
 import Cookies from "universal-cookie";
 
