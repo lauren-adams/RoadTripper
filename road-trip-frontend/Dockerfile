@@ -11,8 +11,8 @@ RUN npm run build
 # Bundle static assets with nginx
 FROM docker.io/nginx:1.21.0-alpine as production
 ENV NODE_ENV production
-# Copy built assets from `builder` image
-COPY --from=builder /app/build /usr/share/nginx/html
+# Copy built assets from build image
+COPY --from=build /app/build /usr/share/nginx/html
 COPY nginx.conf /etc/nginx/conf.d/default.conf
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
