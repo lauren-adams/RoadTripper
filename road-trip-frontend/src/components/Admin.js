@@ -117,7 +117,8 @@ function Admin() {
                 </section>
                 <DeleteConfirmation showModal={displayConfirmationModal} confirmModal={submitDelete} hideModal={hideConfirmationModal} id={userId} message={deleteMessage}  />
 
-                <Link to="/home">Home</Link></div>
+                <Link to="/home">Home</Link>
+            </div>
         );
     } else {
         return (
