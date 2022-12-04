@@ -152,23 +152,30 @@ public class UserEndpoint {
     @GetMapping("/user/getPlaylistbyVal")
     public String getPlaylist2(@RequestParam(value="val1") int v1, @RequestParam(value="val2") int v2, @RequestParam(value="val3") int v3, @RequestParam(value="val4") int v4,  @RequestParam(value="val5") int v5,  @RequestParam(value="val6") int v6){
         //return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
-        if ( v1 + v2 + v3 + v4 + v5 + v6 < 300){
-            if (v1 + v2 + v3 + v4 + v5 + v6 < 80){
+        if ( v1 + v2 + v3 + v4 + v5 + v6 < 280){
+            if (v1 + v2 + v3 + v4 + v5 + v6 < 100){
                 //generic sad
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/32evNsgLAFS5QwHWZkT8Pl?utm_source=generator\"}";
             }
 
-            if (v3 < 30 && v1 < 50){
+            if (v3 < 30 && v1 < 40){
                 //sad country
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4BYfItn9xgCEovBGN1jTsO?utm_source=generator\"}";
-            } else if ( v3 < 30){
+            } else if ( v3 < 30 && v1 > 60){
                 //country
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/31mFv0jGWbPpoh1sJuN7XJ?utm_source=generator\"}";
+            } else if (v3 < 25){
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1kWTrB4SL0gfBxNRnjVj4f?utm_source=generator\"}";
+
             }
 
-            if (v5 < 20){
-                //oldies (maybe sad oldies)
+            if (v5 < 30 && v1 > 60){
+                // happy oldies (maybe sad oldies)
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/5KyrURzuca7eAdnxIDnbwc?utm_source=generator\"}";
+            } else if (v5 < 25){
+                //sad oldies
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/26RNIQaae4ogcX6NO88Z9t?utm_source=generator\"}";
+
             }
 
 
@@ -176,27 +183,42 @@ public class UserEndpoint {
                 //instramental
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/2onh26E3CZbSUS6cITKnCB?utm_source=generator\"}";
             }
+
+            if (v4 < 30){
+                //long
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/430QWq9IU4d7xtbUlAM5sh?utm_source=generator\"}";
+            }
             //gen sad 2
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0I55TIz4Hsk4iihs2uYojd?utm_source=generator\"}";
-        } else if ( v1 + v2 + v3 + v4 + v5 + v6 > 300){
+        } else if ( v1 + v2 + v3 + v4 + v5 + v6 > 320){
             //generic happy
-            if (v1 + v2 + v3 + v4 + v5 + v6 > 520){
+            if (v1 + v2 + v3 + v4 + v5 + v6 > 510){
                 //generic happy 1
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0cIuS0aWZPYFFFbTvU6USs?utm_source=generator\"}";
             }
 
-            if (v4 > 70){
-                //long
-                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/430QWq9IU4d7xtbUlAM5sh?utm_source=generator\"}";
+            if (v6 < 35){
+                //happy instramental
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0H7afxz8U2LF6NUGg6biKq?utm_source=generator\"}";
             }
+
+            if (v1 + v2 + v3 + v4 + v5 + v6 > 440){
+                //generic happy 1
+                return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1PxQYikP1YrIIcflPtomKv?utm_source=generator\"}";
+            }
+
+
 
             //gen happy 2
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1PxQYikP1YrIIcflPtomKv?utm_source=generator\"}";
 
 
-        } else {
+        } else if (v1 + v2 + v3 + v4 + v5 + v6 > 301) {
             //generic
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/6u6fTF7tmAeESJi5ZKg7wY?utm_source=generator\"}";
+        } else {
+            return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4hWUEXvo0SUpTZoou3uv3V?utm_source=generator\"}";
+
         }
 
 
