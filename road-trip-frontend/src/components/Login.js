@@ -17,6 +17,10 @@ import Cookies from 'universal-cookie';
 import bcrypt from 'bcryptjs';
 
 const cookies = new Cookies();
+//const base = `https://subjecttochange.dev/api/`;
+const base = `http://localhost:8080/`;
+
+
 
 let token = "";
 
@@ -31,7 +35,7 @@ const Login = () => {
 
   const logHandler = async () => {
     notify("Logged in successfully!", "success")
-    const response = await axios.get('https://subjecttochange.dev/api/user?emailAddress=' + data.email, {
+    const response = await axios.get(base + 'user?emailAddress=' + data.email, {
       headers: {
         'Authorization': `Bearer ${cookies.get('jwt')}`
       }
@@ -47,8 +51,6 @@ const Login = () => {
   const checkProvidedInfo = async (obj) => {
     const email = data.email;
     let passwordGiven = data.password;
-    let base = `https://subjecttochange.dev/api/`;
-    //let base = `http://localhost:8080/`;
     let authUrl = base + 'authenticate';
     let retrievedHash = "";
     let retrievedType;
