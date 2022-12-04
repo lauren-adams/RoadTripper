@@ -113,6 +113,7 @@ function ViewStops(props) {
         selectedStops.push(stop);
         console.log("check this " + stop.flagStop);
         const base = `https://subjecttochange.dev/api`
+        //const base = `http://localhost`
         const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
         const pushData = async () => {
             const responseA = axios({

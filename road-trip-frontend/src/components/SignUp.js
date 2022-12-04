@@ -54,7 +54,7 @@ const SignUp = () => {
     if (data.password.length>5 && (data.confirmPassword == data.password) && data.email.includes('@')) {
       const base = `https://subjecttochange.dev/api`
       //const base = `http://localhost:8080`
-      const urlApi = base + `/user?`+'emailAddress='+data.email.toLowerCase() + '?'+ 'password='+bcrypt.hashSync(data.password, 10);
+      const urlApi = base + `/user?`+'emailAddress='+data.email.toLowerCase() + '&'+ 'password='+bcrypt.hashSync(data.password, 10);
 
       const pushData = async () => {
         //const responseA = axios.post(urlApi);
