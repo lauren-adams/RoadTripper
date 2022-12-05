@@ -48,23 +48,20 @@ public class UserEndpoint {
 
     @Transactional
     @PostMapping("/user/delete{id}")
-    public void deleteUser(@PathVariable("id") Long id){
+    public void deleteUser(@PathVariable("id") Long id) {
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var user = userService.findUser(loggedIn.getId());
-        if(userService.findUser(id).isPresent()){
-            if(user.get().getUserType().equals("o")){
+        if (userService.findUser(id).isPresent()) {
+            if (user.get().getUserType().equals("o")) {
                 userService.deleteUser(id);
             }
         }
     }
 
 
-
-
-
     //create a user, also updates a user if matching id
     @PostMapping("/user")
-    public User saveUser(@RequestParam(value="emailAddress") String email, @RequestParam(value="password", defaultValue = "") String password) throws Exception {
+    public User saveUser(@RequestParam(value = "emailAddress") String email, @RequestParam(value = "password", defaultValue = "") String password) throws Exception {
         if (getUsersByEmail(email).isEmpty()) {
             User newUser = new User();
             newUser.setUsername(email);
@@ -80,11 +77,11 @@ public class UserEndpoint {
     }
 
     @GetMapping("/users")
-    public List<User> getAllUser(){
+    public List<User> getAllUser() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         CustomUserDetails loggedIn = (CustomUserDetails) principal;
         var user = userService.findUser(loggedIn.getId());
-        if(user.get().getUserType().compareTo("o") == 0){
+        if (user.get().getUserType().compareTo("o") == 0) {
             return userService.getAllUsers();
         }
         //return userService.getAllUsers();
@@ -95,7 +92,7 @@ public class UserEndpoint {
     //localhost:8080/api/user?emailAddress=ryanhuntington1@baylor.edu
     //get all users with the supplied email address
     @GetMapping("/user")
-    public Optional<User> getUsersByEmail(@RequestParam(value="emailAddress", defaultValue = "") String email){
+    public Optional<User> getUsersByEmail(@RequestParam(value = "emailAddress", defaultValue = "") String email) {
         return userService.findUserByEmail(email);
     }
 
@@ -104,105 +101,100 @@ public class UserEndpoint {
     // age, used to authenticate. It would be a good idea to limit access to this.
 
     @GetMapping("/user/getPassword")
-    public String getPassword(@RequestParam(value="emailAddress") String email){
+    public String getPassword(@RequestParam(value = "emailAddress") String email) {
         Optional<User> potentialUser = userService.findUserByEmail(email);
         if (potentialUser.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
-        }
-        else {
-            return "{\"password\": \""+potentialUser.get().getPassword()+"\"}";
+        } else {
+            return "{\"password\": \"" + potentialUser.get().getPassword() + "\"}";
         }
     }
 
 
     //Get the salt for the password.
     @GetMapping("/user/validatePassword")
-    public String validatePassword(@RequestParam(value="emailAddress") String email, @RequestParam(value="password") String password){
+    public String validatePassword(@RequestParam(value = "emailAddress") String email, @RequestParam(value = "password") String password) {
         Optional<User> potentialUser = userService.findUserByEmail(email);
         if (!potentialUser.isPresent()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
-        }
-        else {
+        } else {
             if (potentialUser.get().getPassword() == password) {
                 return "All good";
             }
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND, "HTTP Status will be NOT FOUND (CODE 404)\n");
     }
+
     @GetMapping("/user/getPlaylist")
-    public String getPlaylist(@RequestParam(value="sad") boolean sad, @RequestParam(value="happy") boolean happy, @RequestParam(value="energetic") boolean energetic, @RequestParam(value="calm") boolean calm){
+    public String getPlaylist(@RequestParam(value = "sad") boolean sad, @RequestParam(value = "happy") boolean happy, @RequestParam(value = "energetic") boolean energetic, @RequestParam(value = "calm") boolean calm) {
         if (sad && energetic) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
-        }
-        else if (sad && calm) {
+        } else if (sad && calm) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4MYukieWIJWuLM3buEFk0B?utm_source=generator\"}";
-        }
-        else if (happy && energetic) {
+        } else if (happy && energetic) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/3ZK3Xs4ZFPCeekT6dXsDmm?utm_source=generator\"}";
-        }
-        else if (happy && calm) {
+        } else if (happy && calm) {
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/57UzxeOSaSbw4UyySlTWHp?utm_source=generator\"}";
         }
         return "Bad";
     }
 
     @GetMapping("/user/getPlaylistbyVal")
-    public String getPlaylist2(@RequestParam(value="val1") int v1, @RequestParam(value="val2") int v2, @RequestParam(value="val3") int v3, @RequestParam(value="val4") int v4,  @RequestParam(value="val5") int v5,  @RequestParam(value="val6") int v6){
+    public String getPlaylist2(@RequestParam(value = "val1") int v1, @RequestParam(value = "val2") int v2, @RequestParam(value = "val3") int v3, @RequestParam(value = "val4") int v4, @RequestParam(value = "val5") int v5, @RequestParam(value = "val6") int v6) {
         //return "{\"playlist\": \"https://open.spotify.com/embed/playlist/09MB9D7A0DX20Rp3zX1mq9?utm_source=generator\"}";
-        if ( v1 + v2 + v3 + v4 + v5 + v6 < 280){
-            if (v1 + v2 + v3 + v4 + v5 + v6 < 100){
+        if (v1 + v2 + v3 + v4 + v5 + v6 < 280) {
+            if (v1 + v2 + v3 + v4 + v5 + v6 < 100) {
                 //generic sad
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/32evNsgLAFS5QwHWZkT8Pl?utm_source=generator\"}";
             }
 
-            if (v3 < 30 && v1 < 40){
+            if (v3 < 30 && v1 < 40) {
                 //sad country
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/4BYfItn9xgCEovBGN1jTsO?utm_source=generator\"}";
-            } else if ( v3 < 30 && v1 > 60){
+            } else if (v3 < 30 && v1 > 60) {
                 //country
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/31mFv0jGWbPpoh1sJuN7XJ?utm_source=generator\"}";
-            } else if (v3 < 25){
+            } else if (v3 < 25) {
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1kWTrB4SL0gfBxNRnjVj4f?utm_source=generator\"}";
 
             }
 
-            if (v5 < 30 && v1 > 60){
+            if (v5 < 30 && v1 > 60) {
                 // happy oldies (maybe sad oldies)
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/5KyrURzuca7eAdnxIDnbwc?utm_source=generator\"}";
-            } else if (v5 < 25){
+            } else if (v5 < 25) {
                 //sad oldies
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/26RNIQaae4ogcX6NO88Z9t?utm_source=generator\"}";
 
             }
 
-            if (v6 < 25){
+            if (v6 < 25) {
                 //instramental
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/2onh26E3CZbSUS6cITKnCB?utm_source=generator\"}";
             }
 
-            if (v4 < 30){
+            if (v4 < 30) {
                 //long
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/430QWq9IU4d7xtbUlAM5sh?utm_source=generator\"}";
             }
             //gen sad 2
             return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0I55TIz4Hsk4iihs2uYojd?utm_source=generator\"}";
-        } else if ( v1 + v2 + v3 + v4 + v5 + v6 > 320){
+        } else if (v1 + v2 + v3 + v4 + v5 + v6 > 320) {
             //generic happy
-            if (v1 + v2 + v3 + v4 + v5 + v6 > 510){
+            if (v1 + v2 + v3 + v4 + v5 + v6 > 510) {
                 //generic happy 1
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0cIuS0aWZPYFFFbTvU6USs?utm_source=generator\"}";
             }
 
-            if (v6 < 35){
+            if (v6 < 35) {
                 //happy instramental
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/0H7afxz8U2LF6NUGg6biKq?utm_source=generator\"}";
             }
 
-            if (v1 + v2 + v3 + v4 + v5 + v6 > 440){
+            if (v1 + v2 + v3 + v4 + v5 + v6 > 440) {
                 //generic happy 1
                 return "{\"playlist\": \"https://open.spotify.com/embed/playlist/1PxQYikP1YrIIcflPtomKv?utm_source=generator\"}";
             }
-
 
 
             //gen happy 2
@@ -234,7 +226,7 @@ public class UserEndpoint {
     }
 
     @GetMapping("/user/forgotPassword")
-    public String forgotPassword(@RequestParam(value="emailAddress") String emailAddress) throws Exception {
+    public String forgotPassword(@RequestParam(value = "emailAddress") String emailAddress) throws Exception {
         Optional<User> user = getUsersByEmail(emailAddress);
         if (user.isPresent()) {
             User readUser = user.get();
@@ -245,21 +237,19 @@ public class UserEndpoint {
     }
 
     @GetMapping("/user/generateNewPassword")
-    public String resetPassword(@RequestParam(value="emailAddress") String emailAddress, @RequestParam(value="resetToken") String resetToken) throws Exception {
+    public String resetPassword(@RequestParam(value = "emailAddress") String emailAddress, @RequestParam(value = "resetToken") String resetToken) throws Exception {
         Optional<User> user = getUsersByEmail(emailAddress);
         if (user.isPresent()) {
             String readLink = user.get().getResetLink();
 
             if (readLink == null) {
                 return "Nice try, buddy";
-            }
-            else {
+            } else {
                 if (resetToken == readLink) {
                     user.get().setResetLink(null);
                     userService.saveUser(user.get());
                     return "What you just did worked";
-                }
-                else {
+                } else {
                     return "Token doesn't match";
                 }
             }
@@ -279,8 +269,7 @@ public class UserEndpoint {
                 Throwable ex = new Throwable();
                 throw new Exception("Incorrect Credentials", ex);
             }
-        }
-        else {
+        } else {
             Throwable ex = new Throwable();
             throw new Exception("Incorrect Credentials", ex);
         }
@@ -290,22 +279,23 @@ public class UserEndpoint {
     private PreferenceService preferenceService;
 
     @PostMapping("/user/{userId}/preferences")
-    public Preference savePreference(@PathVariable String userId, @RequestBody Preference pref){
+    public Preference savePreference(@PathVariable String userId, @RequestBody Preference pref) {
         return preferenceService.savePreference(pref);
     }
+
     @GetMapping("/user/{userId}/preferences")
-    public List<Preference> getPreferencesByUser(@PathVariable String userId){
+    public List<Preference> getPreferencesByUser(@PathVariable String userId) {
         return preferenceService.findPreferenceByUser(userId);
     }
 
     @PostMapping("/preferences/delete{id}")
-    public void deleteById(@PathVariable Long id){
+    public void deleteById(@PathVariable Long id) {
         preferenceService.deletePreference(id);
     }
 
     @Transactional
     @PostMapping("user/{userId}/deletepreferences")
-    public void deleteByUser(@PathVariable String userId){
+    public void deleteByUser(@PathVariable String userId) {
         preferenceService.deletePrefByUserId(userId);
     }
 
@@ -330,7 +320,7 @@ public class UserEndpoint {
                 if (stopList.get(i).getFlagStop() != null && stopList.get(i).getFlagStop()) {
                     System.out.println(stopList.get(i).getFlagStop() + "\n");
                     System.out.println(stopList.get(i).getStopLoc() + "\n");
-                    if(stopList.get(i).getStopLoc() != null) {
+                    if (stopList.get(i).getStopLoc() != null) {
                         stopsAsList += stopList.get(i).getStopLoc();
                         stopsAsList += "\n";
                     }
@@ -341,19 +331,21 @@ public class UserEndpoint {
             user.get().sendTripMessage(message);
         }
     }
+
     @PostMapping("/trip")
-    public Trip saveTrip(@RequestBody Trip trip){
+    public Trip saveTrip(@RequestBody Trip trip) {
         try {
             emailTrip(trip, "Trip Planned: \n");
         } catch (Exception e) {
             System.out.println("Email failed");
         }
-        return tripService.saveTrip(trip); }
+        return tripService.saveTrip(trip);
+    }
 
 
     //get a trip by id
     @GetMapping("/trip/{id}")
-    public Trip findTripById(@PathVariable Long id){
+    public Trip findTripById(@PathVariable Long id) {
         var trip = tripService.findTripByID(id);
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (trip.isPresent()) {
@@ -366,7 +358,7 @@ public class UserEndpoint {
 
     @Transactional
     @PostMapping("/trip/delete{id}")
-    public void deleteTrip(@PathVariable("id") Long id){
+    public void deleteTrip(@PathVariable("id") Long id) {
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (tripService.findTripByID(id).isPresent()) {
             if (loggedIn.getId().toString().compareTo(tripService.findTripByID(id).get().getUserID()) == 0) {
@@ -379,7 +371,7 @@ public class UserEndpoint {
 
 
     @GetMapping("/trip")
-    public List<Trip> getTripByUserId(@RequestParam(value="userID") String userId) throws Exception {
+    public List<Trip> getTripByUserId(@RequestParam(value = "userID") String userId) throws Exception {
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (loggedIn.getId().toString().compareTo(userId) == 0) {
             return tripService.findTripByUserID(userId);
@@ -389,12 +381,13 @@ public class UserEndpoint {
 
 
     @GetMapping("/stop/{id}")
-    public Stop getStopById(@PathVariable Long id){
+    public Stop getStopById(@PathVariable Long id) {
         var stop = stopService.findStopByID(id);
         return stop.orElse(null);
     }
+
     @PostMapping("/trip/{tripId}/stop")
-    public List<Stop> saveStop(@PathVariable Long tripId, @RequestBody List<Stop> stops){
+    public List<Stop> saveStop(@PathVariable Long tripId, @RequestBody List<Stop> stops) {
 //        Trip trip = findTripById(tripId);
 //        stop.setTrip(trip);
 //        System.out.println("just trying to print here");
@@ -410,31 +403,35 @@ public class UserEndpoint {
     }
 
     @PostMapping("/stop/delete{id}")
-    public void deleteStopById(@PathVariable Long id){ stopService.deleteStop(id);}
+    public void deleteStopById(@PathVariable Long id) {
+        stopService.deleteStop(id);
+    }
 
     @PostMapping("/trip/{tripId}/deletestop")
-    public void deleteAllStopsForTrip(@PathVariable Long tripId){ stopService.deleteByTripId(tripId); }
+    public void deleteAllStopsForTrip(@PathVariable Long tripId) {
+        stopService.deleteByTripId(tripId);
+    }
 
     @GetMapping("/trip/{tripId}/stop")
-    public List<Stop> getStopsByTripId(@PathVariable Long tripId){
+    public List<Stop> getStopsByTripId(@PathVariable Long tripId) {
         return stopService.findStopsByTripId(tripId);
     }
 
     @GetMapping("/trip/{tripId}/date")
-    public List<Trip> getTripsByDate(@PathVariable String date){
+    public List<Trip> getTripsByDate(@PathVariable String date) {
         return tripService.findTripByDate("bbb");
     }
 
-    public void dailyNotify(){
+    public void dailyNotify() {
         System.out.println("hehe");
         List<Trip> tt = getTripsByDate("bbb");
         System.out.println(tt.toString());
         int x = 0;
-        while (x < 1000){
+        while (x < 1000) {
             System.out.println("hehe");
             List<Trip> t = tripService.findTripByDate("abc");
             System.out.println(t.toString());
-            for (int i = 0; i < t.size(); i++){
+            for (int i = 0; i < t.size(); i++) {
                 try {
                     emailTrip(t.get(i), "Today is your TRIP!\n");
                 } catch (Exception e) {

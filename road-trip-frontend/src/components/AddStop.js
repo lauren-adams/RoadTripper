@@ -193,8 +193,7 @@ const AddStop = () => {
                         "address": results[0].formatted_address,
                         "waypointNumber": 1,
                         "flagStop": true,
-                        "tripId" : userCtx.tid,
-                        "myRating": 0
+                        "tripId" : userCtx.tid
                     }
                     console.log(newObj)
                     submitHandler([newObj])

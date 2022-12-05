@@ -7,23 +7,37 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class StopService{
+public class StopService {
     @Autowired
     public StopRepository stopRepository;
 
-    public Stop saveStop(Stop stop){
+    public Stop saveStop(Stop stop) {
         return stopRepository.save(stop);
     }
-    public List<Stop> saveAllStop(List<Stop> stops){ return stopRepository.saveAll(stops); }
-    public void deleteStop(Long id){ stopRepository.deleteById(id);}
 
-    public void deleteAllStop() { stopRepository.deleteAll(); }
+    public List<Stop> saveAllStop(List<Stop> stops) {
+        return stopRepository.saveAll(stops);
+    }
 
-    public Optional<Stop> findStopByID(Long id){return stopRepository.findById(id);}
+    public void deleteStop(Long id) {
+        stopRepository.deleteById(id);
+    }
 
-    public List<Stop> findStopsByTripId(Long tripId){ return stopRepository.findByTripId(tripId); }
+    public void deleteAllStop() {
+        stopRepository.deleteAll();
+    }
 
-    public void deleteByTripId(Long id){ stopRepository.deleteByTripId(id); }
+    public Optional<Stop> findStopByID(Long id) {
+        return stopRepository.findById(id);
+    }
+
+    public List<Stop> findStopsByTripId(Long tripId) {
+        return stopRepository.findByTripId(tripId);
+    }
+
+    public void deleteByTripId(Long id) {
+        stopRepository.deleteByTripId(id);
+    }
 
 
 }

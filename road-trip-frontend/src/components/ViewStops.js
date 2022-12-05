@@ -32,46 +32,50 @@ function ViewStops(props) {
 
     useEffect(() => {
         console.log(userCtx.username + userCtx.email + userCtx.id);
+        console.log(userCtx.tid);
         setIsLoading(true);
         fetch(
-            'https://subjecttochange.dev/api/trip/' + userCtx.tid + '/stop'
-        )
-            .then((response) => {
-                return response.json();
-            })
-            .then((data) => {
-                setAllStops(data);
-                console.log(data);
-
-                const trips = [];
-                const waypoints = [];
-                // Not refreshable because of this line
-                data = data.filter(x => x.flagStop === true);
-                setSelectedStops(data);
-                console.log("selected" + selectedStops);
-                for (const key in data) {
-                    const trip = {
-                        id: key,
-                        ...data[key]
-                    };
-                    const loc = {
-                        lat: trip.lattitude,
-                        lng: trip.longitude
-                    }
-                    const waypoint = {
-                        location: loc,
-                        stopover: true
-                    }
-                    console.log(trip);
-                    console.log(waypoint);
-                    waypoints.push(waypoint);
-                    trips.push(trip);
+            'https://subjecttochange.dev/api/trip/' + userCtx.tid + '/stop', {
+                headers: {
+                    'Authorization': `Bearer ${cookies.get('jwt')}`
                 }
-                console.log("trips" + trips);
-                setIsLoading(false);
-                setLoadedTrips(trips);
-                setLoadedWaypoints(waypoints);
-            });
+            }
+        ).then((response) => {
+            console.log(response.json());
+            return response.json();
+        }).then((data) => {
+            // setAllStops(data);
+            console.log(data);
+
+            const trips = [];
+            const waypoints = [];
+            // Not refreshable because of this line
+            data = data.filter(x => x.flagStop === true);
+            setSelectedStops(data);
+            console.log("selected" + selectedStops);
+            for (const key in data) {
+                const trip = {
+                    id: key,
+                    ...data[key]
+                };
+                const loc = {
+                    lat: trip.lattitude,
+                    lng: trip.longitude
+                }
+                const waypoint = {
+                    location: loc,
+                    stopover: true
+                }
+                console.log(trip);
+                console.log(waypoint);
+                waypoints.push(waypoint);
+                trips.push(trip);
+            }
+            console.log("trips" + trips);
+            setIsLoading(false);
+            setLoadedTrips(trips);
+            setLoadedWaypoints(waypoints);
+        });
     }, []);
 
     if (isLoading) {
@@ -112,16 +116,14 @@ function ViewStops(props) {
         stop.flagStop = false;
         selectedStops.push(stop);
         console.log("check this " + stop.flagStop);
-        const base = `https://subjecttochange.dev/api`
+        const base = 'https://subjecttochange.dev/api'
         //const base = `http://localhost`
-        const urlApi = base + `/trip/` + userCtx.tid + `/stop`;
+        const urlApi = base + '/trip/' + userCtx.tid + '/stop';
         const pushData = async () => {
             const responseA = axios({
                 method: 'post',
                 url: urlApi,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*',
                     Authentication: `Bearer ${cookies.get('jwt')}`
                 },
                 data: selectedStops
@@ -133,6 +135,7 @@ function ViewStops(props) {
 
         const newLoadTripStop = loadedTrips.filter((item) => item !== stop);
         setLoadedTrips(newLoadTripStop);
+        // Remove display stop
         setLoadedWaypoints(current =>
             current.filter(s => {
                 return s.location.lat !== stop.lattitude;
@@ -270,7 +273,7 @@ function ViewStops(props) {
                                                 <div className={classes.card}>
                                                     <Text className={classes.content}>{stop.stopLoc}</Text>
                                                 </div>
-                                                <Select placeholder={stop.myRating != 0 ? stop.myRating : "Rating"}>
+                                                <Select placeholder={stop.myRating !== 0 ? stop.myRating : "Rating"}>
                                                     <option value='1' onSelect={() => setRating(stop, 1)}>1</option>
                                                     <option value='2' onSelect={() => setRating(stop, 2)}>2</option>
                                                     <option value='3' onSelect={() => setRating(stop, 3)}>3</option>

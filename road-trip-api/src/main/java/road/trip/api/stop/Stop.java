@@ -142,16 +142,17 @@ public class Stop {
     @Column(name = "IS_SELECTED")
     Boolean flagStop = false;
 
-    @Column(name = "myRating")
-    Integer myRating;
+//    @Column(name = "myRating")
+//    Integer myRating;
+//
+//    public int getMyRating() {
+//        return myRating;
+//    }
+//
+//    public void setMyRating(int myRating) {
+//        this.myRating = myRating;
+//    }
 
-    public int getMyRating() {
-        return myRating;
-    }
-
-    public void setMyRating(int myRating) {
-        this.myRating = myRating;
-    }
     public Long getId() {
         return id;
     }

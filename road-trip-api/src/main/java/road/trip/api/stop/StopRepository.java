@@ -9,20 +9,16 @@ import java.util.List;
 import java.util.Optional;
 
 @Repository
-public interface StopRepository extends JpaRepository<Stop, Long>, JpaSpecificationExecutor{
+public interface StopRepository extends JpaRepository<Stop, Long>, JpaSpecificationExecutor {
     //Optional<Trip> findByStopId(Long id);
     Optional<Stop> findById(Long id);
+
     void deleteById(Long id);
 
     List<Stop> findByTripId(Long tripId);
 
     //List<Stop> findByTripId(Long id);
     void deleteByTripId(Long id);
-
-
-
-
-
 
 
 }
