@@ -70,7 +70,7 @@ function Admin() {
         setLoadedUsers(loadedUsers.filter((user) => user.id !== id));
         setDisplayConfirmationModal(false);
         console.log("Delete");
-        let delUrl = 'https://subjecttochange.dev/api/user/' + id;
+        let delUrl = 'https://subjecttochange.dev/api/user/delete' + id;
         let delUrl2 = 'http://localhost:8080/user/' + id;
         // const delData = async () => {
         //     //const responseA = axios.post(urlApi);
@@ -86,7 +86,7 @@ function Admin() {
         // }
         // delData()
 
-        const response = await axios.delete(delUrl, {
+        const response = await axios.post(delUrl, {
             headers: {
                 'Authorization': `Bearer ${cookies.get('jwt')}`
             }
