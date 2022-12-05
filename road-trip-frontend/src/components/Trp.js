@@ -72,7 +72,7 @@ function Trp() {
         setLoadedTrips(loadedTrips.filter((trip) => trip.id !== id));
         setDisplayConfirmationModal(false);
         console.log("Delete");
-        let delUrl = 'https://subjecttochange.dev/api/trip/' + id;
+        let delUrl = 'https://subjecttochange.dev/api/trip/delete' + id;
         let delUrl2 = 'http://localhost:8080/trip/' + id;
         // const delData = async () => {
         //     //const responseA = axios.post(urlApi);
@@ -88,7 +88,7 @@ function Trp() {
         // }
         // delData()
 
-        const response = await axios.delete(delUrl, {
+        const response = await axios.post(delUrl, {},{
             headers: {
                 'Authorization': `Bearer ${cookies.get('jwt')}`
             }
