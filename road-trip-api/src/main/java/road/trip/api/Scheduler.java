@@ -15,5 +15,6 @@ public class Scheduler {
     public void scheduleAsyncTask() {
         System.out.println("ITS WORKING");
         myService.doAsync();
+
     }
 }
