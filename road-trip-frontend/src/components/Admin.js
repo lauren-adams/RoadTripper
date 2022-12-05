@@ -86,7 +86,7 @@ function Admin() {
         // }
         // delData()
 
-        const response = await axios.post(delUrl, {
+        const response = await axios.post(delUrl, {},{
             headers: {
                 'Authorization': `Bearer ${cookies.get('jwt')}`
             }
