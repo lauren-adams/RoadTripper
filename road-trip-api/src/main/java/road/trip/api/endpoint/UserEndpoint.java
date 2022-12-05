@@ -81,7 +81,8 @@ public class UserEndpoint {
 
     @GetMapping("/users")
     public List<User> getAllUser(){
-        CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        CustomUserDetails loggedIn = (CustomUserDetails) principal;
         var user = userService.findUser(loggedIn.getId());
         if(user.get().getUserType().compareTo("o") == 0){
             return userService.getAllUsers();
