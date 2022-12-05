@@ -47,7 +47,7 @@ public class UserEndpoint {
     }
 
     @Transactional
-    @DeleteMapping("/user/{id}")
+    @PostMapping("/user/delete{id}")
     public void deleteUser(@PathVariable("id") Long id){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         var user = userService.findUser(loggedIn.getId());
