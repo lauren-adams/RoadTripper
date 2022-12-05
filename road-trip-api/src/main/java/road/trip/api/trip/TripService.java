@@ -39,11 +39,12 @@ public class TripService{
     @Async("threadTaskExecutor")
     public void doAsync() {
         //System.out.println("hehe");
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("MM-dd-yyyy");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         LocalDateTime now = LocalDateTime.now();
         String date = dtf.format(now);
 
             System.out.println("hehe");
+            System.out.println(date);
             List<Trip> t = tripRepository.findByStartDate(date);
             System.out.println(t.toString());
             for (int i = 0; i < t.size(); i++){
@@ -60,7 +61,7 @@ public class TripService{
     public void emailTrip(Trip trip, String addmessage) throws Exception {
         var user = userRepository.findById(Long.valueOf(trip.getUserID()));
         if (user.isPresent()) {
-            System.out.print("In user" + user.toString());
+           // System.out.print("In user" + user.toString());
             List<Stop> stopList = stopRepository.findByTripId(trip.getId());
             String stopsAsList = "";
             System.out.println(stopList.toString());
