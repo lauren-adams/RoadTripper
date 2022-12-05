@@ -17,8 +17,8 @@ import Cookies from 'universal-cookie';
 import bcrypt from 'bcryptjs';
 
 const cookies = new Cookies();
-//const base = `https://subjecttochange.dev/api/`;
-const base = `http://localhost:8080/`;
+const base = `https://subjecttochange.dev/api/`;
+//const base = `http://localhost:8080/`;
 
 
 
