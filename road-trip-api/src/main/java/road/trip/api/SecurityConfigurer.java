@@ -29,7 +29,7 @@ public class SecurityConfigurer extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception{
         http.cors().and().csrf().disable();
     }
-
+ 
     @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
