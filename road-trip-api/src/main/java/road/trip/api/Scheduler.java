@@ -11,7 +11,7 @@ public class Scheduler {
 
     //@Scheduled(cron = "0 0 */1 * * ?")
     //@Scheduled(cron = "0 0 0 * * *")
-    @Scheduled(cron = "0 11 * * *")
+    @Scheduled(cron = "0 12 * * *")
     public void scheduleAsyncTask() {
         System.out.println("ITS WORKING");
         myService.doAsync();
