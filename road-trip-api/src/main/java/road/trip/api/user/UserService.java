@@ -24,7 +24,7 @@ public class UserService {
         return userRepository.findByUsername(email);
     }
 
-    @Transactional
+    
     public void deleteUser(Long id){ userRepository.deleteById(id); }
     @Transactional
     public void deleteAllUsers() { userRepository.deleteAll(); }
