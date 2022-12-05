@@ -298,13 +298,13 @@ public class UserEndpoint {
         return preferenceService.findPreferenceByUser(userId);
     }
 
-    @DeleteMapping("/preferences/{id}")
+    @PostMapping("/preferences/delete{id}")
     public void deleteById(@PathVariable Long id){
         preferenceService.deletePreference(id);
     }
 
     @Transactional
-    @DeleteMapping("user/{userId}/preferences")
+    @PostMapping("user/{userId}/deletepreferences")
     public void deleteByUser(@PathVariable String userId){
         preferenceService.deletePrefByUserId(userId);
     }
@@ -365,7 +365,7 @@ public class UserEndpoint {
     }
 
     @Transactional
-    @DeleteMapping("/trip/{id}")
+    @PostMapping("/trip/delete{id}")
     public void deleteTrip(@PathVariable("id") Long id){
         CustomUserDetails loggedIn = (CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (tripService.findTripByID(id).isPresent()) {
@@ -409,10 +409,10 @@ public class UserEndpoint {
         return stopService.saveAllStop(stops);
     }
 
-    @DeleteMapping("/stop/{id}")
+    @PostMapping("/stop/delete{id}")
     public void deleteStopById(@PathVariable Long id){ stopService.deleteStop(id);}
 
-    @DeleteMapping("/trip/{tripId}/stop")
+    @PostMapping("/trip/{tripId}/deletestop")
     public void deleteAllStopsForTrip(@PathVariable Long tripId){ stopService.deleteByTripId(tripId); }
 
     @GetMapping("/trip/{tripId}/stop")
