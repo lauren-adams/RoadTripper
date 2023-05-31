@@ -1,3 +1,4 @@
+
  1. **Road-trip-api: Backend Setup** 
 
 	- Install Java 16(OpenJDK)
@@ -73,5 +74,4 @@
 		- We want our runner to build a docker image for both our frontend and backend on a commit and then deploy those images as containers, along with our database image, to our production server. The way this is done is largely up to you; we have provided sample Dockerfiles and a sample gitlab-cli.yml file to give an example of how it could be achieved.
 		- whenever a commit is made, a pipeline should be created for your GitLab project. You can view this pipeline to see its status while it is executing in the "CI/CD -> Pipelines" tab on GitLab.
 
-This will get basic CI/CD functionality setup for your project. Feel free to customize this process to fit your needs as the project progresses.
-
+This will get basic CI/CD functionality setup for your project. Feel free to customize this process to fit your needs as the project progressess
