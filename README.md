@@ -1,4 +1,4 @@
-Website that allows users to plot multistop roadtrips and choose between curated stops in proximity to the route. There was a five person team developing this project, and I led the frontend design and development.
+Website that allows users to plot multistop roadtrips and choose between curated stops in proximity to the route. Currently the website is not online. There was a five person team developing this project, and I led the frontend design and development.
 
  1. **Road-trip-api: Backend Setup** 
 
